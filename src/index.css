@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-[#0D0D0D] text-[#E5E7EB] overflow-x-hidden;
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+/* Add your custom scrollbar and animation styles here */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #0D0D0D; }
+::-webkit-scrollbar-thumb { background: #1F2937; border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: #FF6B00; }
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+@keyframes highlightBlink {
+  0% { border-color: #FF6B00; box-shadow: 0 0 0px #FF6B00; }
+  50% { border-color: #FF6B00; box-shadow: 0 0 30px rgba(255, 107, 0, 0.4); }
+  100% { border-color: #1F2937; box-shadow: 0 0 0px #FF6B00; }
+}
+.animate-highlight {
+  animation: highlightBlink 1.5s ease-in-out 2;
+}
+
+.ambient-glow {
+  background: radial-gradient(circle at center, rgba(255, 107, 0, 0.1) 0%, transparent 70%);
+  pointer-events: none;
+}
