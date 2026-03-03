@@ -42,7 +42,7 @@ export const PRODUCTS: Product[] = [
     price: 75,
     thumbnail: '/images/c-fun.png',
     mobileUrl: 'https://m.me/103186496068437',
-    desktopUrl: 'https://www.facebook.com/share/p/1Cj2obyjSU/',
+    desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
     category: 'Programming Languages'
   },
   {
@@ -52,7 +52,7 @@ export const PRODUCTS: Product[] = [
     price: 75,
     thumbnail: '/images/cpp-fun.png',
     mobileUrl: 'https://m.me/103186496068437',
-    desktopUrl: 'https://www.facebook.com/share/p/1Cj2obyjSU/',
+    desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
     category: 'Programming Languages'
   },
   {
@@ -62,7 +62,7 @@ export const PRODUCTS: Product[] = [
     price: 75,
     thumbnail: '/images/csharp-fun.png',
     mobileUrl: 'https://m.me/103186496068437',
-    desktopUrl: 'https://www.facebook.com/share/p/1Cj2obyjSU/',
+    desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
     category: 'Programming Languages'
   },
   {
@@ -72,7 +72,7 @@ export const PRODUCTS: Product[] = [
     price: 75,
     thumbnail: '/images/py-fun.png',
     mobileUrl: 'https://m.me/103186496068437',
-    desktopUrl: 'https://www.facebook.com/share/p/1Cj2obyjSU/',
+    desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
     category: 'Programming Languages'
   },
   {
@@ -82,7 +82,7 @@ export const PRODUCTS: Product[] = [
     price: 75,
     thumbnail: '/images/java-fun.png',
     mobileUrl: 'https://m.me/103186496068437',
-    desktopUrl: 'https://www.facebook.com/share/p/1Cj2obyjSU/',
+    desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
     category: 'Programming Languages'
   },
   // {
@@ -92,7 +92,7 @@ export const PRODUCTS: Product[] = [
   //   price: 75,
   //   thumbnail: '/images/c-fun.png',
   //   mobileUrl: 'https://m.me/103186496068437',
-  //   desktopUrl: 'https://www.facebook.com/share/p/1Cj2obyjSU/',
+  //   desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
   //   category: 'Programming Languages'
   // },
 
@@ -104,7 +104,7 @@ export const PRODUCTS: Product[] = [
     price: 75,
     thumbnail: '/images/c-act.png',
     mobileUrl: 'https://m.me/103186496068437',
-    desktopUrl: 'https://www.facebook.com/share/p/1Cj2obyjSU/',
+    desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
     category: 'Programming Language Activities'
   },
   {
@@ -114,7 +114,7 @@ export const PRODUCTS: Product[] = [
     price: 75,
     thumbnail: '/images/cpp-act.png',
     mobileUrl: 'https://m.me/103186496068437',
-    desktopUrl: 'https://www.facebook.com/share/p/1Cj2obyjSU/',
+    desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
     category: 'Programming Language Activities'
   },
   {
@@ -124,7 +124,7 @@ export const PRODUCTS: Product[] = [
     price: 75,
     thumbnail: '/images/csharp-act.png',
     mobileUrl: 'https://m.me/103186496068437',
-    desktopUrl: 'https://www.facebook.com/share/p/1Cj2obyjSU/',
+    desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
     category: 'Programming Language Activities'
   },
   {
@@ -134,7 +134,7 @@ export const PRODUCTS: Product[] = [
     price: 75,
     thumbnail: '/images/py-act.png',
     mobileUrl: 'https://m.me/103186496068437',
-    desktopUrl: 'https://www.facebook.com/share/p/1Cj2obyjSU/',
+    desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
     category: 'Programming Language Activities'
   },
   {
@@ -144,7 +144,7 @@ export const PRODUCTS: Product[] = [
     price: 75,
     thumbnail: '/images/java-act.png',
     mobileUrl: 'https://m.me/103186496068437',
-    desktopUrl: 'https://www.facebook.com/share/p/1Cj2obyjSU/',
+    desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
     category: 'Programming Language Activities'
   },
 //   {
@@ -154,7 +154,7 @@ export const PRODUCTS: Product[] = [
 //     price: 75,
 //     thumbnail: '/images/c-fun.png',
 //     mobileUrl: 'https://m.me/103186496068437',
-//     desktopUrl: 'https://www.facebook.com/share/p/1Cj2obyjSU/',
+//     desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
 //     category: 'Programming Language Activities'
 //   },
 
@@ -166,7 +166,7 @@ export const PRODUCTS: Product[] = [
 //   price: 75,
 //   thumbnail: '/images/c-fun.png',
 //   mobileUrl: 'https://m.me/103186496068437',
-//   desktopUrl: 'https://www.facebook.com/share/p/1Cj2obyjSU/',
+//   desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
 //   category: 'Web Development'
 // },
 // {
@@ -176,7 +176,7 @@ export const PRODUCTS: Product[] = [
 //   price: 75,
 //   thumbnail: '/images/c-fun.png',
 //   mobileUrl: 'https://m.me/103186496068437',
-//   desktopUrl: 'https://www.facebook.com/share/p/1Cj2obyjSU/',
+//   desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
 //   category: 'Web Development'
 // },
 // {
@@ -186,7 +186,7 @@ export const PRODUCTS: Product[] = [
 //   price: 75,
 //   thumbnail: '/images/c-fun.png',
 //   mobileUrl: 'https://m.me/103186496068437',
-//   desktopUrl: 'https://www.facebook.com/share/p/1Cj2obyjSU/',
+//   desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
 //   category: 'Web Development'
 // },
 
@@ -199,7 +199,7 @@ export const PRODUCTS: Product[] = [
 //   price: 75,
 //   thumbnail: '/images/c-fun.png',
 //   mobileUrl: 'https://m.me/103186496068437',
-//   desktopUrl: 'https://www.facebook.com/share/p/1Cj2obyjSU/',
+//   desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
 //   category: 'Tools'
 // },
 // {
@@ -209,7 +209,7 @@ export const PRODUCTS: Product[] = [
 //   price: 75,
 //   thumbnail: '/images/c-fun.png',
 //   mobileUrl: 'https://m.me/103186496068437',
-//   desktopUrl: 'https://www.facebook.com/share/p/1Cj2obyjSU/',
+//   desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
 //   category: 'Tools'
 // }
 
