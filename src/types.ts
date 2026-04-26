@@ -8,6 +8,7 @@ export interface Product {
   mobileUrl: string;
   desktopUrl: string;
   category: string;
+  language?: 'en' | 'tl';
 }
 
 export interface FAQItem {
