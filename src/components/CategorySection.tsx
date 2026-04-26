@@ -18,6 +18,10 @@ export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProp
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
 
+  // Separate products by language
+  const englishProducts = products.filter(p => p.language !== 'tl');
+  const tagalogProducts = products.filter(p => p.language === 'tl');
+
   // Robust observer-based scroll state detection
   useEffect(() => {
     if (!isOpen || !scrollRef.current) return;
@@ -161,43 +165,96 @@ export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProp
         </div>
       </div>
       
-      <div className={`overflow-hidden transition-all duration-500 ease-out will-change-[max-height,opacity] ${isOpen ? 'max-h-[1400px] opacity-100 p-6 lg:p-8' : 'max-h-0 opacity-0 pointer-events-none'}`}>
-        <div className="relative">
-          <div 
-            ref={scrollRef}
-            className="flex gap-6 overflow-x-auto snap-x snap-mandatory no-scrollbar pb-8 pt-2 scroll-smooth max-lg:px-[calc(50vw-140px-24px)] sm:max-lg:px-[calc(50vw-160px-24px)] lg:px-2 will-change-transform"
-          >
-            {products.map((product, idx) => (
+      <div className={`overflow-hidden transition-all duration-500 ease-out will-change-[max-height,opacity] ${isOpen ? 'max-h-[2800px] opacity-100 p-6 lg:p-8' : 'max-h-0 opacity-0 pointer-events-none'}`}>
+        {/* English Row */}
+        {englishProducts.length > 0 && (
+          <div className="mb-8">
+            <div className="flex items-center gap-3 mb-4">
+              <span className="text-xs font-black text-brand-yellow uppercase tracking-wider bg-brand-yellow/10 px-3 py-1 rounded-sm border border-brand-yellow/20">English Version</span>
+            </div>
+            <div className="relative">
               <div 
-                key={product.id} 
-                className="product-card-item flex-shrink-0 snap-center lg:snap-start" 
-                data-index={idx}
-                ref={el => { cardRefs.current[idx] = el; }}
+                ref={scrollRef}
+                className="flex gap-6 overflow-x-auto snap-x snap-mandatory no-scrollbar pb-8 pt-2 scroll-smooth max-lg:px-[calc(50vw-140px-24px)] sm:max-lg:px-[calc(50vw-160px-24px)] lg:px-2 will-change-transform"
               >
-                <ProductCard 
-                  product={product} 
-                  isHighlighted={product.id === highlightedProductId}
-                />
+                {englishProducts.map((product, idx) => (
+                  <div 
+                    key={product.id} 
+                    className="product-card-item flex-shrink-0 snap-center lg:snap-start" 
+                    data-index={idx}
+                    ref={el => { cardRefs.current[idx] = el; }}
+                  >
+                    <ProductCard 
+                      product={product} 
+                      isHighlighted={product.id === highlightedProductId}
+                    />
+                  </div>
+                ))}
+                <div className="flex-shrink-0 w-1 lg:hidden"></div>
               </div>
-            ))}
-            <div className="flex-shrink-0 w-1 lg:hidden"></div>
-          </div>
-        </div>
+            </div>
 
-        <div className="flex justify-center items-center gap-3 mt-4 laptop:mt-6">
-          {products.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => jumpToCard(i)}
-              className={`transition-all duration-300 rounded-full h-1 ${
-                activeIndex === i 
-                  ? 'bg-brand-yellow w-10 shadow-[0_0_10px_rgba(255,107,0,0.5)]' 
-                  : 'bg-white/10 w-2 hover:bg-white/30'
-              }`}
-              aria-label={`Go to item ${i + 1}`}
-            />
-          ))}
-        </div>
+            <div className="flex justify-center items-center gap-3 mt-4 laptop:mt-6">
+              {englishProducts.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => jumpToCard(i)}
+                  className={`transition-all duration-300 rounded-full h-1 ${
+                    activeIndex === i 
+                      ? 'bg-brand-yellow w-10 shadow-[0_0_10px_rgba(255,107,0,0.5)]' 
+                      : 'bg-white/10 w-2 hover:bg-white/30'
+                  }`}
+                  aria-label={`Go to item ${i + 1}`}
+                />
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Tagalog Row */}
+        {tagalogProducts.length > 0 && (
+          <div>
+            <div className="flex items-center gap-3 mb-4">
+              <span className="text-xs font-black text-brand-yellow uppercase tracking-wider bg-brand-yellow/10 px-3 py-1 rounded-sm border border-brand-yellow/20">Tagalog Version</span>
+            </div>
+            <div className="relative">
+              <div 
+                ref={scrollRef}
+                className="flex gap-6 overflow-x-auto snap-x snap-mandatory no-scrollbar pb-8 pt-2 scroll-smooth max-lg:px-[calc(50vw-140px-24px)] sm:max-lg:px-[calc(50vw-160px-24px)] lg:px-2 will-change-transform"
+              >
+                {tagalogProducts.map((product, idx) => (
+                  <div 
+                    key={product.id} 
+                    className="product-card-item flex-shrink-0 snap-center lg:snap-start" 
+                    data-index={idx}
+                    ref={el => { cardRefs.current[idx] = el; }}
+                  >
+                    <ProductCard 
+                      product={product} 
+                      isHighlighted={product.id === highlightedProductId}
+                    />
+                  </div>
+                ))}
+                <div className="flex-shrink-0 w-1 lg:hidden"></div>
+              </div>
+            </div>
+
+            <div className="flex justify-center items-center gap-3 mt-4 laptop:mt-6">
+              {tagalogProducts.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => jumpToCard(i)}
+                  className={`transition-all duration-300 rounded-full h-1 ${
+                    activeIndex === i 
+                      ? 'bg-brand-yellow w-10 shadow-[0_0_10px_rgba(255,107,0,0.5)]' 
+                      : 'bg-white/10 w-2 hover:bg-white/30'
+                  }`}
+                  aria-label={`Go to item ${i + 1}`}
+                />
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );
