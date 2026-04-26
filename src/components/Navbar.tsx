@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Menu, X, Facebook, Search } from 'lucide-react';
+import { Menu, X, Search } from 'lucide-react';
 import { PRODUCTS, SITE_CONTENT } from "../constants";
 import { Product } from "../types";
 
@@ -167,16 +167,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onSearchSelect }) => {
                 </div>
               )}
             </div>
-            
-            <a 
-              href={SITE_CONTENT.socials.facebook} 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="f-small text-brand-light font-black hover:text-brand-yellow transition-all flex items-center gap-3 border border-gray-800 px-5 laptop:px-6 xl:px-8 h-10 laptop:h-12 rounded hover:border-brand-yellow/50 shrink-0 ml-4 laptop:ml-6 hover:bg-brand-yellow/5"
-            >
-              <Facebook size={16} className="laptop:size-18" fill="currentColor" stroke="none" /> 
-              <span className="hidden laptop:inline">FOLLOW</span>
-            </a>
           </div>
 
           <div className="flex sm:hidden items-center gap-4">
@@ -247,22 +237,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onSearchSelect }) => {
         )}
 
         <div className={`lg:hidden fixed left-0 right-0 top-20 z-50 overflow-hidden transition-all duration-500 ease-in-out bg-[#1A1A1A] border-b border-white/5 ${isMenuOpen ? 'max-h-80 opacity-100 shadow-2xl' : 'max-h-0 opacity-0 pointer-events-none'}`}>
-          <div className="p-12 flex flex-col items-center">
-            <a 
-              href={SITE_CONTENT.socials.facebook} 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="flex flex-col items-center gap-8 group"
-            >
-              <div className="bg-brand-yellow/10 p-6 rounded-full group-hover:bg-brand-yellow group-hover:text-black transition-all shadow-xl group-hover:shadow-brand-yellow/40">
-                <Facebook size={32} fill="currentColor" stroke="none" className="text-brand-yellow group-hover:text-black" />
-              </div>
-              <div className="text-center">
-                <span className="text-lg font-black text-white uppercase tracking-widest block">Follow on Facebook</span>
-                <span className="f-small text-brand-gray/50 mt-2 block">Premium Technical Resources</span>
-              </div>
-            </a>
-          </div>
         </div>
       </nav>
       

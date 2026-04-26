@@ -24,17 +24,19 @@ export const SITE_CONTENT: SiteContent = {
  * EDIT THIS SECTION TO MANAGE PRODUCT CATEGORIES (Order matters)
  */
 export const CATEGORIES = [
-  'Programming Languages',
-  'Programming Language Activities'
-  // 'Web Development',
-  // 'Tools'
+  'Programming Language Fundamentals',
+  'Programming Language Activities',
+  'Programming Language Intermediate',
+  'Programming Language Advanced',
+  'Web Development',
+  'AI Modules'
 ];
 
 /**
  * EDIT THIS SECTION TO MANAGE ALL STORE ITEMS
  */
 export const PRODUCTS: Product[] = [
-  // Programming Languages
+  // Programming Language Fundamentals
   {
     id: 'pl-c',
     title: 'C Programming Notes For Beginners',
@@ -43,7 +45,7 @@ export const PRODUCTS: Product[] = [
     thumbnail: '/images/c-fun.png',
     mobileUrl: 'https://m.me/103186496068437',
     desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
-    category: 'Programming Languages'
+    category: 'Programming Language Fundamentals'
   },
   {
     id: 'pl-cpp',
@@ -53,7 +55,7 @@ export const PRODUCTS: Product[] = [
     thumbnail: '/images/cpp-fun.png',
     mobileUrl: 'https://m.me/103186496068437',
     desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
-    category: 'Programming Languages'
+    category: 'Programming Language Fundamentals'
   },
   {
     id: 'pl-csharp',
@@ -63,7 +65,7 @@ export const PRODUCTS: Product[] = [
     thumbnail: '/images/csharp-fun.png',
     mobileUrl: 'https://m.me/103186496068437',
     desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
-    category: 'Programming Languages'
+    category: 'Programming Language Fundamentals'
   },
   {
     id: 'pl-python',
@@ -73,7 +75,7 @@ export const PRODUCTS: Product[] = [
     thumbnail: '/images/py-fun.png',
     mobileUrl: 'https://m.me/103186496068437',
     desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
-    category: 'Programming Languages'
+    category: 'Programming Language Fundamentals'
   },
   {
     id: 'pl-java',
@@ -83,7 +85,7 @@ export const PRODUCTS: Product[] = [
     thumbnail: '/images/java-fun.png',
     mobileUrl: 'https://m.me/103186496068437',
     desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
-    category: 'Programming Languages'
+    category: 'Programming Language Fundamentals'
   },
   // {
   //   id: 'pl-javascript',
@@ -158,60 +160,133 @@ export const PRODUCTS: Product[] = [
 //     category: 'Programming Language Activities'
 //   },
 
-// // Web Development
-// {
-//   id: 'wd-html',
-//   title: 'HTML Notes For Beginners',
-//   description: 'Learn how to build clean, well-structured web pages using simple and practical HTML lessons designed for absolute beginners.',
-//   price: 75,
-//   thumbnail: '/images/c-fun.png',
-//   mobileUrl: 'https://m.me/103186496068437',
-//   desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
-//   category: 'Web Development'
-// },
-// {
-//   id: 'wd-css',
-//   title: 'CSS Notes For Beginners',
-//   description: 'Understand modern web styling with easy-to-follow CSS lessons that teach layouts, colors, spacing, and responsive design.',
-//   price: 75,
-//   thumbnail: '/images/c-fun.png',
-//   mobileUrl: 'https://m.me/103186496068437',
-//   desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
-//   category: 'Web Development'
-// },
-// {
-//   id: 'wd-js',
-//   title: 'JavaScript Notes For Beginners',
-//   description: 'Start building interactive websites with beginner-friendly JavaScript lessons that explain logic, events, and core web scripting concepts.',
-//   price: 75,
-//   thumbnail: '/images/c-fun.png',
-//   mobileUrl: 'https://m.me/103186496068437',
-//   desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
-//   category: 'Web Development'
-// },
+  // Programming Language Intermediate
+  {
+    id: 'pli-c',
+    title: 'C Programming Intermediate Notes',
+    description: 'Level up your C skills with intermediate concepts including pointers, data structures, file handling, and memory management techniques.',
+    price: 75,
+    thumbnail: '/images/c-fun.png',
+    mobileUrl: 'https://m.me/103186496068437',
+    desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
+    category: 'Programming Language Intermediate'
+  },
+  {
+    id: 'pli-cpp',
+    title: 'C++ Intermediate Programming',
+    description: 'Deep dive into C++ with templates, STL containers, smart pointers, and advanced object-oriented programming patterns.',
+    price: 75,
+    thumbnail: '/images/cpp-fun.png',
+    mobileUrl: 'https://m.me/103186496068437',
+    desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
+    category: 'Programming Language Intermediate'
+  },
+  {
+    id: 'pli-python',
+    title: 'Python Intermediate Development',
+    description: 'Master Python decorators, generators, context managers, async programming, and build real-world applications.',
+    price: 75,
+    thumbnail: '/images/py-fun.png',
+    mobileUrl: 'https://m.me/103186496068437',
+    desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
+    category: 'Programming Language Intermediate'
+  },
 
+  // Programming Language Advanced
+  {
+    id: 'pla-adv-c',
+    title: 'C Advanced Systems Programming',
+    description: 'Advanced C topics including multithreading, network programming, system calls, and building high-performance applications.',
+    price: 75,
+    thumbnail: '/images/c-fun.png',
+    mobileUrl: 'https://m.me/103186496068437',
+    desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
+    category: 'Programming Language Advanced'
+  },
+  {
+    id: 'pla-adv-cpp',
+    title: 'C++ Advanced Mastery',
+    description: 'Expert-level C++ covering move semantics, perfect forwarding, metaprogramming, and modern C++20/23 features.',
+    price: 75,
+    thumbnail: '/images/cpp-fun.png',
+    mobileUrl: 'https://m.me/103186496068437',
+    desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
+    category: 'Programming Language Advanced'
+  },
+  {
+    id: 'pla-adv-java',
+    title: 'Java Advanced Enterprise',
+    description: 'Advanced Java concepts including concurrency, JVM internals, microservices architecture, and enterprise design patterns.',
+    price: 75,
+    thumbnail: '/images/java-fun.png',
+    mobileUrl: 'https://m.me/103186496068437',
+    desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
+    category: 'Programming Language Advanced'
+  },
 
-// // Tools
-// {
-//   id: 't-vscode',
-//   title: 'VS Code Notes For Beginners',
-//   description: 'Learn how to use Visual Studio Code efficiently with essential shortcuts, extensions, and setup tips that make coding faster and more productive.',
-//   price: 75,
-//   thumbnail: '/images/c-fun.png',
-//   mobileUrl: 'https://m.me/103186496068437',
-//   desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
-//   category: 'Tools'
-// },
-// {
-//   id: 't-github',
-//   title: 'GitHub Notes For Beginners',
-//   description: 'A simple and practical guide to GitHub that teaches version control, repositories, commits, and collaboration the easy way.',
-//   price: 75,
-//   thumbnail: '/images/c-fun.png',
-//   mobileUrl: 'https://m.me/103186496068437',
-//   desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
-//   category: 'Tools'
-// }
+  // Web Development
+  {
+    id: 'wd-html',
+    title: 'HTML5 Modern Web Structure',
+    description: 'Learn how to build clean, semantic, and accessible web pages using modern HTML5 standards and best practices.',
+    price: 75,
+    thumbnail: '/images/c-fun.png',
+    mobileUrl: 'https://m.me/103186496068437',
+    desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
+    category: 'Web Development'
+  },
+  {
+    id: 'wd-css',
+    title: 'CSS3 Responsive Design',
+    description: 'Master modern CSS including Flexbox, Grid, animations, custom properties, and responsive design techniques.',
+    price: 75,
+    thumbnail: '/images/c-fun.png',
+    mobileUrl: 'https://m.me/103186496068437',
+    desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
+    category: 'Web Development'
+  },
+  {
+    id: 'wd-js',
+    title: 'JavaScript DOM & Events',
+    description: 'Build interactive websites with JavaScript fundamentals, DOM manipulation, event handling, and modern ES6+ features.',
+    price: 75,
+    thumbnail: '/images/c-fun.png',
+    mobileUrl: 'https://m.me/103186496068437',
+    desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
+    category: 'Web Development'
+  },
+
+  // AI Modules
+  {
+    id: 'ai-ml-basics',
+    title: 'Machine Learning Fundamentals',
+    description: 'Introduction to machine learning concepts, algorithms, supervised and unsupervised learning with practical examples.',
+    price: 75,
+    thumbnail: '/images/c-fun.png',
+    mobileUrl: 'https://m.me/103186496068437',
+    desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
+    category: 'AI Modules'
+  },
+  {
+    id: 'ai-nlp',
+    title: 'Natural Language Processing',
+    description: 'Learn NLP basics including text preprocessing, sentiment analysis, tokenization, and building chatbots.',
+    price: 75,
+    thumbnail: '/images/c-fun.png',
+    mobileUrl: 'https://m.me/103186496068437',
+    desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
+    category: 'AI Modules'
+  },
+  {
+    id: 'ai-deeplearning',
+    title: 'Deep Learning Essentials',
+    description: 'Dive into neural networks, CNNs, RNNs, and deep learning frameworks to build intelligent AI applications.',
+    price: 75,
+    thumbnail: '/images/c-fun.png',
+    mobileUrl: 'https://m.me/103186496068437',
+    desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
+    category: 'AI Modules'
+  }
 
 ];
 
