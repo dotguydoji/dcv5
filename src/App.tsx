@@ -103,14 +103,17 @@ const App: React.FC = () => {
   };
 
   const toggleCategory = (catName: string) => {
-    const isMobile = window.innerWidth < 1024;
     const isOpening = !openCategories[catName];
     
     setOpenCategories(prev => {
-      if (isMobile && isOpening) {
+      if (isOpening) {
+        // Close all other categories and open only the selected one
         return { [catName]: true };
       }
-      return { ...prev, [catName]: isOpening };
+      // If closing, just remove this category
+      const newState = { ...prev };
+      delete newState[catName];
+      return newState;
     });
 
     if (isOpening) {
