@@ -83,26 +83,37 @@ const App: React.FC = () => {
     }
   };
 
-  const scrollToCategory = (catName: string) => {
+  const scrollToCategory = (catName: string, waitForExpansion: boolean = false) => {
     const element = categoryRefs.current[catName];
     if (element) {
       setIsScrolling(true);
-      // Get the header element within the category section
-      const headerElement = element.querySelector('.category-header');
-      const targetElement = headerElement || element;
       
-      const offset = window.innerWidth >= 1024 ? 180 : 144; 
-      const elementRect = targetElement.getBoundingClientRect();
-      const elementPosition = elementRect.top + window.scrollY;
-      const offsetPosition = elementPosition - offset;
+      const performScroll = () => {
+        // Get the header element within the category section
+        const headerElement = element.querySelector('.category-header');
+        const targetElement = headerElement || element;
+        
+        const offset = window.innerWidth >= 1024 ? 180 : 144; 
+        const elementRect = targetElement.getBoundingClientRect();
+        const elementPosition = elementRect.top + window.scrollY;
+        const offsetPosition = elementPosition - offset;
 
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
 
-      // Reset scrolling flag after animation completes
-      setTimeout(() => setIsScrolling(false), 800);
+        // Reset scrolling flag after animation completes
+        setTimeout(() => setIsScrolling(false), 800);
+      };
+
+      if (waitForExpansion) {
+        // Wait for the expansion animation to complete before calculating position
+        // This ensures we get the correct position when switching from another open category
+        setTimeout(performScroll, 350);
+      } else {
+        performScroll();
+      }
     }
   };
 
@@ -121,8 +132,8 @@ const App: React.FC = () => {
     });
 
     if (isOpening) {
-      // Scroll immediately without waiting for expansion animation
-      scrollToCategory(catName);
+      // Wait for expansion animation when switching from another open category
+      scrollToCategory(catName, true);
     }
   };
 
@@ -133,8 +144,8 @@ const App: React.FC = () => {
     }
 
     setOpenCategories(prev => ({ ...prev, [catName]: true }));
-    // Scroll immediately without delay
-    scrollToCategory(catName);
+    // Wait for expansion animation when opening a new category
+    scrollToCategory(catName, true);
   };
 
   const handleSearchSelect = (product: Product) => {
