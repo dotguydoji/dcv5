@@ -18,11 +18,13 @@ const App: React.FC = () => {
   const catContainerRef = useRef<HTMLDivElement>(null);
   const catButtonRefs = useRef<Record<string, HTMLButtonElement | null>>({});
 
+  const [isScrolling, setIsScrolling] = useState(false);
+
   // Performance optimized scroll spy
   useEffect(() => {
     let ticking = false;
     const handleScroll = () => {
-      if (!ticking) {
+      if (!ticking && !isScrolling) {
         window.requestAnimationFrame(() => {
           if (document.activeElement?.tagName === 'INPUT' || document.activeElement?.tagName === 'TEXTAREA') {
             ticking = false;
@@ -59,7 +61,7 @@ const App: React.FC = () => {
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [activeCategory]);
+  }, [activeCategory, isScrolling]);
 
   useEffect(() => {
     if (activeCategory && catContainerRef.current) {
@@ -89,6 +91,7 @@ const App: React.FC = () => {
   const scrollToCategory = (catName: string) => {
     const element = categoryRefs.current[catName];
     if (element) {
+      setIsScrolling(true);
       const offset = window.innerWidth >= 1024 ? 180 : 144; 
       const bodyRect = document.body.getBoundingClientRect().top;
       const elementRect = element.getBoundingClientRect().top;
@@ -99,6 +102,9 @@ const App: React.FC = () => {
         top: offsetPosition,
         behavior: 'smooth'
       });
+
+      // Reset scrolling flag after animation completes
+      setTimeout(() => setIsScrolling(false), 500);
     }
   };
 
@@ -117,9 +123,8 @@ const App: React.FC = () => {
     });
 
     if (isOpening) {
-      // Scroll immediately, then again after animation to ensure correct position
-      scrollToCategory(catName);
-      setTimeout(() => scrollToCategory(catName), 300);
+      // Scroll once after a short delay to allow the category to expand
+      setTimeout(() => scrollToCategory(catName), 50);
     }
   };
 

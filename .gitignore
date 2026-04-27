@@ -1,68 +1,68 @@
+```gitignore
+# Compiled and build artifacts
+*.pyc
+__pycache__/
+*.o
+*.obj
+*.exe
+*.dll
+*.so
+*.a
+*.out
+
 # Dependencies
 node_modules/
+venv/
+.venv/
+.env
+.env.local
+.env.*
 
-# Build outputs
+# Build directories
 dist/
 build/
 target/
+.mypy_cache/
+.pytest_cache/
+.coverage
+coverage/
+htmlcov/
 
-# Python
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
-.Python
-env/
-venv/
-.venv/
-.venv.bak/
-pip-log.txt
-pip-delete-this-directory.txt
-
-# Logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# OS generated files
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
-
-# Editor files
+# Editors and IDEs
 .vscode/
 .idea/
 *.swp
 *.swo
-*~
-
-# Environment variables
-.env
-.env.local
-.env.*
-!.env.example
-
-# Coverage
-coverage/
-htmlcov/
-.coverage
-*.coverage
-
-# Distribution / packaging
-.pytest_cache/
-.mypy_cache/
-*.egg-info/
-.installed.cfg
-*.egg
-
-# Temporary files
 *.tmp
-*.temp
-*~
+
+# System files
 .DS_Store
 Thumbs.db
+
+# Logs
+*.log
+
+# Compressed files
+*.zip
+*.gz
+*.tar
+*.tgz
+*.bz2
+*.xz
+*.7z
+*.rar
+*.zst
+*.lz4
+*.lzh
+*.cab
+*.arj
+*.rpm
+*.deb
+*.Z
+*.lz
+*.lzo
+*.tar.gz
+*.tar.bz2
+*.tar.xz
+*.tar.zst
+```
