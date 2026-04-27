@@ -33,7 +33,7 @@ export const ProductCard = memo(({ product, isHighlighted }: ProductCardProps) =
     };
   }, [isHighlighted]);
 
-  const buttonStyles = "flex items-center justify-center gap-2 bg-[#9B1C1C] text-[#E8E4DF] border border-[#9B1C1C] py-2 rounded-sm transition-all duration-300 hover:bg-transparent hover:text-[#9B1C1C] active:scale-90 shadow-lg shadow-[#9B1C1C]/10 will-change-transform";
+  const buttonStyles = "flex items-center justify-center gap-2 bg-[#6E0F1A] text-[#F9F9F7] border border-[#6E0F1A] py-2 rounded-sm transition-all duration-300 hover:bg-transparent hover:text-[#6E0F1A] active:scale-90 shadow-lg shadow-[#6E0F1A]/10 will-change-transform";
 
   const handleImageLoad = useCallback((e: React.SyntheticEvent<HTMLImageElement>) => {
     e.currentTarget.style.willChange = 'auto';
@@ -42,10 +42,10 @@ export const ProductCard = memo(({ product, isHighlighted }: ProductCardProps) =
   return (
     <div 
       ref={cardRef}
-      className={`group flex-shrink-0 w-[320px] sm:w-[360px] laptop:w-[290px] xl:w-[320px] bg-[#3F3B39] border rounded-lg overflow-hidden flex flex-col transition-all duration-300 active:scale-[0.98] shadow-2xl shadow-black/80 will-change-transform ${
+      className={`group flex-shrink-0 w-[320px] sm:w-[360px] laptop:w-[290px] xl:w-[320px] bg-[#0B0B0C] border rounded-lg overflow-hidden flex flex-col transition-all duration-300 active:scale-[0.98] shadow-2xl shadow-black/80 will-change-transform ${
         isHighlighted 
-          ? 'animate-highlight border-[#9B1C1C] z-10 scale-[1.02]' 
-          : 'border-[#E8E4DF]/5 hover:border-[#9B1C1C]/40'
+          ? 'animate-highlight border-[#6E0F1A] z-10 scale-[1.02]' 
+          : 'border-[#F9F9F7]/5 hover:border-[#6E0F1A]/40'
       }`}
     >
       <div className="relative aspect-[16/9] w-full overflow-hidden bg-gray-950/50">
@@ -57,21 +57,21 @@ export const ProductCard = memo(({ product, isHighlighted }: ProductCardProps) =
           decoding="async"
           onLoad={handleImageLoad}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#3F3B39] to-transparent opacity-40"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0B0B0C] to-transparent opacity-40"></div>
       </div>
       
       <div className="p-5 laptop:p-5 flex flex-col flex-grow">
-        <h3 className="f-body font-bold text-[#E8E4DF] mb-1 leading-tight group-hover:text-[#9B1C1C] transition-colors duration-300 truncate">
+        <h3 className="f-body font-bold text-[#F9F9F7] mb-1 leading-tight group-hover:text-[#6E0F1A] transition-colors duration-300 truncate">
           {product.title}
         </h3>
-        <p className="f-small normal-case text-[#9A9490]/80 mb-4 flex-grow tracking-normal leading-relaxed line-clamp-2 opacity-80">
+        <p className="f-small normal-case text-[#6F6F6C]/80 mb-4 flex-grow tracking-normal leading-relaxed line-clamp-2 opacity-80">
           {product.description}
         </p>
         
-        <div className="mt-auto pt-3 border-t border-[#E8E4DF]/5">
+        <div className="mt-auto pt-3 border-t border-[#F9F9F7]/5">
           <div className="flex justify-between items-center mb-3">
-            <span className="f-small text-[#9A9490] font-bold tracking-[0.2em] opacity-50">PRICE</span>
-            <span className="f-price text-[#9B1C1C] drop-shadow-[0_0_10px_rgba(155,28,28,0.2)] text-xl lg:text-2xl">
+            <span className="f-small text-[#6F6F6C] font-bold tracking-[0.2em] opacity-50">PRICE</span>
+            <span className="f-price text-[#6E0F1A] drop-shadow-[0_0_10px_rgba(155,28,28,0.2)] text-xl lg:text-2xl">
               ₱{product.price.toLocaleString()}
             </span>
           </div>

@@ -2,8 +2,8 @@
 # Build artifacts
 dist/
 build/
-*.css
 *.js
+*.css
 *.html
 
 # Dependencies
@@ -28,35 +28,46 @@ nosetests.xml
 coverage.xml
 *.cover
 *.log
-*.pot
-*.pyc
-*.pyo
-*.pyd
-.MF
-tags
-TAGS
-.IDEAvimrc
-.idea/
+*.tmp
 *.swp
-*.swo
-*~
 .DS_Store
 Thumbs.db
-
-# Logs
-*.log
 
 # Environment variables
 .env
 .env.local
-*.env.*
+.env.*
 
 # IDE
 .vscode/
 .idea/
+*.swp
+*.swo
 
-# Coverage
-coverage/
+# Distribution / packaging
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Testing
 htmlcov/
+.tox/
+.nox/
 .coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+*~
 ```
