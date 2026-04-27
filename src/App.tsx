@@ -168,11 +168,11 @@ const App: React.FC = () => {
                   key={cat}
                   ref={el => { catButtonRefs.current[cat] = el; }}
                   onClick={() => jumpToCategory(cat)}
-                  className={`f-small px-6 py-3 rounded-sm transition-all border font-black ${
+                  className={`px-6 py-3 rounded-sm transition-all border font-poppins ${
                     activeCategory === cat 
                       ? 'bg-brand-yellow/15 border-brand-yellow text-brand-yellow' 
                       : 'bg-transparent border-white/10 text-brand-gray/50 hover:text-white hover:border-white/30'
-                  }`}
+                  } text-xs md:text-sm`}
                 >
                   {cat}
                 </button>
