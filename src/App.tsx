@@ -117,7 +117,9 @@ const App: React.FC = () => {
     });
 
     if (isOpening) {
-      setTimeout(() => scrollToCategory(catName), 100);
+      // Scroll immediately, then again after animation to ensure correct position
+      scrollToCategory(catName);
+      setTimeout(() => scrollToCategory(catName), 300);
     }
   };
 
