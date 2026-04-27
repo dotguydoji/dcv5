@@ -121,8 +121,8 @@ const App: React.FC = () => {
     });
 
     if (isOpening) {
-      // Scroll after the expansion animation completes (500ms + small buffer)
-      setTimeout(() => scrollToCategory(catName), 600);
+      // Scroll immediately without waiting for expansion animation
+      scrollToCategory(catName);
     }
   };
 
@@ -133,7 +133,8 @@ const App: React.FC = () => {
     }
 
     setOpenCategories(prev => ({ ...prev, [catName]: true }));
-    setTimeout(() => scrollToCategory(catName), 50);
+    // Scroll immediately without delay
+    scrollToCategory(catName);
   };
 
   const handleSearchSelect = (product: Product) => {
