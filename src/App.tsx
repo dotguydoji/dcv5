@@ -97,9 +97,8 @@ const App: React.FC = () => {
       const targetElement = headerElement || element;
       
       const offset = window.innerWidth >= 1024 ? 180 : 144; 
-      const bodyRect = document.body.getBoundingClientRect().top;
-      const elementRect = targetElement.getBoundingClientRect().top;
-      const elementPosition = elementRect - bodyRect;
+      const elementRect = targetElement.getBoundingClientRect();
+      const elementPosition = elementRect.top + window.scrollY;
       const offsetPosition = elementPosition - offset;
 
       window.scrollTo({
@@ -108,7 +107,7 @@ const App: React.FC = () => {
       });
 
       // Reset scrolling flag after animation completes
-      setTimeout(() => setIsScrolling(false), 500);
+      setTimeout(() => setIsScrolling(false), 800);
     }
   };
 
@@ -127,8 +126,8 @@ const App: React.FC = () => {
     });
 
     if (isOpening) {
-      // Scroll once after a short delay to allow the category to expand
-      setTimeout(() => scrollToCategory(catName), 50);
+      // Scroll after the expansion animation completes (500ms + small buffer)
+      setTimeout(() => scrollToCategory(catName), 600);
     }
   };
 
