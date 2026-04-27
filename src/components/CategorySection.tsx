@@ -193,14 +193,14 @@ export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProp
       ref={ref} 
       className="transition-all rounded-xl overflow-hidden bg-[#333333] border border-white/5 shadow-2xl mb-4 lg:mb-6 will-change-transform"
     >
-      <div className="category-header px-4 lg:px-6 py-2 lg:py-3 laptop:py-4 bg-black/40 border-b border-white/5">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between group gap-3">
+      <div className="category-header px-4 lg:px-6 py-1.5 lg:py-2 laptop:py-3 bg-black/40 border-b border-white/5">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between group gap-2">
           <button 
             onClick={onToggle}
-            className="flex-grow flex items-center gap-3 text-left outline-none group/title"
+            className="flex-grow flex items-center gap-2 text-left outline-none group/title"
             aria-expanded={isOpen}
           >
-            <h2 className="f-heading font-normal text-white group-hover/title:text-brand-yellow transition-colors uppercase tracking-tighter text-lg lg:text-xl">
+            <h2 className="f-heading font-normal text-black group-hover/title:text-brand-yellow transition-colors uppercase tracking-tighter text-base lg:text-lg">
               {name}
             </h2>
             <div className={`text-brand-gray transition-transform duration-300 p-1 border border-transparent rounded-full ${isOpen ? 'rotate-180 text-brand-yellow bg-brand-yellow/5' : 'group-hover/title:text-white'}`}>
@@ -208,9 +208,9 @@ export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProp
             </div>
           </button>
           
-          <div className="flex items-center justify-between sm:justify-end gap-4">
+          <div className="flex items-center justify-between sm:justify-end gap-3">
             <div className="hidden sm:flex flex-col items-end">
-              <span className="f-small bg-black/60 text-brand-yellow px-2 py-1 rounded-sm border border-white/5 font-extrabold whitespace-nowrap shadow-xl text-xs">
+              <span className="f-small bg-black/60 text-black px-2 py-0.5 rounded-sm border border-white/5 font-extrabold whitespace-nowrap shadow-xl text-xs">
                 {products.length} <span className="opacity-50">ITEMS</span>
               </span>
             </div>
@@ -218,12 +218,12 @@ export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProp
         </div>
       </div>
       
-      <div className={`overflow-hidden transition-all duration-500 ease-out will-change-[max-height,opacity] ${isOpen ? 'max-h-[2800px] opacity-100 p-4 lg:p-6' : 'max-h-0 opacity-0 pointer-events-none'}`}>
+      <div className={`overflow-hidden transition-all duration-500 ease-out will-change-[max-height,opacity] ${isOpen ? 'max-h-[2800px] opacity-100 p-3 lg:p-4' : 'max-h-0 opacity-0 pointer-events-none'}`}>
         {/* English Row */}
         {englishProducts.length > 0 && (
-          <div className="mb-6">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-xs font-extrabold text-brand-yellow uppercase tracking-wider bg-brand-yellow/10 px-2 py-0.5 rounded-sm border border-brand-yellow/20">English Version</span>
+          <div className="mb-4">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="text-sm font-extrabold text-black uppercase tracking-wider bg-brand-yellow/10 px-2 py-0.5 rounded-sm border border-brand-yellow/20">English Version</span>
             </div>
             <div className="relative">
               <div 
@@ -248,7 +248,7 @@ export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProp
               </div>
             </div>
 
-            <div className="flex justify-center items-center gap-2 mt-3 laptop:mt-4">
+            <div className="flex justify-center items-center gap-2 mt-2 laptop:mt-3">
               {englishProducts.map((_, i) => (
                 <button
                   key={i}
@@ -264,7 +264,7 @@ export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProp
             </div>
             
             {/* Navigation buttons for English row */}
-            <div className="flex justify-center items-center gap-2 mt-3">
+            <div className="flex justify-center items-center gap-2 mt-2">
               <button 
                 onClick={(e) => { e.stopPropagation(); scroll('left', 'english'); }}
                 disabled={!englishCanScrollLeft}
@@ -296,8 +296,8 @@ export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProp
         {/* Tagalog Row */}
         {tagalogProducts.length > 0 && (
           <div>
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-xs font-extrabold text-brand-yellow uppercase tracking-wider bg-brand-yellow/10 px-2 py-0.5 rounded-sm border border-brand-yellow/20">Tagalog Version</span>
+            <div className="flex items-center gap-2 mb-2">
+              <span className="text-sm font-extrabold text-black uppercase tracking-wider bg-brand-yellow/10 px-2 py-0.5 rounded-sm border border-brand-yellow/20">Tagalog Version</span>
             </div>
             <div className="relative">
               <div 
@@ -322,7 +322,7 @@ export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProp
               </div>
             </div>
 
-            <div className="flex justify-center items-center gap-2 mt-3 laptop:mt-4">
+            <div className="flex justify-center items-center gap-2 mt-2 laptop:mt-3">
               {tagalogProducts.map((_, i) => (
                 <button
                   key={i}
@@ -338,7 +338,7 @@ export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProp
             </div>
             
             {/* Navigation buttons for Tagalog row */}
-            <div className="flex justify-center items-center gap-2 mt-3">
+            <div className="flex justify-center items-center gap-2 mt-2">
               <button 
                 onClick={(e) => { e.stopPropagation(); scroll('left', 'tagalog'); }}
                 disabled={!tagalogCanScrollLeft}

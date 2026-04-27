@@ -61,10 +61,10 @@ export const ProductCard = memo(({ product, isHighlighted }: ProductCardProps) =
       </div>
       
       <div className="p-5 laptop:p-5 flex flex-col flex-grow">
-        <h3 className="f-body font-bold text-white mb-1 leading-tight group-hover:text-brand-yellow transition-colors duration-300 truncate">
+        <h3 className="f-body font-bold text-black mb-1 leading-tight group-hover:text-brand-yellow transition-colors duration-300 truncate text-base lg:text-lg">
           {product.title}
         </h3>
-        <p className="f-small normal-case text-brand-gray/80 mb-4 flex-grow tracking-normal leading-relaxed line-clamp-2 opacity-80">
+        <p className="f-small normal-case text-black mb-4 flex-grow tracking-normal leading-relaxed line-clamp-2 opacity-100 text-sm lg:text-base">
           {product.description}
         </p>
         
