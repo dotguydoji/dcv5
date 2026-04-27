@@ -12,21 +12,22 @@ interface CategorySectionProps {
 }
 
 export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProps>(({ name, products, isOpen, onToggle, highlightedProductId }, ref) => {
-  const scrollRef = useRef<HTMLDivElement>(null);
+  const englishScrollRef = useRef<HTMLDivElement>(null);
+  const tagalogScrollRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [activeIndex, setActiveIndex] = useState(0);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
 
-  // Separate products by language
-  const englishProducts = products.filter(p => p.language !== 'tl');
-  const tagalogProducts = products.filter(p => p.language === 'tl');
+  // Separate products by language (check for Tagalog Version in title)
+  const englishProducts = products.filter(p => !p.title.includes('(Tagalog Version)'));
+  const tagalogProducts = products.filter(p => p.title.includes('(Tagalog Version)'));
 
-  // Robust observer-based scroll state detection
+  // Robust observer-based scroll state detection for English row
   useEffect(() => {
-    if (!isOpen || !scrollRef.current) return;
+    if (!isOpen || !englishScrollRef.current || englishProducts.length === 0) return;
 
-    const container = scrollRef.current;
+    const container = englishScrollRef.current;
     
     // Observer for detecting first and last item visibility for button states
     const navObserver = new IntersectionObserver(
@@ -38,7 +39,7 @@ export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProp
           if (index === 0) {
             setCanScrollLeft(!entry.isIntersecting || entry.intersectionRatio < 0.9);
           }
-          if (index === products.length - 1) {
+          if (index === englishProducts.length - 1) {
             setCanScrollRight(!entry.isIntersecting || entry.intersectionRatio < 0.9);
           }
         });
@@ -65,7 +66,7 @@ export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProp
       }
     );
 
-    const cards = container.querySelectorAll('.product-card-item');
+    const cards = container.querySelectorAll('.product-card-item[data-row="english"]');
     cards.forEach(card => {
       navObserver.observe(card);
       activeObserver.observe(card);
@@ -75,10 +76,67 @@ export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProp
       navObserver.disconnect();
       activeObserver.disconnect();
     };
-  }, [isOpen, products.length]);
+  }, [isOpen, englishProducts.length]);
 
-  const scroll = (direction: 'left' | 'right') => {
-    const container = scrollRef.current;
+  // Robust observer-based scroll state detection for Tagalog row
+  useEffect(() => {
+    if (!isOpen || !tagalogScrollRef.current || tagalogProducts.length === 0) return;
+
+    const container = tagalogScrollRef.current;
+    
+    // Observer for detecting first and last item visibility for button states
+    const navObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const target = entry.target as HTMLElement;
+          const index = parseInt(target.dataset.index || '0');
+          
+          if (index === 0) {
+            // For Tagalog row, we only update left scroll state
+            setCanScrollLeft(!entry.isIntersecting || entry.intersectionRatio < 0.9);
+          }
+          if (index === tagalogProducts.length - 1) {
+            // For Tagalog row, we only update right scroll state
+            setCanScrollRight(!entry.isIntersecting || entry.intersectionRatio < 0.9);
+          }
+        });
+      },
+      { 
+        root: container,
+        threshold: [0.1, 0.9, 1.0],
+        rootMargin: '0px -5px 0px -5px'
+      }
+    );
+
+    // Observer for tracking active dot (which item is most visible)
+    const activeObserver = new IntersectionObserver(
+      (entries) => {
+        const visibleEntry = entries.find(e => e.isIntersecting);
+        if (visibleEntry) {
+          const index = parseInt((visibleEntry.target as HTMLElement).dataset.index || '0');
+          setActiveIndex(index);
+        }
+      },
+      { 
+        root: container,
+        threshold: 0.6 
+      }
+    );
+
+    const cards = container.querySelectorAll('.product-card-item[data-row="tagalog"]');
+    cards.forEach(card => {
+      navObserver.observe(card);
+      activeObserver.observe(card);
+    });
+
+    return () => {
+      navObserver.disconnect();
+      activeObserver.disconnect();
+    };
+  }, [isOpen, tagalogProducts.length]);
+
+  const scroll = (direction: 'left' | 'right', row: 'english' | 'tagalog') => {
+    const container = row === 'english' ? englishScrollRef.current : tagalogScrollRef.current;
     if (!container) return;
 
     const clientWidth = container.clientWidth;
@@ -90,10 +148,10 @@ export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProp
     });
   };
 
-  const jumpToCard = (index: number) => {
+  const jumpToCard = (index: number, row: 'english' | 'tagalog') => {
+    const container = row === 'english' ? englishScrollRef.current : tagalogScrollRef.current;
     const target = cardRefs.current[index];
-    if (target && scrollRef.current) {
-      const container = scrollRef.current;
+    if (target && container) {
       const containerStyle = window.getComputedStyle(container);
       const paddingLeft = parseInt(containerStyle.paddingLeft) || 0;
       
@@ -174,7 +232,7 @@ export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProp
             </div>
             <div className="relative">
               <div 
-                ref={scrollRef}
+                ref={englishScrollRef}
                 className="flex gap-6 overflow-x-auto snap-x snap-mandatory no-scrollbar pb-8 pt-2 scroll-smooth max-lg:px-[calc(50vw-140px-24px)] sm:max-lg:px-[calc(50vw-160px-24px)] lg:px-2 will-change-transform"
               >
                 {englishProducts.map((product, idx) => (
@@ -182,6 +240,7 @@ export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProp
                     key={product.id} 
                     className="product-card-item flex-shrink-0 snap-center lg:snap-start" 
                     data-index={idx}
+                    data-row="english"
                     ref={el => { cardRefs.current[idx] = el; }}
                   >
                     <ProductCard 
@@ -198,7 +257,7 @@ export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProp
               {englishProducts.map((_, i) => (
                 <button
                   key={i}
-                  onClick={() => jumpToCard(i)}
+                  onClick={() => jumpToCard(i, 'english')}
                   className={`transition-all duration-300 rounded-full h-1 ${
                     activeIndex === i 
                       ? 'bg-brand-yellow w-10 shadow-[0_0_10px_rgba(255,107,0,0.5)]' 
@@ -207,6 +266,34 @@ export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProp
                   aria-label={`Go to item ${i + 1}`}
                 />
               ))}
+            </div>
+            
+            {/* Navigation buttons for English row */}
+            <div className="flex justify-center items-center gap-2 mt-4">
+              <button 
+                onClick={(e) => { e.stopPropagation(); scroll('left', 'english'); }}
+                disabled={!canScrollLeft}
+                className={`flex items-center justify-center w-10 h-10 laptop:w-12 laptop:h-12 rounded-sm bg-black border transition-all active:scale-90 ${
+                  !canScrollLeft 
+                    ? 'opacity-10 border-gray-900 text-gray-800 cursor-not-allowed' 
+                    : 'border-gray-800 text-brand-gray hover:text-brand-yellow hover:border-brand-yellow hover:bg-brand-yellow/5'
+                }`}
+                aria-label="Previous"
+              >
+                <ChevronLeft size={20} strokeWidth={3} />
+              </button>
+              <button 
+                onClick={(e) => { e.stopPropagation(); scroll('right', 'english'); }}
+                disabled={!canScrollRight}
+                className={`flex items-center justify-center w-10 h-10 laptop:w-12 laptop:h-12 rounded-sm bg-black border transition-all active:scale-90 ${
+                  !canScrollRight
+                    ? 'opacity-10 border-gray-900 text-gray-800 cursor-not-allowed' 
+                    : 'border-gray-800 text-brand-gray hover:text-brand-yellow hover:border-brand-yellow hover:bg-brand-yellow/5'
+                }`}
+                aria-label="Next"
+              >
+                <ChevronRight size={20} strokeWidth={3} />
+              </button>
             </div>
           </div>
         )}
@@ -219,7 +306,7 @@ export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProp
             </div>
             <div className="relative">
               <div 
-                ref={scrollRef}
+                ref={tagalogScrollRef}
                 className="flex gap-6 overflow-x-auto snap-x snap-mandatory no-scrollbar pb-8 pt-2 scroll-smooth max-lg:px-[calc(50vw-140px-24px)] sm:max-lg:px-[calc(50vw-160px-24px)] lg:px-2 will-change-transform"
               >
                 {tagalogProducts.map((product, idx) => (
@@ -227,6 +314,7 @@ export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProp
                     key={product.id} 
                     className="product-card-item flex-shrink-0 snap-center lg:snap-start" 
                     data-index={idx}
+                    data-row="tagalog"
                     ref={el => { cardRefs.current[idx] = el; }}
                   >
                     <ProductCard 
@@ -243,7 +331,7 @@ export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProp
               {tagalogProducts.map((_, i) => (
                 <button
                   key={i}
-                  onClick={() => jumpToCard(i)}
+                  onClick={() => jumpToCard(i, 'tagalog')}
                   className={`transition-all duration-300 rounded-full h-1 ${
                     activeIndex === i 
                       ? 'bg-brand-yellow w-10 shadow-[0_0_10px_rgba(255,107,0,0.5)]' 
@@ -252,6 +340,34 @@ export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProp
                   aria-label={`Go to item ${i + 1}`}
                 />
               ))}
+            </div>
+            
+            {/* Navigation buttons for Tagalog row */}
+            <div className="flex justify-center items-center gap-2 mt-4">
+              <button 
+                onClick={(e) => { e.stopPropagation(); scroll('left', 'tagalog'); }}
+                disabled={!canScrollLeft}
+                className={`flex items-center justify-center w-10 h-10 laptop:w-12 laptop:h-12 rounded-sm bg-black border transition-all active:scale-90 ${
+                  !canScrollLeft 
+                    ? 'opacity-10 border-gray-900 text-gray-800 cursor-not-allowed' 
+                    : 'border-gray-800 text-brand-gray hover:text-brand-yellow hover:border-brand-yellow hover:bg-brand-yellow/5'
+                }`}
+                aria-label="Previous"
+              >
+                <ChevronLeft size={20} strokeWidth={3} />
+              </button>
+              <button 
+                onClick={(e) => { e.stopPropagation(); scroll('right', 'tagalog'); }}
+                disabled={!canScrollRight}
+                className={`flex items-center justify-center w-10 h-10 laptop:w-12 laptop:h-12 rounded-sm bg-black border transition-all active:scale-90 ${
+                  !canScrollRight
+                    ? 'opacity-10 border-gray-900 text-gray-800 cursor-not-allowed' 
+                    : 'border-gray-800 text-brand-gray hover:text-brand-yellow hover:border-brand-yellow hover:bg-brand-yellow/5'
+                }`}
+                aria-label="Next"
+              >
+                <ChevronRight size={20} strokeWidth={3} />
+              </button>
             </div>
           </div>
         )}
