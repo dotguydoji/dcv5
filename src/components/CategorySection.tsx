@@ -223,7 +223,7 @@ export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProp
         {englishProducts.length > 0 && (
           <div className="mb-4">
             <div className="flex items-center gap-3 mb-3">
-              <span className="text-xs font-extrabold text-brand-yellow uppercase tracking-wider bg-brand-yellow/10 px-3 py-1 rounded-sm border border-brand-yellow/20">English Version</span>
+              <span className="text-xs font-extrabold text-white uppercase tracking-wider bg-brand-yellow/10 px-3 py-1 rounded-sm border border-brand-yellow/20" style={{ textShadow: '0 0 3px rgba(0,0,0,0.8), 0 0 1px #000' }}>English Version</span>
             </div>
             <div className="relative">
               <div 
@@ -297,7 +297,7 @@ export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProp
         {tagalogProducts.length > 0 && (
           <div>
             <div className="flex items-center gap-3 mb-3">
-              <span className="text-xs font-extrabold text-brand-yellow uppercase tracking-wider bg-brand-yellow/10 px-3 py-1 rounded-sm border border-brand-yellow/20">Tagalog Version</span>
+              <span className="text-xs font-extrabold text-white uppercase tracking-wider bg-brand-yellow/10 px-3 py-1 rounded-sm border border-brand-yellow/20" style={{ textShadow: '0 0 3px rgba(0,0,0,0.8), 0 0 1px #000' }}>Tagalog Version</span>
             </div>
             <div className="relative">
               <div 
