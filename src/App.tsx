@@ -20,48 +20,43 @@ const App: React.FC = () => {
 
   const [isScrolling, setIsScrolling] = useState(false);
 
-  // Performance optimized scroll spy
+  // Performance optimized scroll spy using IntersectionObserver
   useEffect(() => {
-    let ticking = false;
-    const handleScroll = () => {
-      if (!ticking && !isScrolling) {
-        window.requestAnimationFrame(() => {
-          if (document.activeElement?.tagName === 'INPUT' || document.activeElement?.tagName === 'TEXTAREA') {
-            ticking = false;
-            return;
-          }
-
-          const offset = window.innerWidth >= 1024 ? 200 : 160;
-          const scrollPosition = window.scrollY;
-
-          if (scrollPosition < 50) {
-            setActiveCategory(CATEGORIES[0]);
-            ticking = false;
-            return;
-          }
-
-          let currentActive = activeCategory;
-          for (const catName of CATEGORIES) {
-            const element = categoryRefs.current[catName];
-            if (element && scrollPosition + offset >= element.offsetTop) {
-              currentActive = catName;
-            } else {
-              break;
-            }
-          }
-
-          if (currentActive !== activeCategory) {
-            setActiveCategory(currentActive);
-          }
-          ticking = false;
-        });
-        ticking = true;
-      }
+    const observerOptions = {
+      root: null,
+      rootMargin: '-180px 0px -60% 0px',
+      threshold: 0
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [activeCategory, isScrolling]);
+    const observerCallback: IntersectionObserverCallback = (entries) => {
+      if (document.activeElement?.tagName === 'INPUT' || document.activeElement?.tagName === 'TEXTAREA') {
+        return;
+      }
+
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const categoryName = entry.target.getAttribute('data-category');
+          if (categoryName && categoryName !== activeCategory) {
+            setActiveCategory(categoryName);
+          }
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+    CATEGORIES.forEach((catName) => {
+      const element = categoryRefs.current[catName];
+      if (element) {
+        element.setAttribute('data-category', catName);
+        observer.observe(element);
+      }
+    });
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [activeCategory]);
 
   useEffect(() => {
     if (activeCategory && catContainerRef.current) {
