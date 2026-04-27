@@ -45,6 +45,9 @@ export const Navbar: React.FC<NavbarProps> = ({ onSearchSelect }) => {
         if (searchQuery.trim() === '') {
           setIsSearchVisible(false);
         }
+      } else if (searchRef.current?.contains(event.target as Node)) {
+        // Ensure focus is set when clicking inside the search area
+        setIsSearchFocused(true);
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
