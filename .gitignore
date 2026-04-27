@@ -1,1 +1,54 @@
-Nothing should be ignored based on the provided file changes. The only modified file is a source code file (.tsx) which should not be ignored.
+```
+# Build artifacts
+dist/
+build/
+*.js
+*.css
+*.map
+
+# Dependencies
+node_modules/
+
+# Logs and temp files
+*.log
+*.tmp
+
+# Environment
+.env
+.env.local
+*.env.*
+
+# Editors
+.vscode/
+.idea/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Compiled files
+*.o
+*.obj
+*.so
+*.a
+*.dll
+*.exe
+*.out
+
+# Coverage
+coverage/
+htmlcov/
+.coverage
+
+# Cache
+.mypy_cache/
+.pytest_cache/
+.nyc_output/
+coverage/lcov-report/
+
+# OS
+.DS_Store
+Thumbs.db
+```

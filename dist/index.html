@@ -48,11 +48,12 @@
         extend: {
           colors: {
             brand: {
-              black: '#000000',
-              yellow: '#FF6B00',
-              gray: '#9CA3AF',
-              light: '#E5E7EB',
-              white: '#FFFFFF',
+              ink: '#0d0d0d',
+              paper: '#f5f0e8',
+              accent: '#c8402a',
+              gold: '#d4a843',
+              muted: '#7a7060',
+              light: '#e8e0d0',
             }
           },
           fontFamily: {
@@ -68,8 +69,8 @@
   </script>
   <style>
     body {
-      background-color: #0D0D0D;
-      color: #E5E7EB;
+      background-color: #c8bfb0;
+      color: #0d0d0d;
       -webkit-tap-highlight-color: transparent;
       overflow-x: hidden;
     }
@@ -163,16 +164,16 @@
     }
 
     ::-webkit-scrollbar-track {
-      background: #0D0D0D;
+      background: #f5f0e8;
     }
 
     ::-webkit-scrollbar-thumb {
-      background: #1F2937;
+      background: #7a7060;
       border-radius: 10px;
     }
 
     ::-webkit-scrollbar-thumb:hover {
-      background: #FF6B00;
+      background: #c8402a;
     }
 
     .no-scrollbar::-webkit-scrollbar {
@@ -186,18 +187,18 @@
 
     @keyframes highlightBlink {
       0% {
-        border-color: #FF6B00;
-        box-shadow: 0 0 0px #FF6B00;
+        border-color: #d4a843;
+        box-shadow: 0 0 0px #d4a843;
       }
 
       50% {
-        border-color: #FF6B00;
-        box-shadow: 0 0 30px rgba(255, 107, 0, 0.4);
+        border-color: #d4a843;
+        box-shadow: 0 0 30px rgba(212, 168, 67, 0.4);
       }
 
       100% {
-        border-color: #1F2937;
-        box-shadow: 0 0 0px #FF6B00;
+        border-color: #e8e0d0;
+        box-shadow: 0 0 0px #d4a843;
       }
     }
 
@@ -206,7 +207,7 @@
     }
 
     .ambient-glow {
-      background: radial-gradient(circle at center, rgba(255, 107, 0, 0.1) 0%, transparent 70%);
+      background: radial-gradient(circle at center, rgba(212, 168, 67, 0.15) 0%, transparent 70%);
       pointer-events: none;
     }
   </style>
@@ -222,7 +223,7 @@
   }
 }
 </script>
-  <script type="module" crossorigin src="/assets/index-BbGK77m_.js"></script>
+  <script type="module" crossorigin src="/assets/index-DcpTkwUe.js"></script>
   <link rel="stylesheet" crossorigin href="/assets/index-CkPizyGe.css">
 </head>
 
