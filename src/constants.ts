@@ -286,6 +286,198 @@ export const PRODUCTS: Product[] = [
     mobileUrl: 'https://m.me/103186496068437',
     desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
     category: 'AI Modules'
+  },
+
+  // Tagalog Versions - Programming Language Fundamentals
+  {
+    id: 'pl-c-tl',
+    title: 'C Programming Notes (Tagalog Version)',
+    description: 'Malinaw at praktikal na introduksyon sa C programming, perpekto para sa mga estudyanteng gustong matutunan ang logic, memory handling, at core programming fundamentals.',
+    price: 75,
+    thumbnail: '/images/c-fun.png',
+    mobileUrl: 'https://m.me/103186496068437',
+    desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
+    category: 'Programming Language Fundamentals'
+  },
+  {
+    id: 'pl-cpp-tl',
+    title: 'C++ Notes (Tagalog Version)',
+    description: 'Step-by-step na C++ lessons na nakadisenyo para bumuo ng malakas na coding foundations, sakop ang syntax, problem solving, at object-oriented concepts.',
+    price: 75,
+    thumbnail: '/images/cpp-fun.png',
+    mobileUrl: 'https://m.me/103186496068437',
+    desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
+    category: 'Programming Language Fundamentals'
+  },
+  {
+    id: 'pl-python-tl',
+    title: 'Python Notes (Tagalog Version)',
+    description: 'Matuto ng Python nang madali gamit ang simpleng paliwanag, praktikal na halimbawa, at beginner-friendly na aralin para sa automation at data analysis.',
+    price: 75,
+    thumbnail: '/images/py-fun.png',
+    mobileUrl: 'https://m.me/103186496068437',
+    desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
+    category: 'Programming Language Fundamentals'
+  },
+
+  // Tagalog Versions - Programming Language Activities
+  {
+    id: 'pla-c-tl',
+    title: 'C Activities (Tagalog Version)',
+    description: 'Sanayin ang mahahalagang C programming concepts sa pamamagitan ng structured exercises na nagpapalakas ng logic, syntax, at problem-solving skills.',
+    price: 75,
+    thumbnail: '/images/c-act.png',
+    mobileUrl: 'https://m.me/103186496068437',
+    desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
+    category: 'Programming Language Activities'
+  },
+  {
+    id: 'pla-cpp-tl',
+    title: 'C++ Activities (Tagalog Version)',
+    description: 'Hands-on na C++ exercises na nagpapalakas ng core concepts, nagpapabuti ng coding confidence, at tumutulong sa mga beginners na ma-master ang object-oriented thinking.',
+    price: 75,
+    thumbnail: '/images/cpp-act.png',
+    mobileUrl: 'https://m.me/103186496068437',
+    desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
+    category: 'Programming Language Activities'
+  },
+  {
+    id: 'pla-java-tl',
+    title: 'Java Activities (Tagalog Version)',
+    description: 'Step-by-step na Java programming activities na nagpapalakas ng iyong pagka-unawa sa object-oriented concepts at core programming logic.',
+    price: 75,
+    thumbnail: '/images/java-act.png',
+    mobileUrl: 'https://m.me/103186496068437',
+    desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
+    category: 'Programming Language Activities'
+  },
+
+  // Tagalog Versions - Programming Language Intermediate
+  {
+    id: 'pli-csharp-tl',
+    title: 'C# Intermediate Notes (Tagalog Version)',
+    description: 'Itaas ang iyong C# skills sa intermediate concepts kabilang ang LINQ, async/await, Entity Framework, at modern application development.',
+    price: 75,
+    thumbnail: '/images/csharp-fun.png',
+    mobileUrl: 'https://m.me/103186496068437',
+    desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
+    category: 'Programming Language Intermediate'
+  },
+  {
+    id: 'pli-python-tl',
+    title: 'Python Intermediate (Tagalog Version)',
+    description: 'I-master ang Python decorators, generators, context managers, async programming, at gumawa ng real-world applications.',
+    price: 75,
+    thumbnail: '/images/py-fun.png',
+    mobileUrl: 'https://m.me/103186496068437',
+    desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
+    category: 'Programming Language Intermediate'
+  },
+  {
+    id: 'pli-java-tl',
+    title: 'Java Intermediate (Tagalog Version)',
+    description: 'Intermediate Java topics kabilang ang collections, streams, lambdas, exception handling, at object-oriented design patterns.',
+    price: 75,
+    thumbnail: '/images/java-fun.png',
+    mobileUrl: 'https://m.me/103186496068437',
+    desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
+    category: 'Programming Language Intermediate'
+  },
+
+  // Tagalog Versions - Programming Language Advanced
+  {
+    id: 'pla-adv-cpp-tl',
+    title: 'C++ Advanced Mastery (Tagalog Version)',
+    description: 'Expert-level na C++ sakop ang move semantics, perfect forwarding, metaprogramming, at modern C++20/23 features.',
+    price: 75,
+    thumbnail: '/images/cpp-fun.png',
+    mobileUrl: 'https://m.me/103186496068437',
+    desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
+    category: 'Programming Language Advanced'
+  },
+  {
+    id: 'pla-adv-csharp-tl',
+    title: 'C# Advanced Enterprise (Tagalog Version)',
+    description: 'Advanced C# concepts kabilang ang multithreading, async programming patterns, microservices, at enterprise architecture.',
+    price: 75,
+    thumbnail: '/images/csharp-fun.png',
+    mobileUrl: 'https://m.me/103186496068437',
+    desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
+    category: 'Programming Language Advanced'
+  },
+  {
+    id: 'pla-adv-python-tl',
+    title: 'Python Advanced Development (Tagalog Version)',
+    description: 'Advanced Python topics kabilang ang metaprogramming, performance optimization, C extensions, at building scalable applications.',
+    price: 75,
+    thumbnail: '/images/py-fun.png',
+    mobileUrl: 'https://m.me/103186496068437',
+    desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
+    category: 'Programming Language Advanced'
+  },
+
+  // Tagalog Versions - Web Development
+  {
+    id: 'wd-html-tl',
+    title: 'HTML5 Modern Web Structure (Tagalog Version)',
+    description: 'Matuto kung paano gumawa ng malinis, semantic, at accessible na web pages gamit ang modern HTML5 standards at best practices.',
+    price: 75,
+    thumbnail: '/images/c-fun.png',
+    mobileUrl: 'https://m.me/103186496068437',
+    desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
+    category: 'Web Development'
+  },
+  {
+    id: 'wd-css-tl',
+    title: 'CSS3 Responsive Design (Tagalog Version)',
+    description: 'I-master ang modern CSS kabilang ang Flexbox, Grid, animations, custom properties, at responsive design techniques.',
+    price: 75,
+    thumbnail: '/images/c-fun.png',
+    mobileUrl: 'https://m.me/103186496068437',
+    desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
+    category: 'Web Development'
+  },
+  {
+    id: 'wd-js-tl',
+    title: 'JavaScript DOM & Events (Tagalog Version)',
+    description: 'Gumawa ng interactive websites gamit ang JavaScript fundamentals, DOM manipulation, event handling, at modern ES6+ features.',
+    price: 75,
+    thumbnail: '/images/c-fun.png',
+    mobileUrl: 'https://m.me/103186496068437',
+    desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
+    category: 'Web Development'
+  },
+
+  // Tagalog Versions - AI Modules
+  {
+    id: 'ai-ml-basics-tl',
+    title: 'Machine Learning Fundamentals (Tagalog Version)',
+    description: 'Introduksyon sa machine learning concepts, algorithms, supervised at unsupervised learning na may praktikal na halimbawa.',
+    price: 75,
+    thumbnail: '/images/c-fun.png',
+    mobileUrl: 'https://m.me/103186496068437',
+    desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
+    category: 'AI Modules'
+  },
+  {
+    id: 'ai-nlp-tl',
+    title: 'Natural Language Processing (Tagalog Version)',
+    description: 'Matuto ng NLP basics kabilang ang text preprocessing, sentiment analysis, tokenization, at paggawa ng chatbots.',
+    price: 75,
+    thumbnail: '/images/c-fun.png',
+    mobileUrl: 'https://m.me/103186496068437',
+    desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
+    category: 'AI Modules'
+  },
+  {
+    id: 'ai-deeplearning-tl',
+    title: 'Deep Learning Essentials (Tagalog Version)',
+    description: 'Sumisid sa neural networks, CNNs, RNNs, at deep learning frameworks para makagawa ng intelligent AI applications.',
+    price: 75,
+    thumbnail: '/images/c-fun.png',
+    mobileUrl: 'https://m.me/103186496068437',
+    desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
+    category: 'AI Modules'
   }
 
 ];
