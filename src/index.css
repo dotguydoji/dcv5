@@ -3,41 +3,31 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
-    /* Dark Theme Colors */
-    --color-brand-black: #0a0a0a;
-    --color-brand-darkgray: #1a1a1a;
-    --color-brand-gray: #2a2a2a;
-    --color-brand-yellow: #fbbf24;
-    --color-brand-white: #ffffff;
-    --color-brand-lightgray: #9ca3af;
-  }
-  
   body {
-    @apply bg-[#0a0a0a] text-[#ffffff] overflow-x-hidden;
+    @apply bg-[#0D0D0D] text-[#E5E7EB] overflow-x-hidden;
     -webkit-tap-highlight-color: transparent;
   }
 }
 
 /* Add your custom scrollbar and animation styles here */
 ::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-track { background: #0a0a0a; }
-::-webkit-scrollbar-thumb { background: #2a2a2a; border-radius: 10px; }
-::-webkit-scrollbar-thumb:hover { background: #fbbf24; }
+::-webkit-scrollbar-track { background: #0D0D0D; }
+::-webkit-scrollbar-thumb { background: #1F2937; border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: #FF6B00; }
 
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
 @keyframes highlightBlink {
-  0% { border-color: #fbbf24; box-shadow: 0 0 0px #fbbf24; }
-  50% { border-color: #fbbf24; box-shadow: 0 0 30px rgba(251, 191, 36, 0.4); }
-  100% { border-color: #2a2a2a; box-shadow: 0 0 0px #fbbf24; }
+  0% { border-color: #FF6B00; box-shadow: 0 0 0px #FF6B00; }
+  50% { border-color: #FF6B00; box-shadow: 0 0 30px rgba(255, 107, 0, 0.4); }
+  100% { border-color: #1F2937; box-shadow: 0 0 0px #FF6B00; }
 }
 .animate-highlight {
   animation: highlightBlink 1.5s ease-in-out 2;
 }
 
 .ambient-glow {
-  background: radial-gradient(circle at center, rgba(251, 191, 36, 0.1) 0%, transparent 70%);
+  background: radial-gradient(circle at center, rgba(255, 107, 0, 0.1) 0%, transparent 70%);
   pointer-events: none;
 }
