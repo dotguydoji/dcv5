@@ -31,13 +31,20 @@ export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProp
 
     const container = englishScrollRef.current;
     
-    // Initialize scroll states on mount
-    const updateScrollStates = () => {
-      setEnglishCanScrollLeft(container.scrollLeft > 5);
-      setEnglishCanScrollRight(container.scrollLeft < container.scrollWidth - container.clientWidth - 5);
+    // Force immediate scroll state calculation after DOM render
+    const calculateScrollState = () => {
+      const hasScroll = container.scrollWidth > container.clientWidth;
+      const canScrollLeft = container.scrollLeft > 5;
+      const canScrollRight = container.scrollLeft < container.scrollWidth - container.clientWidth - 5;
+      
+      setEnglishCanScrollLeft(canScrollLeft);
+      setEnglishCanScrollRight(hasScroll && canScrollRight);
     };
     
-    updateScrollStates();
+    // Calculate immediately and after a micro-task to ensure DOM is ready
+    calculateScrollState();
+    setTimeout(calculateScrollState, 0);
+    requestAnimationFrame(calculateScrollState);
     
     // Observer for detecting first and last item visibility for button states
     const navObserver = new IntersectionObserver(
@@ -83,12 +90,12 @@ export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProp
     });
     
     // Add scroll event listener for immediate button state updates
-    container.addEventListener('scroll', updateScrollStates, { passive: true });
+    container.addEventListener('scroll', calculateScrollState, { passive: true });
 
     return () => {
       navObserver.disconnect();
       activeObserver.disconnect();
-      container.removeEventListener('scroll', updateScrollStates);
+      container.removeEventListener('scroll', calculateScrollState);
     };
   }, [isOpen, englishProducts.length]);
 
@@ -98,13 +105,20 @@ export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProp
 
     const container = tagalogScrollRef.current;
     
-    // Initialize scroll states on mount
-    const updateScrollStates = () => {
-      setTagalogCanScrollLeft(container.scrollLeft > 5);
-      setTagalogCanScrollRight(container.scrollLeft < container.scrollWidth - container.clientWidth - 5);
+    // Force immediate scroll state calculation after DOM render
+    const calculateScrollState = () => {
+      const hasScroll = container.scrollWidth > container.clientWidth;
+      const canScrollLeft = container.scrollLeft > 5;
+      const canScrollRight = container.scrollLeft < container.scrollWidth - container.clientWidth - 5;
+      
+      setTagalogCanScrollLeft(canScrollLeft);
+      setTagalogCanScrollRight(hasScroll && canScrollRight);
     };
     
-    updateScrollStates();
+    // Calculate immediately and after a micro-task to ensure DOM is ready
+    calculateScrollState();
+    setTimeout(calculateScrollState, 0);
+    requestAnimationFrame(calculateScrollState);
     
     // Observer for detecting first and last item visibility for button states
     const navObserver = new IntersectionObserver(
@@ -150,12 +164,12 @@ export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProp
     });
     
     // Add scroll event listener for immediate button state updates
-    container.addEventListener('scroll', updateScrollStates, { passive: true });
+    container.addEventListener('scroll', calculateScrollState, { passive: true });
 
     return () => {
       navObserver.disconnect();
       activeObserver.disconnect();
-      container.removeEventListener('scroll', updateScrollStates);
+      container.removeEventListener('scroll', calculateScrollState);
     };
   }, [isOpen, tagalogProducts.length]);
 
