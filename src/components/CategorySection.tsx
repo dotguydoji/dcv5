@@ -176,7 +176,7 @@ export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProp
             className="flex-grow flex items-center gap-4 text-left outline-none group/title"
             aria-expanded={isOpen}
           >
-            <h2 className="f-heading font-black text-white group-hover/title:text-brand-yellow transition-colors uppercase italic tracking-tighter">
+            <h2 className="f-heading font-extrabold text-white group-hover/title:text-brand-yellow transition-colors uppercase italic tracking-tighter">
               {name}
             </h2>
             <div className={`text-brand-gray transition-transform duration-300 p-1 border border-transparent rounded-full ${isOpen ? 'rotate-180 text-brand-yellow bg-brand-yellow/5' : 'group-hover/title:text-white'}`}>
@@ -185,37 +185,8 @@ export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProp
           </button>
           
           <div className="flex items-center justify-between sm:justify-end gap-6">
-            {isOpen && (
-              <div className="hidden sm:flex items-center gap-2">
-                <button 
-                  onClick={(e) => { e.stopPropagation(); scroll('left'); }}
-                  disabled={!canScrollLeft}
-                  className={`flex items-center justify-center w-10 h-10 laptop:w-12 laptop:h-12 rounded-sm bg-black border transition-all active:scale-90 ${
-                    !canScrollLeft 
-                      ? 'opacity-10 border-gray-900 text-gray-800 cursor-not-allowed' 
-                      : 'border-gray-800 text-brand-gray hover:text-brand-yellow hover:border-brand-yellow hover:bg-brand-yellow/5'
-                  }`}
-                  aria-label="Previous"
-                >
-                  <ChevronLeft size={20} strokeWidth={3} />
-                </button>
-                <button 
-                  onClick={(e) => { e.stopPropagation(); scroll('right'); }}
-                  disabled={!canScrollRight}
-                  className={`flex items-center justify-center w-10 h-10 laptop:w-12 laptop:h-12 rounded-sm bg-black border transition-all active:scale-90 ${
-                    !canScrollRight
-                      ? 'opacity-10 border-gray-900 text-gray-800 cursor-not-allowed' 
-                      : 'border-gray-800 text-brand-gray hover:text-brand-yellow hover:border-brand-yellow hover:bg-brand-yellow/5'
-                  }`}
-                  aria-label="Next"
-                >
-                  <ChevronRight size={20} strokeWidth={3} />
-                </button>
-              </div>
-            )}
-            
             <div className="hidden sm:flex flex-col items-end">
-              <span className="f-small bg-black/60 text-brand-yellow px-3 py-1.5 rounded-sm border border-white/5 font-black whitespace-nowrap shadow-xl">
+              <span className="f-small bg-black/60 text-brand-yellow px-3 py-1.5 rounded-sm border border-white/5 font-extrabold whitespace-nowrap shadow-xl">
                 {products.length} <span className="opacity-50">ITEMS</span>
               </span>
             </div>
@@ -228,7 +199,7 @@ export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProp
         {englishProducts.length > 0 && (
           <div className="mb-8">
             <div className="flex items-center gap-3 mb-4">
-              <span className="text-xs font-black text-brand-yellow uppercase tracking-wider bg-brand-yellow/10 px-3 py-1 rounded-sm border border-brand-yellow/20">English Version</span>
+              <span className="text-xs font-extrabold text-brand-yellow uppercase tracking-wider bg-brand-yellow/10 px-3 py-1 rounded-sm border border-brand-yellow/20">English Version</span>
             </div>
             <div className="relative">
               <div 
@@ -302,7 +273,7 @@ export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProp
         {tagalogProducts.length > 0 && (
           <div>
             <div className="flex items-center gap-3 mb-4">
-              <span className="text-xs font-black text-brand-yellow uppercase tracking-wider bg-brand-yellow/10 px-3 py-1 rounded-sm border border-brand-yellow/20">Tagalog Version</span>
+              <span className="text-xs font-extrabold text-brand-yellow uppercase tracking-wider bg-brand-yellow/10 px-3 py-1 rounded-sm border border-brand-yellow/20">Tagalog Version</span>
             </div>
             <div className="relative">
               <div 

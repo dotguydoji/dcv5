@@ -113,8 +113,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onSearchSelect }) => {
               alt="DC Notes Logo" 
               className="w-10 h-10 laptop:w-12 laptop:h-12 object-contain"
             />
-            <span className="text-sm md:text-lg laptop:text-lg xl:text-xl font-black text-white uppercase tracking-[0.3em]">
-              {SITE_CONTENT.brandName.split(' ')[0]} <span className="text-brand-yellow">{SITE_CONTENT.brandTagline}</span>
+            <span className="text-sm md:text-lg laptop:text-lg xl:text-xl font-extrabold text-white uppercase tracking-[0.3em]">
+              Doji's <span className="text-brand-yellow">Library</span>
             </span>
           </div>
 
