@@ -33,7 +33,7 @@ export const ProductCard = memo(({ product, isHighlighted }: ProductCardProps) =
     };
   }, [isHighlighted]);
 
-  const buttonStyles = "flex items-center justify-center gap-2 bg-brand-gold text-white border border-brand-gold py-2 rounded-sm transition-all duration-300 hover:bg-transparent hover:text-brand-gold active:scale-90 shadow-lg shadow-brand-gold/10 will-change-transform";
+  const buttonStyles = "flex items-center justify-center gap-2 bg-[#fbbf24] text-[#0a0a0a] border border-[#fbbf24] py-2 rounded-sm transition-all duration-300 hover:bg-transparent hover:text-[#fbbf24] active:scale-90 shadow-lg shadow-[#fbbf24]/10 will-change-transform";
 
   const handleImageLoad = useCallback((e: React.SyntheticEvent<HTMLImageElement>) => {
     e.currentTarget.style.willChange = 'auto';
@@ -42,13 +42,13 @@ export const ProductCard = memo(({ product, isHighlighted }: ProductCardProps) =
   return (
     <div 
       ref={cardRef}
-      className={`group flex-shrink-0 w-[320px] sm:w-[360px] laptop:w-[290px] xl:w-[320px] bg-[#f5f0e8] border rounded-lg overflow-hidden flex flex-col transition-all duration-300 active:scale-[0.98] shadow-2xl shadow-brand-ink/10 will-change-transform ${
+      className={`group flex-shrink-0 w-[320px] sm:w-[360px] laptop:w-[290px] xl:w-[320px] bg-[#1a1a1a] border rounded-lg overflow-hidden flex flex-col transition-all duration-300 active:scale-[0.98] shadow-2xl shadow-black/50 will-change-transform ${
         isHighlighted 
-          ? 'animate-highlight border-brand-gold z-10 scale-[1.02]' 
-          : 'border-brand-light hover:border-brand-gold/40'
+          ? 'animate-highlight border-[#fbbf24] z-10 scale-[1.02]' 
+          : 'border-[#2a2a2a] hover:border-[#fbbf24]/40'
       }`}
     >
-      <div className="relative aspect-[16/9] w-full overflow-hidden bg-gray-950/50">
+      <div className="relative aspect-[16/9] w-full overflow-hidden bg-black/50">
         <img 
           src={product.thumbnail} 
           alt={product.title}
@@ -57,21 +57,21 @@ export const ProductCard = memo(({ product, isHighlighted }: ProductCardProps) =
           decoding="async"
           onLoad={handleImageLoad}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#f5f0e8] to-transparent opacity-40"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-[#1a1a1a] to-transparent opacity-40"></div>
       </div>
       
       <div className="p-5 laptop:p-5 flex flex-col flex-grow">
-        <h3 className="f-body font-bold text-brand-ink mb-1 leading-tight group-hover:text-brand-gold transition-colors duration-300 truncate">
+        <h3 className="f-body font-bold text-[#ffffff] mb-1 leading-tight group-hover:text-[#fbbf24] transition-colors duration-300 truncate">
           {product.title}
         </h3>
-        <p className="f-small normal-case text-brand-muted/80 mb-4 flex-grow tracking-normal leading-relaxed line-clamp-2 opacity-80">
+        <p className="f-small normal-case text-[#9ca3af]/80 mb-4 flex-grow tracking-normal leading-relaxed line-clamp-2 opacity-80">
           {product.description}
         </p>
         
-        <div className="mt-auto pt-3 border-t border-brand-ink/10">
+        <div className="mt-auto pt-3 border-t border-[#2a2a2a]">
           <div className="flex justify-between items-center mb-3">
-            <span className="f-small text-brand-muted font-bold tracking-[0.2em] opacity-50">PRICE</span>
-            <span className="f-price text-brand-gold drop-shadow-[0_0_10px_rgba(212,168,67,0.2)] text-xl lg:text-2xl">
+            <span className="f-small text-[#9ca3af] font-bold tracking-[0.2em] opacity-50">PRICE</span>
+            <span className="f-price text-[#fbbf24] drop-shadow-[0_0_10px_rgba(251,191,36,0.2)] text-xl lg:text-2xl">
               ₱{product.price.toLocaleString()}
             </span>
           </div>
