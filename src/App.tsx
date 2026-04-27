@@ -92,9 +92,13 @@ const App: React.FC = () => {
     const element = categoryRefs.current[catName];
     if (element) {
       setIsScrolling(true);
+      // Get the header element within the category section
+      const headerElement = element.querySelector('.category-header');
+      const targetElement = headerElement || element;
+      
       const offset = window.innerWidth >= 1024 ? 180 : 144; 
       const bodyRect = document.body.getBoundingClientRect().top;
-      const elementRect = element.getBoundingClientRect().top;
+      const elementRect = targetElement.getBoundingClientRect().top;
       const elementPosition = elementRect - bodyRect;
       const offsetPosition = elementPosition - offset;
 
