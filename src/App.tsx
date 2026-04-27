@@ -24,7 +24,7 @@ const App: React.FC = () => {
   useEffect(() => {
     const observerOptions = {
       root: null,
-      rootMargin: '-180px 0px -60% 0px',
+      rootMargin: '-100px 0px -60% 0px',
       threshold: 0
     };
 
@@ -93,7 +93,16 @@ const App: React.FC = () => {
         const headerElement = element.querySelector('.category-header');
         const targetElement = headerElement || element;
         
-        const offset = window.innerWidth >= 1024 ? 180 : 144; 
+        // Calculate offset to position category title just below the category navigation bar
+        // Navbar heights: h-20 (80px mobile), h-22 (88px laptop), h-24 (96px xl)
+        // Category nav bar: py-4 lg:py-5 with buttons py-3 + text ~14-16px + gap/border = ~56-64px total
+        // Mobile (<1024px): navbar 80px + cat nav ~56px = ~136px, use 144px base
+        // Desktop (>=1024px): navbar 96px + cat nav ~64px = ~160px, use 180px base  
+        // Add buffer to ensure title is fully visible with breathing room below the nav
+        const headerHeight = window.innerWidth >= 1024 ? 180 : 144;
+        const buffer = 48; // Extra buffer for clean spacing and to account for any variations
+        const offset = headerHeight + buffer;
+        
         const elementRect = targetElement.getBoundingClientRect();
         const elementPosition = elementRect.top + window.scrollY;
         const offsetPosition = elementPosition - offset;
@@ -109,8 +118,12 @@ const App: React.FC = () => {
 
       if (waitForExpansion) {
         // Wait for the expansion animation to complete before calculating position
-        // This ensures we get the correct position when switching from another open category
-        setTimeout(performScroll, 350);
+        // Use requestAnimationFrame to ensure layout has stabilized
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            requestAnimationFrame(performScroll);
+          });
+        });
       } else {
         performScroll();
       }
