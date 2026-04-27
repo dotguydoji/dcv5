@@ -9,8 +9,8 @@ export const FAQSection: React.FC = () => {
   return (
     <section className="mt-20 lg:mt-32">
       <div className="flex items-center gap-6 mb-10 lg:mb-16">
-        <div className="h-[2px] bg-brand-yellow w-12 lg:w-20"></div>
-        <h2 className="f-heading font-black text-white uppercase tracking-tighter italic">
+        <div className="h-[2px] bg-[#9B1C1C] w-12 lg:w-20"></div>
+        <h2 className="f-heading font-black text-[#E8E4DF] uppercase tracking-tighter italic">
           Frequently Asked
         </h2>
       </div>
@@ -19,18 +19,18 @@ export const FAQSection: React.FC = () => {
         {FAQS.map((faq, index) => (
           <div 
             key={index}
-            className="border border-white/5 rounded-lg bg-[#333333] overflow-hidden transition-all duration-300 hover:border-brand-yellow/20"
+            className="border border-[#E8E4DF]/5 rounded-lg bg-[#3F3B39] overflow-hidden transition-all duration-300 hover:border-[#9B1C1C]/20"
           >
             <button
               onClick={() => setOpenIndex(openIndex === index ? null : index)}
               className="w-full px-6 py-5 lg:px-8 lg:py-7 flex items-center justify-between text-left group"
             >
-              <span className="f-body font-bold text-white group-hover:text-brand-yellow transition-colors">
+              <span className="f-body font-bold text-[#E8E4DF] group-hover:text-[#9B1C1C] transition-colors">
                 {faq.question}
               </span>
               <ChevronDown 
                 size={24} 
-                className={`text-brand-gray transition-transform duration-500 ${openIndex === index ? 'rotate-180 text-brand-yellow' : ''}`}
+                className={`text-[#9A9490] transition-transform duration-500 ${openIndex === index ? 'rotate-180 text-[#9B1C1C]' : ''}`}
               />
             </button>
             
@@ -39,8 +39,8 @@ export const FAQSection: React.FC = () => {
                 openIndex === index ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
               }`}
             >
-              <div className="px-6 pb-6 lg:px-8 lg:pb-8 border-t border-white/5 pt-4">
-                <p className="f-body text-brand-gray/80 leading-relaxed max-w-4xl">
+              <div className="px-6 pb-6 lg:px-8 lg:pb-8 border-t border-[#E8E4DF]/5 pt-4">
+                <p className="f-body text-[#9A9490]/80 leading-relaxed max-w-4xl">
                   {faq.answer}
                 </p>
               </div>

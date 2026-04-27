@@ -49,7 +49,7 @@ export const NeuralNetwork: React.FC = () => {
         if (!ctx) return;
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, 6.28);
-        ctx.fillStyle = `rgba(255, 107, 0, ${this.opacity * 0.4})`;
+        ctx.fillStyle = `rgba(155, 28, 28, ${this.opacity * 0.4})`;
         ctx.fill();
       }
     }
@@ -80,7 +80,7 @@ export const NeuralNetwork: React.FC = () => {
             ctx.moveTo(p1.x, p1.y);
             ctx.lineTo(p2.x, p2.y);
             const alpha = (1 - (dist / connectionDistance)) * 0.2 * Math.min(p1.opacity, p2.opacity);
-            ctx.strokeStyle = `rgba(255, 107, 0, ${alpha})`;
+            ctx.strokeStyle = `rgba(155, 28, 28, ${alpha})`;
             ctx.stroke();
           }
         }

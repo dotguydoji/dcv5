@@ -191,26 +191,26 @@ export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProp
   return (
     <section 
       ref={ref} 
-      className="transition-all rounded-xl overflow-hidden bg-[#333333] border border-white/5 shadow-2xl mb-8 lg:mb-12 will-change-transform"
+      className="transition-all rounded-xl overflow-hidden bg-[#3F3B39] border border-[#E8E4DF]/5 shadow-2xl mb-8 lg:mb-12 will-change-transform"
     >
-      <div className="category-header px-6 lg:px-8 py-3 lg:py-5 laptop:py-6 bg-black/40 border-b border-white/5">
+      <div className="category-header px-6 lg:px-8 py-3 lg:py-5 laptop:py-6 bg-[#0A0A0A]/40 border-b border-[#E8E4DF]/5">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between group gap-4">
           <button 
             onClick={onToggle}
             className="flex-grow flex items-center gap-4 text-left outline-none group/title"
             aria-expanded={isOpen}
           >
-            <h2 className="f-heading font-normal text-white group-hover/title:text-brand-yellow transition-colors uppercase tracking-tighter">
+            <h2 className="f-heading font-normal text-[#E8E4DF] group-hover/title:text-[#9B1C1C] transition-colors uppercase tracking-tighter">
               {name}
             </h2>
-            <div className={`text-brand-gray transition-transform duration-300 p-1 border border-transparent rounded-full ${isOpen ? 'rotate-180 text-brand-yellow bg-brand-yellow/5' : 'group-hover/title:text-white'}`}>
+            <div className={`text-[#9A9490] transition-transform duration-300 p-1 border border-transparent rounded-full ${isOpen ? 'rotate-180 text-[#9B1C1C] bg-[#9B1C1C]/5' : 'group-hover/title:text-[#E8E4DF]'}`}>
               <ChevronDown size={28} strokeWidth={2.5} />
             </div>
           </button>
           
           <div className="flex items-center justify-between sm:justify-end gap-6">
             <div className="hidden sm:flex flex-col items-end">
-              <span className="f-small bg-black/60 text-brand-yellow px-3 py-1.5 rounded-sm border border-white/5 font-extrabold whitespace-nowrap shadow-xl">
+              <span className="f-small bg-[#0A0A0A]/60 text-[#9B1C1C] px-3 py-1.5 rounded-sm border border-[#E8E4DF]/5 font-extrabold whitespace-nowrap shadow-xl">
                 {products.length} <span className="opacity-50">ITEMS</span>
               </span>
             </div>
@@ -223,7 +223,7 @@ export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProp
         {englishProducts.length > 0 && (
           <div className="mb-4">
             <div className="flex items-center gap-3 mb-3">
-              <span className="text-sm font-extrabold text-white uppercase tracking-wider bg-brand-yellow/10 px-3 py-1 rounded-sm border border-black" style={{ textShadow: '0 0 3px rgba(0,0,0,0.8), 0 0 1px #000' }}>English Version</span>
+              <span className="text-sm font-extrabold text-[#E8E4DF] uppercase tracking-wider bg-[#9B1C1C]/10 px-3 py-1 rounded-sm border border-[#0A0A0A]" style={{ textShadow: '0 0 3px rgba(0,0,0,0.8), 0 0 1px #000' }}>English Version</span>
             </div>
             <div className="relative">
               <div 
@@ -255,8 +255,8 @@ export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProp
                   onClick={() => jumpToCard(i, 'english')}
                   className={`transition-all duration-300 rounded-full h-1 ${
                     activeIndex === i 
-                      ? 'bg-brand-yellow w-10 shadow-[0_0_10px_rgba(255,107,0,0.5)]' 
-                      : 'bg-white/10 w-2 hover:bg-white/30'
+                      ? 'bg-[#9B1C1C] w-10 shadow-[0_0_10px_rgba(155,28,28,0.5)]' 
+                      : 'bg-[#E8E4DF]/10 w-2 hover:bg-[#E8E4DF]/30'
                   }`}
                   aria-label={`Go to item ${i + 1}`}
                 />
@@ -268,10 +268,10 @@ export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProp
               <button 
                 onClick={(e) => { e.stopPropagation(); scroll('left', 'english'); }}
                 disabled={!englishCanScrollLeft}
-                className={`flex items-center justify-center w-10 h-10 laptop:w-12 laptop:h-12 rounded-sm bg-black border transition-all active:scale-90 ${
+                className={`flex items-center justify-center w-10 h-10 laptop:w-12 laptop:h-12 rounded-sm bg-[#0A0A0A] border transition-all active:scale-90 ${
                   !englishCanScrollLeft 
-                    ? 'opacity-10 border-gray-900 text-gray-800 cursor-not-allowed' 
-                    : 'border-gray-800 text-brand-gray hover:text-brand-yellow hover:border-brand-yellow hover:bg-brand-yellow/5'
+                    ? 'opacity-10 border-[#5F5A57] text-[#5F5A57] cursor-not-allowed' 
+                    : 'border-[#5F5A57] text-[#9A9490] hover:text-[#9B1C1C] hover:border-[#9B1C1C] hover:bg-[#9B1C1C]/5'
                 }`}
                 aria-label="Previous"
               >
@@ -280,10 +280,10 @@ export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProp
               <button 
                 onClick={(e) => { e.stopPropagation(); scroll('right', 'english'); }}
                 disabled={!englishCanScrollRight}
-                className={`flex items-center justify-center w-10 h-10 laptop:w-12 laptop:h-12 rounded-sm bg-black border transition-all active:scale-90 ${
+                className={`flex items-center justify-center w-10 h-10 laptop:w-12 laptop:h-12 rounded-sm bg-[#0A0A0A] border transition-all active:scale-90 ${
                   !englishCanScrollRight
-                    ? 'opacity-10 border-gray-900 text-gray-800 cursor-not-allowed' 
-                    : 'border-gray-800 text-brand-gray hover:text-brand-yellow hover:border-brand-yellow hover:bg-brand-yellow/5'
+                    ? 'opacity-10 border-[#5F5A57] text-[#5F5A57] cursor-not-allowed' 
+                    : 'border-[#5F5A57] text-[#9A9490] hover:text-[#9B1C1C] hover:border-[#9B1C1C] hover:bg-[#9B1C1C]/5'
                 }`}
                 aria-label="Next"
               >
@@ -297,7 +297,7 @@ export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProp
         {tagalogProducts.length > 0 && (
           <div>
             <div className="flex items-center gap-3 mb-3">
-              <span className="text-sm font-extrabold text-white uppercase tracking-wider bg-brand-yellow/10 px-3 py-1 rounded-sm border border-black" style={{ textShadow: '0 0 3px rgba(0,0,0,0.8), 0 0 1px #000' }}>Tagalog Version</span>
+              <span className="text-sm font-extrabold text-[#E8E4DF] uppercase tracking-wider bg-[#9B1C1C]/10 px-3 py-1 rounded-sm border border-[#0A0A0A]" style={{ textShadow: '0 0 3px rgba(0,0,0,0.8), 0 0 1px #000' }}>Tagalog Version</span>
             </div>
             <div className="relative">
               <div 
@@ -329,8 +329,8 @@ export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProp
                   onClick={() => jumpToCard(i, 'tagalog')}
                   className={`transition-all duration-300 rounded-full h-1 ${
                     activeIndex === i 
-                      ? 'bg-brand-yellow w-10 shadow-[0_0_10px_rgba(255,107,0,0.5)]' 
-                      : 'bg-white/10 w-2 hover:bg-white/30'
+                      ? 'bg-[#9B1C1C] w-10 shadow-[0_0_10px_rgba(155,28,28,0.5)]' 
+                      : 'bg-[#E8E4DF]/10 w-2 hover:bg-[#E8E4DF]/30'
                   }`}
                   aria-label={`Go to item ${i + 1}`}
                 />
@@ -342,10 +342,10 @@ export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProp
               <button 
                 onClick={(e) => { e.stopPropagation(); scroll('left', 'tagalog'); }}
                 disabled={!tagalogCanScrollLeft}
-                className={`flex items-center justify-center w-10 h-10 laptop:w-12 laptop:h-12 rounded-sm bg-black border transition-all active:scale-90 ${
+                className={`flex items-center justify-center w-10 h-10 laptop:w-12 laptop:h-12 rounded-sm bg-[#0A0A0A] border transition-all active:scale-90 ${
                   !tagalogCanScrollLeft 
-                    ? 'opacity-10 border-gray-900 text-gray-800 cursor-not-allowed' 
-                    : 'border-gray-800 text-brand-gray hover:text-brand-yellow hover:border-brand-yellow hover:bg-brand-yellow/5'
+                    ? 'opacity-10 border-[#5F5A57] text-[#5F5A57] cursor-not-allowed' 
+                    : 'border-[#5F5A57] text-[#9A9490] hover:text-[#9B1C1C] hover:border-[#9B1C1C] hover:bg-[#9B1C1C]/5'
                 }`}
                 aria-label="Previous"
               >
@@ -354,10 +354,10 @@ export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProp
               <button 
                 onClick={(e) => { e.stopPropagation(); scroll('right', 'tagalog'); }}
                 disabled={!tagalogCanScrollRight}
-                className={`flex items-center justify-center w-10 h-10 laptop:w-12 laptop:h-12 rounded-sm bg-black border transition-all active:scale-90 ${
+                className={`flex items-center justify-center w-10 h-10 laptop:w-12 laptop:h-12 rounded-sm bg-[#0A0A0A] border transition-all active:scale-90 ${
                   !tagalogCanScrollRight
-                    ? 'opacity-10 border-gray-900 text-gray-800 cursor-not-allowed' 
-                    : 'border-gray-800 text-brand-gray hover:text-brand-yellow hover:border-brand-yellow hover:bg-brand-yellow/5'
+                    ? 'opacity-10 border-[#5F5A57] text-[#5F5A57] cursor-not-allowed' 
+                    : 'border-[#5F5A57] text-[#9A9490] hover:text-[#9B1C1C] hover:border-[#9B1C1C] hover:bg-[#9B1C1C]/5'
                 }`}
                 aria-label="Next"
               >
