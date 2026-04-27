@@ -200,7 +200,7 @@ export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProp
             className="flex-grow flex items-center gap-4 text-left outline-none group/title"
             aria-expanded={isOpen}
           >
-            <h2 className="f-heading font-extrabold text-white group-hover/title:text-brand-yellow transition-colors uppercase italic tracking-tighter">
+            <h2 className="f-heading font-normal text-white group-hover/title:text-brand-yellow transition-colors uppercase tracking-tighter">
               {name}
             </h2>
             <div className={`text-brand-gray transition-transform duration-300 p-1 border border-transparent rounded-full ${isOpen ? 'rotate-180 text-brand-yellow bg-brand-yellow/5' : 'group-hover/title:text-white'}`}>
