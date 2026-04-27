@@ -16,8 +16,10 @@ export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProp
   const tagalogScrollRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [activeIndex, setActiveIndex] = useState(0);
-  const [canScrollLeft, setCanScrollLeft] = useState(false);
-  const [canScrollRight, setCanScrollRight] = useState(true);
+  const [englishCanScrollLeft, setEnglishCanScrollLeft] = useState(false);
+  const [englishCanScrollRight, setEnglishCanScrollRight] = useState(true);
+  const [tagalogCanScrollLeft, setTagalogCanScrollLeft] = useState(false);
+  const [tagalogCanScrollRight, setTagalogCanScrollRight] = useState(true);
 
   // Separate products by language (check for Tagalog Version in title)
   const englishProducts = products.filter(p => !p.title.includes('(Tagalog Version)'));
@@ -29,6 +31,14 @@ export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProp
 
     const container = englishScrollRef.current;
     
+    // Initialize scroll states on mount
+    const updateScrollStates = () => {
+      setEnglishCanScrollLeft(container.scrollLeft > 5);
+      setEnglishCanScrollRight(container.scrollLeft < container.scrollWidth - container.clientWidth - 5);
+    };
+    
+    updateScrollStates();
+    
     // Observer for detecting first and last item visibility for button states
     const navObserver = new IntersectionObserver(
       (entries) => {
@@ -37,10 +47,10 @@ export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProp
           const index = parseInt(target.dataset.index || '0');
           
           if (index === 0) {
-            setCanScrollLeft(!entry.isIntersecting || entry.intersectionRatio < 0.9);
+            setEnglishCanScrollLeft(!entry.isIntersecting || entry.intersectionRatio < 0.9);
           }
           if (index === englishProducts.length - 1) {
-            setCanScrollRight(!entry.isIntersecting || entry.intersectionRatio < 0.9);
+            setEnglishCanScrollRight(!entry.isIntersecting || entry.intersectionRatio < 0.9);
           }
         });
       },
@@ -71,10 +81,14 @@ export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProp
       navObserver.observe(card);
       activeObserver.observe(card);
     });
+    
+    // Add scroll event listener for immediate button state updates
+    container.addEventListener('scroll', updateScrollStates, { passive: true });
 
     return () => {
       navObserver.disconnect();
       activeObserver.disconnect();
+      container.removeEventListener('scroll', updateScrollStates);
     };
   }, [isOpen, englishProducts.length]);
 
@@ -84,6 +98,14 @@ export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProp
 
     const container = tagalogScrollRef.current;
     
+    // Initialize scroll states on mount
+    const updateScrollStates = () => {
+      setTagalogCanScrollLeft(container.scrollLeft > 5);
+      setTagalogCanScrollRight(container.scrollLeft < container.scrollWidth - container.clientWidth - 5);
+    };
+    
+    updateScrollStates();
+    
     // Observer for detecting first and last item visibility for button states
     const navObserver = new IntersectionObserver(
       (entries) => {
@@ -92,12 +114,10 @@ export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProp
           const index = parseInt(target.dataset.index || '0');
           
           if (index === 0) {
-            // For Tagalog row, we only update left scroll state
-            setCanScrollLeft(!entry.isIntersecting || entry.intersectionRatio < 0.9);
+            setTagalogCanScrollLeft(!entry.isIntersecting || entry.intersectionRatio < 0.9);
           }
           if (index === tagalogProducts.length - 1) {
-            // For Tagalog row, we only update right scroll state
-            setCanScrollRight(!entry.isIntersecting || entry.intersectionRatio < 0.9);
+            setTagalogCanScrollRight(!entry.isIntersecting || entry.intersectionRatio < 0.9);
           }
         });
       },
@@ -128,10 +148,14 @@ export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProp
       navObserver.observe(card);
       activeObserver.observe(card);
     });
+    
+    // Add scroll event listener for immediate button state updates
+    container.addEventListener('scroll', updateScrollStates, { passive: true });
 
     return () => {
       navObserver.disconnect();
       activeObserver.disconnect();
+      container.removeEventListener('scroll', updateScrollStates);
     };
   }, [isOpen, tagalogProducts.length]);
 
@@ -243,9 +267,9 @@ export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProp
             <div className="flex justify-center items-center gap-2 mt-4">
               <button 
                 onClick={(e) => { e.stopPropagation(); scroll('left', 'english'); }}
-                disabled={!canScrollLeft}
+                disabled={!englishCanScrollLeft}
                 className={`flex items-center justify-center w-10 h-10 laptop:w-12 laptop:h-12 rounded-sm bg-black border transition-all active:scale-90 ${
-                  !canScrollLeft 
+                  !englishCanScrollLeft 
                     ? 'opacity-10 border-gray-900 text-gray-800 cursor-not-allowed' 
                     : 'border-gray-800 text-brand-gray hover:text-brand-yellow hover:border-brand-yellow hover:bg-brand-yellow/5'
                 }`}
@@ -255,9 +279,9 @@ export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProp
               </button>
               <button 
                 onClick={(e) => { e.stopPropagation(); scroll('right', 'english'); }}
-                disabled={!canScrollRight}
+                disabled={!englishCanScrollRight}
                 className={`flex items-center justify-center w-10 h-10 laptop:w-12 laptop:h-12 rounded-sm bg-black border transition-all active:scale-90 ${
-                  !canScrollRight
+                  !englishCanScrollRight
                     ? 'opacity-10 border-gray-900 text-gray-800 cursor-not-allowed' 
                     : 'border-gray-800 text-brand-gray hover:text-brand-yellow hover:border-brand-yellow hover:bg-brand-yellow/5'
                 }`}
@@ -317,9 +341,9 @@ export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProp
             <div className="flex justify-center items-center gap-2 mt-4">
               <button 
                 onClick={(e) => { e.stopPropagation(); scroll('left', 'tagalog'); }}
-                disabled={!canScrollLeft}
+                disabled={!tagalogCanScrollLeft}
                 className={`flex items-center justify-center w-10 h-10 laptop:w-12 laptop:h-12 rounded-sm bg-black border transition-all active:scale-90 ${
-                  !canScrollLeft 
+                  !tagalogCanScrollLeft 
                     ? 'opacity-10 border-gray-900 text-gray-800 cursor-not-allowed' 
                     : 'border-gray-800 text-brand-gray hover:text-brand-yellow hover:border-brand-yellow hover:bg-brand-yellow/5'
                 }`}
@@ -329,9 +353,9 @@ export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProp
               </button>
               <button 
                 onClick={(e) => { e.stopPropagation(); scroll('right', 'tagalog'); }}
-                disabled={!canScrollRight}
+                disabled={!tagalogCanScrollRight}
                 className={`flex items-center justify-center w-10 h-10 laptop:w-12 laptop:h-12 rounded-sm bg-black border transition-all active:scale-90 ${
-                  !canScrollRight
+                  !tagalogCanScrollRight
                     ? 'opacity-10 border-gray-900 text-gray-800 cursor-not-allowed' 
                     : 'border-gray-800 text-brand-gray hover:text-brand-yellow hover:border-brand-yellow hover:bg-brand-yellow/5'
                 }`}
