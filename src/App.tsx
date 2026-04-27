@@ -201,7 +201,7 @@ const App: React.FC = () => {
             </div>
           </header>
 
-          <div className="space-y-4 lg:space-y-8">
+          <div className="relative">
             {CATEGORIES.map(categoryName => (
               <CategorySection 
                 key={categoryName}

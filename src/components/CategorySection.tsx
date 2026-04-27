@@ -191,7 +191,7 @@ export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProp
   return (
     <section 
       ref={ref} 
-      className="transition-all rounded-xl overflow-hidden bg-[#333333] border border-white/5 shadow-2xl mb-12 lg:mb-20 will-change-transform"
+      className="transition-all rounded-xl overflow-hidden bg-[#333333] border border-white/5 shadow-2xl mb-8 lg:mb-12 will-change-transform"
     >
       <div className="px-6 lg:px-8 py-3 lg:py-5 laptop:py-6 bg-black/40 border-b border-white/5">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between group gap-4">
