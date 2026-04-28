@@ -212,7 +212,7 @@ export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProp
           
           <div className="flex items-center justify-between sm:justify-end gap-6">
             <div className="hidden sm:flex flex-col items-end">
-              <span className="f-small bg-black/60 text-brand-yellow px-3 py-1.5 rounded-sm border border-white/5 font-extrabold whitespace-nowrap shadow-xl">
+              <span className="f-small bg-black/60 text-yellow-300 px-3 py-1.5 rounded-sm border border-white/5 font-extrabold whitespace-nowrap shadow-xl text-lg">
                 {products.length} <span className="opacity-50">ITEMS</span>
               </span>
             </div>
