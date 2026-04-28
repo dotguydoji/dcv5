@@ -1,11 +1,26 @@
-```gitignore
+```
 # Dependencies
 node_modules/
 
 # Build outputs
 dist/
 build/
-target/
+*.js.map
+*.tsbuildinfo
+
+# Logs
+*.log
+
+# Environment variables
+.env
+.env.local
+*.env.*
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
 
 # Python
 __pycache__/
@@ -16,34 +31,35 @@ __pycache__/
 env/
 venv/
 .venv/
-.env
-.env.local
-.env.*
-.venv/
-.ENV
-
-# Logs
-*.log
-
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
-
-# OS
-.DS_Store
-Thumbs.db
-
-# Coverage
-coverage/
-htmlcov/
+pip-log.txt
+pip-delete-this-directory.txt
+.tox/
 .coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.log
+.git/
+.mypy_cache/
+.pytest_cache/
+.hypothesis/
 
-# Compressed files
+# Compiled and binary files
+*.exe
+*.dll
+*.so
+*.a
+*.o
+*.obj
+*.out
+*.class
+*.jar
+*.war
 *.zip
-*.gz
 *.tar
+*.gz
 *.tgz
 *.bz2
 *.xz
@@ -59,8 +75,23 @@ htmlcov/
 *.Z
 *.lz
 *.lzo
-*.tar.gz
-*.tar.bz2
-*.tar.xz
-*.tar.zst
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Coverage
+coverage/
+htmlcov/
+.coverage
+
+# Temporary files
+*.tmp
+*~
+```
+
+Wait, I need to reconsider. The only modified file is `src/components/ProductCard.tsx`, which is a TypeScript React component file (source code). There are no build artifacts, dependency directories, or temporary files in the change list that would require adding ignore rules.
+
+```
+
 ```

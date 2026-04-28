@@ -79,13 +79,13 @@ export const ProductCard = memo(({ product, isHighlighted, isSelected, onToggleS
               e.stopPropagation();
               onToggleSelect(product);
             }}
-            className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 ${
+            className={`transition-all duration-300 ${
               isSelected 
-                ? 'bg-yellow-400 text-black' 
-                : 'bg-gray-200 text-gray-600 hover:bg-yellow-400 hover:text-black'
+                ? 'text-yellow-400' 
+                : 'text-white hover:text-yellow-400'
             }`}
           >
-            {isSelected ? <Check size={20} strokeWidth={3} /> : <Plus size={20} strokeWidth={3} />}
+            {isSelected ? <Check size={24} strokeWidth={4} /> : <Plus size={24} strokeWidth={4} />}
           </button>
         </div>
       </div>
