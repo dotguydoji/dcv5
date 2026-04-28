@@ -43,15 +43,15 @@
   animation: highlightBlink 1.5s ease-in-out 2;
 }
 
-/* Flying to cart animation */
+/* Flying to cart animation - straight line */
 @keyframes flyToCart {
   0% {
     opacity: 1;
-    transform: translate(0, 0) scale(1) rotate(0deg);
+    transform: translate(0, 0) scale(1);
   }
   100% {
     opacity: 0;
-    transform: translate(var(--fly-end-x), var(--fly-end-y)) scale(0.2) rotate(720deg);
+    transform: translate(var(--fly-end-x), var(--fly-end-y)) scale(0.2);
   }
 }
 

@@ -49,8 +49,10 @@ const App: React.FC = () => {
         
         setFlyingItems(prev => [...prev, flyingItem]);
         
-        // Trigger cart bounce animation
-        setCartBounceKey(prev => prev + 1);
+        // Trigger cart bounce animation after the item hits the cart (800ms delay)
+        setTimeout(() => {
+          setCartBounceKey(prev => prev + 1);
+        }, 800);
         
         // Remove the flying item after animation completes
         setTimeout(() => {
