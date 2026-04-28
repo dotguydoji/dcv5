@@ -62,7 +62,7 @@ export const ProductCard = memo(({ product, isHighlighted, isSelected, onToggleS
         <div className="absolute inset-0 bg-gradient-to-t from-[#F5F5DC] to-transparent opacity-40"></div>
       </div>
       
-      <div className="p-5 laptop:p-5 flex flex-col flex-grow">
+      <div className="p-5 laptop:p-5 flex flex-col flex-grow bg-[#F5F5DC]">
         <h3 className="f-body font-poppins font-medium text-black mb-1 leading-tight group-hover:text-yellow-600 transition-colors duration-300 truncate">
           {product.title}
         </h3>
@@ -70,9 +70,9 @@ export const ProductCard = memo(({ product, isHighlighted, isSelected, onToggleS
           {product.description}
         </p>
         
-        <div className="mt-auto pt-3 border-t border-black/10">
+        <div className="mt-auto pt-3 border-t border-black/10 bg-black rounded-b-lg -mx-5 -mb-5 px-5 pb-5">
           <div className="flex justify-between items-center mb-3">
-            <span className="f-price text-green-600 drop-shadow-none text-xl lg:text-2xl flex-grow">
+            <span className="f-price text-green-400 drop-shadow-none text-xl lg:text-2xl flex-grow">
               ₱{product.price.toLocaleString()}
             </span>
             <button
