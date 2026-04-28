@@ -159,7 +159,6 @@ export const CartModal: React.FC<CartModalProps> = ({
                 {/* Copy Button */}
                 <button
                   onClick={handleCopyOrder}
-                  disabled={copied}
                   className={`w-full flex items-center justify-center gap-2 py-4 rounded-sm font-bold transition-all touch-manipulation active:scale-[0.98] ${
                     copied 
                       ? 'bg-green-600 text-white cursor-default' 
@@ -167,8 +166,19 @@ export const CartModal: React.FC<CartModalProps> = ({
                   }`}
                   style={{ minHeight: '48px' }}
                 >
-                  <Copy size={18} strokeWidth={2.5} />
-                  {copied ? 'COPIED!' : 'COPY ORDER LIST'}
+                  {copied ? (
+                    <>
+                      <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                      </svg>
+                      COPIED!
+                    </>
+                  ) : (
+                    <>
+                      <Copy size={18} strokeWidth={2.5} />
+                      COPY ORDER LIST
+                    </>
+                  )}
                 </button>
 
                 {/* Buy Buttons */}
