@@ -1,13 +1,15 @@
 import React, { useEffect, useRef, memo, useCallback } from 'react';
-import { Smartphone, Monitor } from 'lucide-react';
+import { Check, Plus } from 'lucide-react';
 import { Product } from '../types';
 
 interface ProductCardProps {
   product: Product;
   isHighlighted?: boolean;
+  isSelected: boolean;
+  onToggleSelect: (product: Product, event?: React.MouseEvent) => void;
 }
 
-export const ProductCard = memo(({ product, isHighlighted }: ProductCardProps) => {
+export const ProductCard = memo(({ product, isHighlighted, isSelected, onToggleSelect }: ProductCardProps) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const scrollTimeoutRef = useRef<number | null>(null);
 
@@ -106,7 +108,8 @@ export const ProductCard = memo(({ product, isHighlighted }: ProductCardProps) =
   // Custom comparison for better memoization
   return (
     prevProps.product.id === nextProps.product.id &&
-    prevProps.isHighlighted === nextProps.isHighlighted
+    prevProps.isHighlighted === nextProps.isHighlighted &&
+    prevProps.isSelected === nextProps.isSelected
   );
 });
 

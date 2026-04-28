@@ -9,13 +9,16 @@ interface CategorySectionProps {
   isOpen: boolean;
   onToggle: () => void;
   highlightedProductId?: string | null;
+  selectedProducts: Product[];
+  onToggleSelect: (product: Product) => void;
 }
 
-export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProps>(({ name, products, isOpen, onToggle, highlightedProductId }, ref) => {
+export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProps>(({ name, products, isOpen, onToggle, highlightedProductId, selectedProducts, onToggleSelect }, ref) => {
   const englishScrollRef = useRef<HTMLDivElement>(null);
   const tagalogScrollRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [englishActiveIndex, setEnglishActiveIndex] = useState(0);
+  const [tagalogActiveIndex, setTagalogActiveIndex] = useState(0);
   const [englishCanScrollLeft, setEnglishCanScrollLeft] = useState(false);
   const [englishCanScrollRight, setEnglishCanScrollRight] = useState(true);
   const [tagalogCanScrollLeft, setTagalogCanScrollLeft] = useState(false);
@@ -69,17 +72,35 @@ export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProp
     );
 
     // Observer for tracking active dot (which item is most visible)
+    let lastActiveIndex = -1;
+    let debounceTimer: NodeJS.Timeout | null = null;
+    
     const activeObserver = new IntersectionObserver(
       (entries) => {
-        const visibleEntry = entries.find(e => e.isIntersecting);
-        if (visibleEntry) {
-          const index = parseInt((visibleEntry.target as HTMLElement).dataset.index || '0');
-          setActiveIndex(index);
+        // Find the entry with the highest intersection ratio
+        const mostVisibleEntry = entries.reduce((max, entry) => {
+          return entry.intersectionRatio > (max?.intersectionRatio || 0) ? entry : max;
+        }, entries.find(e => e.isIntersecting) || null);
+        
+        if (mostVisibleEntry && mostVisibleEntry.intersectionRatio > 0.7) {
+          const newIndex = parseInt((mostVisibleEntry.target as HTMLElement).dataset.index || '0');
+          
+          // Debounce to prevent rapid switching
+          if (debounceTimer) {
+            clearTimeout(debounceTimer);
+          }
+          
+          debounceTimer = setTimeout(() => {
+            if (newIndex !== lastActiveIndex) {
+              lastActiveIndex = newIndex;
+              setEnglishActiveIndex(newIndex);
+            }
+          }, 50);
         }
       },
       { 
         root: container,
-        threshold: 0.6 
+        threshold: [0.5, 0.7, 0.9]
       }
     );
 
@@ -143,17 +164,35 @@ export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProp
     );
 
     // Observer for tracking active dot (which item is most visible)
+    let tagalogLastActiveIndex = -1;
+    let tagalogDebounceTimer: NodeJS.Timeout | null = null;
+    
     const activeObserver = new IntersectionObserver(
       (entries) => {
-        const visibleEntry = entries.find(e => e.isIntersecting);
-        if (visibleEntry) {
-          const index = parseInt((visibleEntry.target as HTMLElement).dataset.index || '0');
-          setActiveIndex(index);
+        // Find the entry with the highest intersection ratio
+        const mostVisibleEntry = entries.reduce((max, entry) => {
+          return entry.intersectionRatio > (max?.intersectionRatio || 0) ? entry : max;
+        }, entries.find(e => e.isIntersecting) || null);
+        
+        if (mostVisibleEntry && mostVisibleEntry.intersectionRatio > 0.7) {
+          const newIndex = parseInt((mostVisibleEntry.target as HTMLElement).dataset.index || '0');
+          
+          // Debounce to prevent rapid switching
+          if (tagalogDebounceTimer) {
+            clearTimeout(tagalogDebounceTimer);
+          }
+          
+          tagalogDebounceTimer = setTimeout(() => {
+            if (newIndex !== tagalogLastActiveIndex) {
+              tagalogLastActiveIndex = newIndex;
+              setTagalogActiveIndex(newIndex);
+            }
+          }, 50);
         }
       },
       { 
         root: container,
-        threshold: 0.6 
+        threshold: [0.5, 0.7, 0.9]
       }
     );
 
@@ -232,7 +271,7 @@ export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProp
         </div>
       </div>
       
-      <div className={`overflow-hidden transition-all duration-500 ease-out will-change-[max-height,opacity] ${isOpen ? 'max-h-[2800px] opacity-100 p-6 lg:p-8' : 'max-h-0 opacity-0 pointer-events-none'}`}>
+      <div className={`overflow-hidden transition-all duration-500 ease-out will-change-[max-height,opacity] ${isOpen ? 'max-h-[2800px] opacity-100 p-4 lg:p-6' : 'max-h-0 opacity-0 pointer-events-none'}`}>
         {/* English Row */}
         {englishProducts.length > 0 && (
           <div className="mb-8">
@@ -242,7 +281,7 @@ export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProp
             <div className="relative">
               <div 
                 ref={englishScrollRef}
-                className="flex gap-6 overflow-x-auto snap-x snap-mandatory no-scrollbar pb-8 pt-2 scroll-smooth max-lg:px-[calc(50vw-140px-24px)] sm:max-lg:px-[calc(50vw-160px-24px)] lg:px-2 will-change-transform"
+                className="flex gap-4 overflow-x-auto snap-x snap-mandatory no-scrollbar pb-4 pt-2 scroll-smooth max-lg:px-[calc(50vw-140px-24px)] sm:max-lg:px-[calc(50vw-160px-24px)] lg:px-2 will-change-transform"
               >
                 {englishProducts.map((product, idx) => (
                   <div 
@@ -255,6 +294,8 @@ export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProp
                     <ProductCard 
                       product={product} 
                       isHighlighted={product.id === highlightedProductId}
+                      isSelected={selectedProducts.some(p => p.id === product.id)}
+                      onToggleSelect={onToggleSelect}
                     />
                   </div>
                 ))}
@@ -262,7 +303,7 @@ export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProp
               </div>
             </div>
 
-            <div className="flex justify-center items-center gap-3 mt-4 laptop:mt-6">
+            <div className="flex justify-center items-center gap-3 mt-3 laptop:mt-4">
               {englishProducts.map((_, i) => (
                 <button
                   key={i}
@@ -278,7 +319,7 @@ export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProp
             </div>
             
             {/* Navigation buttons for English row */}
-            <div className="flex justify-center items-center gap-2 mt-4">
+            <div className="flex justify-center items-center gap-2 mt-3">
               <button 
                 onClick={(e) => { e.stopPropagation(); scroll('left', 'english'); }}
                 disabled={!englishCanScrollLeft}
@@ -316,7 +357,7 @@ export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProp
             <div className="relative">
               <div 
                 ref={tagalogScrollRef}
-                className="flex gap-6 overflow-x-auto snap-x snap-mandatory no-scrollbar pb-8 pt-2 scroll-smooth max-lg:px-[calc(50vw-140px-24px)] sm:max-lg:px-[calc(50vw-160px-24px)] lg:px-2 will-change-transform"
+                className="flex gap-4 overflow-x-auto snap-x snap-mandatory no-scrollbar pb-4 pt-2 scroll-smooth max-lg:px-[calc(50vw-140px-24px)] sm:max-lg:px-[calc(50vw-160px-24px)] lg:px-2 will-change-transform"
               >
                 {tagalogProducts.map((product, idx) => (
                   <div 
@@ -329,6 +370,8 @@ export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProp
                     <ProductCard 
                       product={product} 
                       isHighlighted={product.id === highlightedProductId}
+                      isSelected={selectedProducts.some(p => p.id === product.id)}
+                      onToggleSelect={onToggleSelect}
                     />
                   </div>
                 ))}
@@ -336,7 +379,7 @@ export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProp
               </div>
             </div>
 
-            <div className="flex justify-center items-center gap-3 mt-4 laptop:mt-6">
+            <div className="flex justify-center items-center gap-3 mt-3 laptop:mt-4">
               {tagalogProducts.map((_, i) => (
                 <button
                   key={i}
@@ -352,7 +395,7 @@ export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProp
             </div>
             
             {/* Navigation buttons for Tagalog row */}
-            <div className="flex justify-center items-center gap-2 mt-4">
+            <div className="flex justify-center items-center gap-2 mt-3">
               <button 
                 onClick={(e) => { e.stopPropagation(); scroll('left', 'tagalog'); }}
                 disabled={!tagalogCanScrollLeft}

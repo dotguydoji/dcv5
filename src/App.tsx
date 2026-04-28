@@ -3,9 +3,17 @@ import { Navbar } from './components/Navbar';
 import { CategorySection } from './components/CategorySection';
 import { FAQSection } from './components/FAQSection';
 import { NeuralNetwork } from './components/NeuralNetwork';
-import { PRODUCTS, CATEGORIES, SITE_CONTENT } from "./constants"; 
+import { CartModal } from './components/CartModal';
+import { PRODUCTS, CATEGORIES, SITE_CONTENT } from "./constants";  
 import { Product } from './types';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, ShoppingCart } from 'lucide-react';
+
+interface FlyingItem {
+  id: string;
+  startX: number;
+  startY: number;
+  thumbnail: string;
+}
 
 const App: React.FC = () => {
   const [openCategories, setOpenCategories] = useState<Record<string, boolean>>({
@@ -13,52 +21,92 @@ const App: React.FC = () => {
   });
   const [activeCategory, setActiveCategory] = useState<string | null>(CATEGORIES[0]);
   const [highlightedProductId, setHighlightedProductId] = useState<string | null>(null);
+  const [selectedProducts, setSelectedProducts] = useState<Product[]>([]);
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const [flyingItems, setFlyingItems] = useState<FlyingItem[]>([]);
+  const [cartBounceKey, setCartBounceKey] = useState(0);
 
   const categoryRefs = useRef<Record<string, HTMLElement | null>>({});
   const catContainerRef = useRef<HTMLDivElement>(null);
   const catButtonRefs = useRef<Record<string, HTMLButtonElement | null>>({});
+  const cartButtonRef = useRef<HTMLButtonElement>(null);
 
-  // Performance optimized scroll spy
-  useEffect(() => {
-    let ticking = false;
-    const handleScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          if (document.activeElement?.tagName === 'INPUT' || document.activeElement?.tagName === 'TEXTAREA') {
-            ticking = false;
-            return;
-          }
+  const [isScrolling, setIsScrolling] = useState(false);
 
-          const offset = window.innerWidth >= 1024 ? 200 : 160;
-          const scrollPosition = window.scrollY;
-
-          if (scrollPosition < 50) {
-            setActiveCategory(CATEGORIES[0]);
-            ticking = false;
-            return;
-          }
-
-          let currentActive = activeCategory;
-          for (const catName of CATEGORIES) {
-            const element = categoryRefs.current[catName];
-            if (element && scrollPosition + offset >= element.offsetTop) {
-              currentActive = catName;
-            } else {
-              break;
-            }
-          }
-
-          if (currentActive !== activeCategory) {
-            setActiveCategory(currentActive);
-          }
-          ticking = false;
-        });
-        ticking = true;
+  const handleToggleSelect = (product: Product, event?: React.MouseEvent) => {
+    // Create flying animation when adding item
+    if (!selectedProducts.some(p => p.id === product.id) && event) {
+      const startRect = (event.target as HTMLElement).getBoundingClientRect();
+      const cartRect = cartButtonRef.current?.getBoundingClientRect();
+      
+      if (cartRect) {
+        const flyingItem: FlyingItem = {
+          id: `${product.id}-${Date.now()}`,
+          startX: startRect.left,
+          startY: startRect.top,
+          thumbnail: product.thumbnail
+        };
+        
+        setFlyingItems(prev => [...prev, flyingItem]);
+        
+        // Trigger cart bounce animation after the item hits the cart (1000ms delay to match flight time)
+        setTimeout(() => {
+          setCartBounceKey(prev => prev + 1);
+        }, 1000);
+        
+        // Remove the flying item after animation completes
+        setTimeout(() => {
+          setFlyingItems(prev => prev.filter(item => item.id !== flyingItem.id));
+        }, 1000);
       }
+    }
+    
+    setSelectedProducts(prev => {
+      const isSelected = prev.some(p => p.id === product.id);
+      if (isSelected) {
+        return prev.filter(p => p.id !== product.id);
+      } else {
+        return [...prev, product];
+      }
+    });
+  };
+
+  // Performance optimized scroll spy using IntersectionObserver
+  useEffect(() => {
+    const observerOptions = {
+      root: null,
+      rootMargin: '-180px 0px -60% 0px',
+      threshold: 0
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    const observerCallback: IntersectionObserverCallback = (entries) => {
+      if (document.activeElement?.tagName === 'INPUT' || document.activeElement?.tagName === 'TEXTAREA') {
+        return;
+      }
+
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const categoryName = entry.target.getAttribute('data-category');
+          if (categoryName && categoryName !== activeCategory) {
+            setActiveCategory(categoryName);
+          }
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+    CATEGORIES.forEach((catName) => {
+      const element = categoryRefs.current[catName];
+      if (element) {
+        element.setAttribute('data-category', catName);
+        observer.observe(element);
+      }
+    });
+
+    return () => {
+      observer.disconnect();
+    };
   }, [activeCategory]);
 
   useEffect(() => {
@@ -89,32 +137,43 @@ const App: React.FC = () => {
   const scrollToCategory = (catName: string) => {
     const element = categoryRefs.current[catName];
     if (element) {
+      setIsScrolling(true);
+      // Get the header element within the category section
+      const headerElement = element.querySelector('.category-header');
+      const targetElement = headerElement || element;
+      
       const offset = window.innerWidth >= 1024 ? 180 : 144; 
-      const bodyRect = document.body.getBoundingClientRect().top;
-      const elementRect = element.getBoundingClientRect().top;
-      const elementPosition = elementRect - bodyRect;
+      const elementRect = targetElement.getBoundingClientRect();
+      const elementPosition = elementRect.top + window.scrollY;
       const offsetPosition = elementPosition - offset;
 
       window.scrollTo({
         top: offsetPosition,
         behavior: 'smooth'
       });
+
+      // Reset scrolling flag after animation completes
+      setTimeout(() => setIsScrolling(false), 800);
     }
   };
 
   const toggleCategory = (catName: string) => {
-    const isMobile = window.innerWidth < 1024;
     const isOpening = !openCategories[catName];
     
     setOpenCategories(prev => {
-      if (isMobile && isOpening) {
+      if (isOpening) {
+        // Close all other categories and open only the selected one
         return { [catName]: true };
       }
-      return { ...prev, [catName]: isOpening };
+      // If closing, just remove this category
+      const newState = { ...prev };
+      delete newState[catName];
+      return newState;
     });
 
     if (isOpening) {
-      setTimeout(() => scrollToCategory(catName), 100);
+      // Scroll after the expansion animation completes (500ms + small buffer)
+      setTimeout(() => scrollToCategory(catName), 600);
     }
   };
 
@@ -155,7 +214,7 @@ const App: React.FC = () => {
                   key={cat}
                   ref={el => { catButtonRefs.current[cat] = el; }}
                   onClick={() => jumpToCategory(cat)}
-                  className={`f-small px-6 py-3 rounded-sm transition-all border font-black ${
+                  className={`px-6 py-3 rounded-sm transition-all border font-poppins ${
                     activeCategory === cat 
                       ? 'bg-brand-gold/15 border-brand-gold text-brand-gold' 
                       : 'bg-transparent border-brand-ink/10 text-brand-muted/70 hover:text-brand-ink hover:border-brand-ink/30'
@@ -201,7 +260,7 @@ const App: React.FC = () => {
             </div>
           </header>
 
-          <div className="space-y-4 lg:space-y-8">
+          <div className="relative">
             {CATEGORIES.map(categoryName => (
               <CategorySection 
                 key={categoryName}
@@ -211,6 +270,8 @@ const App: React.FC = () => {
                 onToggle={() => toggleCategory(categoryName)}
                 products={PRODUCTS.filter(p => p.category === categoryName)}
                 highlightedProductId={highlightedProductId}
+                selectedProducts={selectedProducts}
+                onToggleSelect={handleToggleSelect}
               />
             ))}
           </div>
@@ -249,7 +310,55 @@ const App: React.FC = () => {
             <p className="f-small text-brand-muted/60 font-black">{SITE_CONTENT.footer.copyright}</p>
           </div>
         </footer>
+
+        {/* Floating Cart Button */}
+        <button
+          ref={cartButtonRef}
+          onClick={() => setIsCartOpen(true)}
+          key={cartBounceKey}
+          className="fixed bottom-6 right-6 z-[99] bg-white text-black p-4 rounded-full shadow-2xl hover:bg-yellow-400 transition-all duration-300 active:scale-95 group cart-bounce"
+          aria-label="Open cart"
+        >
+          <ShoppingCart size={28} strokeWidth={2.5} />
+          {selectedProducts.length > 0 && (
+            <span className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full h-7 w-7 flex items-center justify-center text-xs font-bold border-2 border-[#0D0D0D]">
+              {selectedProducts.length}
+            </span>
+          )}
+        </button>
+
+        {/* Flying Items Animation */}
+        {flyingItems.map(item => {
+          const cartRect = cartButtonRef.current?.getBoundingClientRect();
+          if (!cartRect) return null;
+          
+          const flyEndX = cartRect.left + cartRect.width / 2 - item.startX;
+          const flyEndY = cartRect.top + cartRect.height / 2 - item.startY;
+          
+          return (
+            <img
+              key={item.id}
+              src={item.thumbnail}
+              alt=""
+              className="fly-to-cart"
+              style={{
+                left: item.startX,
+                top: item.startY,
+                '--fly-end-x': `${flyEndX}px`,
+                '--fly-end-y': `${flyEndY}px`
+              } as React.CSSProperties}
+            />
+          );
+        })}
       </div>
+
+      {/* Cart Modal */}
+      <CartModal 
+        isOpen={isCartOpen}
+        onClose={() => setIsCartOpen(false)}
+        selectedProducts={selectedProducts}
+        onToggleSelect={handleToggleSelect}
+      />
     </div>
   );
 };
