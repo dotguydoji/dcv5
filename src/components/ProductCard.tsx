@@ -72,7 +72,7 @@ export const ProductCard = memo(({ product, isHighlighted, isSelected, onToggleS
         
         <div className="mt-auto pt-3 border-t border-white/5">
           <div className="flex justify-between items-center mb-3">
-            <span className="f-price text-green-400 drop-shadow-[0_0_10px_rgba(255,107,0,0.2)] text-xl lg:text-2xl">
+            <span className="f-price text-green-400 drop-shadow-[0_0_10px_rgba(255,107,0,0.2)] text-xl lg:text-2xl flex-grow text-right">
               ₱{product.price.toLocaleString()}
             </span>
           </div>
