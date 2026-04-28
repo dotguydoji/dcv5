@@ -35,6 +35,8 @@ export const ProductCard = memo(({ product, isHighlighted, isSelected, onToggleS
     };
   }, [isHighlighted]);
 
+  const buttonStyles = "flex items-center justify-center gap-2 bg-[#fbbf24] text-[#0a0a0a] border border-[#fbbf24] py-2 rounded-sm transition-all duration-300 hover:bg-transparent hover:text-[#fbbf24] active:scale-90 shadow-lg shadow-[#fbbf24]/10 will-change-transform";
+
   const handleImageLoad = useCallback((e: React.SyntheticEvent<HTMLImageElement>) => {
     e.currentTarget.style.willChange = 'auto';
   }, []);
@@ -42,15 +44,13 @@ export const ProductCard = memo(({ product, isHighlighted, isSelected, onToggleS
   return (
     <div 
       ref={cardRef}
-      className={`group flex-shrink-0 w-[320px] sm:w-[360px] laptop:w-[290px] xl:w-[320px] bg-[#F5F5DC] border rounded-lg overflow-hidden flex flex-col transition-all duration-300 active:scale-[0.98] shadow-2xl shadow-black/20 will-change-transform ${
+      className={`group flex-shrink-0 w-[320px] sm:w-[360px] laptop:w-[290px] xl:w-[320px] bg-[#1a1a1a] border rounded-lg overflow-hidden flex flex-col transition-all duration-300 active:scale-[0.98] shadow-2xl shadow-black/50 will-change-transform ${
         isHighlighted 
-          ? 'animate-highlight border-yellow-600 z-10 scale-[1.02]' 
-          : isSelected
-            ? 'border-yellow-600 ring-2 ring-yellow-600/30'
-            : 'border-black/5 hover:border-yellow-600/40'
+          ? 'animate-highlight border-[#fbbf24] z-10 scale-[1.02]' 
+          : 'border-[#2a2a2a] hover:border-[#fbbf24]/40'
       }`}
     >
-      <div className="relative aspect-[16/9] w-full overflow-hidden bg-gray-950/50">
+      <div className="relative aspect-[16/9] w-full overflow-hidden bg-black/50">
         <img 
           src={product.thumbnail} 
           alt={product.title}
@@ -59,34 +59,47 @@ export const ProductCard = memo(({ product, isHighlighted, isSelected, onToggleS
           decoding="async"
           onLoad={handleImageLoad}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#F5F5DC] to-transparent opacity-40"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-[#1a1a1a] to-transparent opacity-40"></div>
       </div>
       
-      <div className="p-5 laptop:p-5 flex flex-col flex-grow bg-[#F5F5DC]">
-        <h3 className="f-body font-poppins font-medium text-black mb-1 leading-tight group-hover:text-yellow-600 transition-colors duration-300 truncate">
+      <div className="p-5 laptop:p-5 flex flex-col flex-grow">
+        <h3 className="f-body font-bold text-[#ffffff] mb-1 leading-tight group-hover:text-[#fbbf24] transition-colors duration-300 truncate">
           {product.title}
         </h3>
-        <p className="f-small normal-case text-gray-600/80 mb-4 flex-grow tracking-normal leading-relaxed line-clamp-2 opacity-80">
+        <p className="f-small normal-case text-[#9ca3af]/80 mb-4 flex-grow tracking-normal leading-relaxed line-clamp-2 opacity-80">
           {product.description}
         </p>
         
-        <div className="mt-auto pt-3 border-t border-black/10 bg-black rounded-b-lg -mx-5 -mb-5 px-5 pb-5 flex items-center justify-between h-[80px]">
-          <span className="f-price text-green-400 drop-shadow-none text-2xl lg:text-3xl font-semibold">
-            ₱{product.price.toLocaleString()}
-          </span>
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              onToggleSelect(product, e);
-            }}
-            className={`transition-all duration-300 ${
-              isSelected 
-                ? 'text-yellow-400' 
-                : 'text-white hover:text-yellow-400'
-            }`}
-          >
-            {isSelected ? <Check size={24} strokeWidth={4} /> : <Plus size={24} strokeWidth={4} />}
-          </button>
+        <div className="mt-auto pt-3 border-t border-[#2a2a2a]">
+          <div className="flex justify-between items-center mb-3">
+            <span className="f-small text-[#9ca3af] font-bold tracking-[0.2em] opacity-50">PRICE</span>
+            <span className="f-price text-[#fbbf24] drop-shadow-[0_0_10px_rgba(251,191,36,0.2)] text-xl lg:text-2xl">
+              ₱{product.price.toLocaleString()}
+            </span>
+          </div>
+          
+          <div className="space-y-2.5">
+            <div className="grid grid-cols-2 gap-2">
+              <a 
+                href={product.mobileUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={buttonStyles}
+              >
+                <Smartphone size={13} strokeWidth={3} />
+                <span className="f-small font-black text-[10px]">Mobile</span>
+              </a>
+              <a 
+                href={product.desktopUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={buttonStyles}
+              >
+                <Monitor size={13} strokeWidth={3} />
+                <span className="f-small font-black text-[10px]">Desktop</span>
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </div>

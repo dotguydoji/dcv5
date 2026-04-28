@@ -194,7 +194,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#0D0D0D] font-sans selection:bg-brand-yellow selection:text-black relative">
+    <div className="min-h-screen bg-[#c8bfb0] font-sans selection:bg-brand-gold selection:text-black relative">
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
         <div className="absolute top-[10%] left-[-10%] w-[50%] h-[50%] ambient-glow opacity-40"></div>
         <div className="absolute bottom-[20%] right-[-10%] w-[60%] h-[60%] ambient-glow opacity-30 rotate-180"></div>
@@ -203,7 +203,7 @@ const App: React.FC = () => {
       <div className="relative z-10">
         <Navbar onSearchSelect={handleSearchSelect} />
         
-        <div className="sticky top-20 lg:top-24 z-50 bg-[#1A1A1A]/95 backdrop-blur-md border-b border-white/5 shadow-2xl">
+        <div className="sticky top-20 lg:top-24 z-50 bg-[#f5f0e8]/95 backdrop-blur-md border-b border-brand-ink/10 shadow-2xl">
           <div className="max-w-[1580px] mx-auto px-6 lg:px-10 flex items-center">
             <div 
               ref={catContainerRef}
@@ -216,26 +216,26 @@ const App: React.FC = () => {
                   onClick={() => jumpToCategory(cat)}
                   className={`px-6 py-3 rounded-sm transition-all border font-poppins ${
                     activeCategory === cat 
-                      ? 'bg-brand-yellow/15 border-brand-yellow text-brand-yellow' 
-                      : 'bg-transparent border-white/10 text-brand-gray/50 hover:text-white hover:border-white/30'
-                  } text-xs md:text-sm`}
+                      ? 'bg-brand-gold/15 border-brand-gold text-brand-gold' 
+                      : 'bg-transparent border-brand-ink/10 text-brand-muted/70 hover:text-brand-ink hover:border-brand-ink/30'
+                  }`}
                 >
                   {cat}
                 </button>
               ))}
             </div>
 
-            <div className="hidden lg:flex items-center gap-2 pl-6 ml-6 border-l border-white/5">
+            <div className="hidden lg:flex items-center gap-2 pl-6 ml-6 border-l border-brand-ink/10">
               <button 
                 onClick={() => scrollCatBar('left')}
-                className="flex items-center justify-center w-10 h-10 rounded-sm bg-black border border-white/10 text-brand-gray hover:text-brand-yellow hover:border-brand-yellow transition-all active:scale-90"
+                className="flex items-center justify-center w-10 h-10 rounded-sm bg-brand-paper border border-brand-ink/10 text-brand-muted hover:text-brand-gold hover:border-brand-gold transition-all active:scale-90"
                 aria-label="Scroll left"
               >
                 <ChevronLeft size={20} strokeWidth={3} />
               </button>
               <button 
                 onClick={() => scrollCatBar('right')}
-                className="flex items-center justify-center w-10 h-10 rounded-sm bg-black border border-white/10 text-brand-gray hover:text-brand-yellow hover:border-brand-yellow transition-all active:scale-90"
+                className="flex items-center justify-center w-10 h-10 rounded-sm bg-brand-paper border border-brand-ink/10 text-brand-muted hover:text-brand-gold hover:border-brand-gold transition-all active:scale-90"
                 aria-label="Scroll right"
               >
                 <ChevronRight size={20} strokeWidth={3} />
@@ -246,11 +246,11 @@ const App: React.FC = () => {
         
         <main className="max-w-[1580px] mx-auto px-6 lg:px-10 pb-40">
           <header className="relative py-8 md:py-12 lg:py-16 laptop:py-20 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-center">
-            <div className="relative z-20 border-l-4 lg:border-l-8 border-brand-yellow pl-8 lg:pl-12 py-2 lg:py-4">
-              <h1 className="text-3xl md:text-5xl lg:text-6xl laptop:text-7xl xl:text-8xl font-black text-white leading-[1.1] tracking-tighter italic drop-shadow-2xl">
+            <div className="relative z-20 border-l-4 lg:border-l-8 border-brand-accent pl-8 lg:pl-12 py-2 lg:py-4">
+              <h1 className="text-3xl md:text-5xl lg:text-6xl laptop:text-7xl xl:text-8xl font-black text-brand-ink leading-[1.1] tracking-tighter italic drop-shadow-2xl">
                 {SITE_CONTENT.hero.mainTitle}
               </h1>
-              <p className="f-small text-brand-gray mt-6 lg:mt-10 font-black tracking-[0.4em] opacity-40">
+              <p className="f-small text-brand-muted mt-6 lg:mt-10 font-black tracking-[0.4em] opacity-60">
                 {SITE_CONTENT.hero.subTitle}
               </p>
             </div>
@@ -279,25 +279,25 @@ const App: React.FC = () => {
           <FAQSection />
         </main>
 
-        <footer className="border-t border-white/5 bg-[#1A1A1A] py-24 md:py-40 px-6 lg:px-10 relative z-10">
+        <footer className="border-t border-brand-ink/10 bg-[#f5f0e8] py-24 md:py-40 px-6 lg:px-10 relative z-10">
           <div className="max-w-[1580px] mx-auto flex flex-col items-center md:items-start text-center md:text-left gap-16 md:grid md:grid-cols-2 md:gap-32">
             <div className="space-y-8 flex flex-col items-center md:items-start w-full">
-              <div className="text-xl font-black text-white uppercase tracking-[0.4em] border-b-2 border-brand-yellow w-fit pb-2">
+              <div className="text-xl font-black text-brand-ink uppercase tracking-[0.4em] border-b-2 border-brand-gold w-fit pb-2">
                 {SITE_CONTENT.brandName}
               </div>
-              <p className="f-body text-brand-gray/70 leading-relaxed max-w-md font-medium">
+              <p className="f-body text-brand-muted/70 leading-relaxed max-w-md font-medium">
                 {SITE_CONTENT.footer.description}
               </p>
             </div>
             
             <div className="flex flex-col gap-8 md:gap-12 w-full">
-              <span className="f-small text-white font-black tracking-[0.5em]">COLLECTIONS</span>
+              <span className="f-small text-brand-ink font-black tracking-[0.5em]">COLLECTIONS</span>
               <div className="flex flex-wrap justify-center md:justify-start gap-x-12 gap-y-6">
                 {CATEGORIES.map(cat => (
                   <button 
                     key={cat}
                     onClick={() => jumpToCategory(cat)}
-                    className="f-small text-brand-gray hover:text-brand-yellow transition-colors font-black"
+                    className="f-small text-brand-muted hover:text-brand-gold transition-colors font-black"
                   >
                     {cat}
                   </button>
@@ -306,8 +306,8 @@ const App: React.FC = () => {
             </div>
           </div>
           
-          <div className="max-w-[1580px] mx-auto mt-24 md:mt-40 pt-12 border-t border-white/5 flex flex-col items-center gap-10 text-center md:flex-row md:justify-between">
-            <p className="f-small text-brand-gray/60 font-black">{SITE_CONTENT.footer.copyright}</p>
+          <div className="max-w-[1580px] mx-auto mt-24 md:mt-40 pt-12 border-t border-brand-ink/10 flex flex-col items-center gap-10 text-center md:flex-row md:justify-between">
+            <p className="f-small text-brand-muted/60 font-black">{SITE_CONTENT.footer.copyright}</p>
           </div>
         </footer>
 
