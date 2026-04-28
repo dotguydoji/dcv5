@@ -99,7 +99,7 @@ export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProp
 
     const visibleProducts = filterProducts(selectedLanguage, selectedLevel);
     const defaultProducts = filterProducts(defaultLanguage, defaultLevel);
-    const itemCount = isOpen ? visibleProducts.length : defaultProducts.length;
+    const itemCount = products.length;
 
     useEffect(() => {
       if (!isOpen) return;
