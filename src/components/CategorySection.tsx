@@ -9,9 +9,11 @@ interface CategorySectionProps {
   isOpen: boolean;
   onToggle: () => void;
   highlightedProductId?: string | null;
+  selectedProducts: Product[];
+  onToggleSelect: (product: Product) => void;
 }
 
-export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProps>(({ name, products, isOpen, onToggle, highlightedProductId }, ref) => {
+export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProps>(({ name, products, isOpen, onToggle, highlightedProductId, selectedProducts, onToggleSelect }, ref) => {
   const englishScrollRef = useRef<HTMLDivElement>(null);
   const tagalogScrollRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -241,6 +243,8 @@ export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProp
                     <ProductCard 
                       product={product} 
                       isHighlighted={product.id === highlightedProductId}
+                      isSelected={selectedProducts.some(p => p.id === product.id)}
+                      onToggleSelect={onToggleSelect}
                     />
                   </div>
                 ))}
@@ -315,6 +319,8 @@ export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProp
                     <ProductCard 
                       product={product} 
                       isHighlighted={product.id === highlightedProductId}
+                      isSelected={selectedProducts.some(p => p.id === product.id)}
+                      onToggleSelect={onToggleSelect}
                     />
                   </div>
                 ))}

@@ -3,9 +3,10 @@ import { Navbar } from './components/Navbar';
 import { CategorySection } from './components/CategorySection';
 import { FAQSection } from './components/FAQSection';
 import { NeuralNetwork } from './components/NeuralNetwork';
-import { PRODUCTS, CATEGORIES, SITE_CONTENT } from "./constants"; 
+import { CartModal } from './components/CartModal';
+import { PRODUCTS, CATEGORIES, SITE_CONTENT } from "./constants";  
 import { Product } from './types';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, ShoppingCart } from 'lucide-react';
 
 const App: React.FC = () => {
   const [openCategories, setOpenCategories] = useState<Record<string, boolean>>({
@@ -13,12 +14,25 @@ const App: React.FC = () => {
   });
   const [activeCategory, setActiveCategory] = useState<string | null>(CATEGORIES[0]);
   const [highlightedProductId, setHighlightedProductId] = useState<string | null>(null);
+  const [selectedProducts, setSelectedProducts] = useState<Product[]>([]);
+  const [isCartOpen, setIsCartOpen] = useState(false);
 
   const categoryRefs = useRef<Record<string, HTMLElement | null>>({});
   const catContainerRef = useRef<HTMLDivElement>(null);
   const catButtonRefs = useRef<Record<string, HTMLButtonElement | null>>({});
 
   const [isScrolling, setIsScrolling] = useState(false);
+
+  const handleToggleSelect = (product: Product) => {
+    setSelectedProducts(prev => {
+      const isSelected = prev.some(p => p.id === product.id);
+      if (isSelected) {
+        return prev.filter(p => p.id !== product.id);
+      } else {
+        return [...prev, product];
+      }
+    });
+  };
 
   // Performance optimized scroll spy using IntersectionObserver
   useEffect(() => {
@@ -219,6 +233,8 @@ const App: React.FC = () => {
                 onToggle={() => toggleCategory(categoryName)}
                 products={PRODUCTS.filter(p => p.category === categoryName)}
                 highlightedProductId={highlightedProductId}
+                selectedProducts={selectedProducts}
+                onToggleSelect={handleToggleSelect}
               />
             ))}
           </div>
