@@ -8,6 +8,15 @@ import { PRODUCTS, CATEGORIES, SITE_CONTENT } from "./constants";
 import { Product } from './types';
 import { ChevronLeft, ChevronRight, ShoppingCart } from 'lucide-react';
 
+interface FlyingItem {
+  id: number;
+  startX: number;
+  startY: number;
+  endX: number;
+  endY: number;
+  imageSrc: string;
+}
+
 const App: React.FC = () => {
   const [openCategories, setOpenCategories] = useState<Record<string, boolean>>({
     [CATEGORIES[0]]: true
@@ -16,10 +25,12 @@ const App: React.FC = () => {
   const [highlightedProductId, setHighlightedProductId] = useState<string | null>(null);
   const [selectedProducts, setSelectedProducts] = useState<Product[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [flyingItems, setFlyingItems] = useState<FlyingItem[]>([]);
 
   const categoryRefs = useRef<Record<string, HTMLElement | null>>({});
   const catContainerRef = useRef<HTMLDivElement>(null);
   const catButtonRefs = useRef<Record<string, HTMLButtonElement | null>>({});
+  const cartButtonRef = useRef<HTMLButtonElement | null>(null);
 
   const [isScrolling, setIsScrolling] = useState(false);
 
