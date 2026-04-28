@@ -277,7 +277,7 @@ const App: React.FC = () => {
         {/* Floating Cart Button */}
         <button
           onClick={() => setIsCartOpen(true)}
-          className="fixed bottom-6 right-6 z-[99] bg-white text-black p-4 rounded-full shadow-2xl hover:bg-brand-yellow transition-all duration-300 active:scale-95 group"
+          className="fixed bottom-6 right-6 z-[99] bg-white text-black p-4 rounded-full shadow-2xl hover:bg-yellow-400 transition-all duration-300 active:scale-95 group"
           aria-label="Open cart"
         >
           <ShoppingCart size={28} strokeWidth={2.5} />
