@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ShoppingCart, Copy, Smartphone, Monitor, X, ExternalLink } from 'lucide-react';
 import { Product } from '../types';
 
@@ -16,6 +16,20 @@ export const CartModal: React.FC<CartModalProps> = ({
   onToggleSelect,
 }) => {
   const [copied, setCopied] = React.useState(false);
+
+  // Prevent body scrolling when modal is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+
+    // Cleanup on unmount
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
 
   const handleCopyOrder = () => {
     if (selectedProducts.length === 0) return;
