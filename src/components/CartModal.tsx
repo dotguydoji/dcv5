@@ -33,6 +33,8 @@ export const CartModal: React.FC<CartModalProps> = ({
 
   const handleCopyOrder = (e: React.MouseEvent) => {
     e.stopPropagation();
+    e.preventDefault();
+    
     if (selectedProducts.length === 0) return;
 
     const orderList = selectedProducts
@@ -42,10 +44,54 @@ export const CartModal: React.FC<CartModalProps> = ({
     const total = selectedProducts.reduce((sum, p) => sum + p.price, 0);
     const fullText = `My Order:\n${orderList}\n\nTotal: ₱${total.toLocaleString()}`;
 
-    navigator.clipboard.writeText(fullText).then(() => {
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    });
+    // Try modern clipboard API first
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(fullText).then(() => {
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      }).catch((err) => {
+        console.error('Clipboard API failed:', err);
+        // Fallback to execCommand
+        fallbackCopy(fullText);
+      });
+    } else {
+      // Fallback for older browsers
+      fallbackCopy(fullText);
+    }
+  };
+
+  const fallbackCopy = (text: string) => {
+    const textArea = document.createElement('textarea');
+    textArea.value = text;
+    textArea.style.position = 'fixed';
+    textArea.style.top = '0';
+    textArea.style.left = '0';
+    textArea.style.width = '2em';
+    textArea.style.height = '2em';
+    textArea.style.padding = '0';
+    textArea.style.border = 'none';
+    textArea.style.outline = 'none';
+    textArea.style.boxShadow = 'none';
+    textArea.style.background = 'transparent';
+    textArea.style.opacity = '0';
+    
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    
+    try {
+      const successful = document.execCommand('copy');
+      if (successful) {
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      } else {
+        console.error('execCommand copy failed');
+      }
+    } catch (err) {
+      console.error('execCommand copy error:', err);
+    } finally {
+      document.body.removeChild(textArea);
+    }
   };
 
   const handleBuyNow = (platform: 'mobile' | 'desktop') => {
