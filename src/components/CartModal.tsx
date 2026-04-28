@@ -31,7 +31,8 @@ export const CartModal: React.FC<CartModalProps> = ({
     };
   }, [isOpen]);
 
-  const handleCopyOrder = () => {
+  const handleCopyOrder = (e: React.MouseEvent) => {
+    e.stopPropagation();
     if (selectedProducts.length === 0) return;
 
     const orderList = selectedProducts
@@ -174,17 +175,24 @@ export const CartModal: React.FC<CartModalProps> = ({
                 <div className="grid grid-cols-2 gap-3">
                   <button
                     onClick={() => handleBuyNow('mobile')}
-                    className="flex items-center justify-center gap-2 bg-brand-yellow text-black border border-brand-yellow py-3 rounded-sm transition-all duration-300 hover:bg-transparent hover:text-brand-yellow active:scale-95 font-bold"
+                    className="hidden sm:flex items-center justify-center gap-2 bg-brand-yellow text-black border border-brand-yellow py-3 rounded-sm transition-all duration-300 hover:bg-transparent hover:text-brand-yellow active:scale-95 font-bold"
                   >
                     <Smartphone size={16} strokeWidth={2.5} />
                     <span className="text-sm">BUY WITH MOBILE</span>
                   </button>
                   <button
                     onClick={() => handleBuyNow('desktop')}
-                    className="flex items-center justify-center gap-2 bg-brand-yellow text-black border border-brand-yellow py-3 rounded-sm transition-all duration-300 hover:bg-transparent hover:text-brand-yellow active:scale-95 font-bold"
+                    className="hidden sm:flex items-center justify-center gap-2 bg-brand-yellow text-black border border-brand-yellow py-3 rounded-sm transition-all duration-300 hover:bg-transparent hover:text-brand-yellow active:scale-95 font-bold"
                   >
                     <Monitor size={16} strokeWidth={2.5} />
                     <span className="text-sm">BUY WITH DESKTOP</span>
+                  </button>
+                  {/* Mobile-only centered button */}
+                  <button
+                    onClick={() => handleBuyNow('mobile')}
+                    className="sm:hidden w-full flex items-center justify-center gap-2 bg-brand-yellow text-black border border-brand-yellow py-3 rounded-sm transition-all duration-300 hover:bg-transparent hover:text-brand-yellow active:scale-95 font-bold col-span-2"
+                  >
+                    <span className="text-sm">BUY NOW</span>
                   </button>
                 </div>
               </div>
