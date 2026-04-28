@@ -83,7 +83,7 @@ export const ProductCard = memo(({ product, isHighlighted, isSelected, onToggleS
             onClick={() => onToggleSelect(product)}
           >
             <label className="flex justify-between items-center">
-              <span className={`font-bold text-sm ${isSelected ? 'text-brand-yellow' : 'text-white'}`}>
+              <span className={`font-bold text-sm ${isSelected ? 'text-yellow-400' : 'text-white'}`}>
                 {isSelected ? 'Added to cart' : 'Add to cart'}
               </span>
               <div

@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+@theme {
+  --color-brand-yellow: #FF6B00;
+}
+
 @layer base {
   body {
     @apply bg-[#0D0D0D] text-[#E5E7EB] overflow-x-hidden;
