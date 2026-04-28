@@ -78,18 +78,18 @@ export const ProductCard = memo(({ product, isHighlighted, isSelected, onToggleS
             </span>
           </div>
           
-          {/* Add to Cart Section - Entire label is clickable */}
-          <div className="bg-black rounded-lg p-3">
-            <label 
-              onClick={() => onToggleSelect(product)}
-              className="flex justify-between items-center cursor-pointer group/select"
-            >
-              <span className="text-white font-bold text-sm group-hover/select:text-brand-yellow transition-colors">Add to cart</span>
+          {/* Add to Cart Section - Entire container is clickable */}
+          <div 
+            className="bg-black rounded-lg p-3 cursor-pointer hover:bg-black/90 transition-colors"
+            onClick={() => onToggleSelect(product)}
+          >
+            <label className="flex justify-between items-center">
+              <span className={`text-white font-bold text-sm ${isSelected ? 'text-brand-yellow' : ''}`}>Add to cart</span>
               <div
                 className={`w-6 h-6 rounded-sm border-2 flex items-center justify-center transition-all duration-200 ${
                   isSelected 
                     ? 'bg-brand-yellow border-brand-yellow' 
-                    : 'bg-transparent border-white/40 group-hover/select:border-white'
+                    : 'bg-transparent border-white/40'
                 }`}
               >
                 {isSelected && <Check size={14} strokeWidth={3} className="text-black" />}
