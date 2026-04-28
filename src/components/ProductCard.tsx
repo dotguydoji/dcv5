@@ -70,25 +70,23 @@ export const ProductCard = memo(({ product, isHighlighted, isSelected, onToggleS
           {product.description}
         </p>
         
-        <div className="mt-auto pt-3 border-t border-black/10 bg-black rounded-b-lg -mx-5 -mb-5 px-5 pb-5">
-          <div className="flex justify-between items-center mb-3">
-            <span className="f-price text-green-400 drop-shadow-none text-xl lg:text-2xl flex-grow">
-              ₱{product.price.toLocaleString()}
-            </span>
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                onToggleSelect(product);
-              }}
-              className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 ${
-                isSelected 
-                  ? 'bg-yellow-400 text-black' 
-                  : 'bg-gray-200 text-gray-600 hover:bg-yellow-400 hover:text-black'
-              }`}
-            >
-              {isSelected ? <Check size={20} strokeWidth={3} /> : <Plus size={20} strokeWidth={3} />}
-            </button>
-          </div>
+        <div className="mt-auto pt-3 border-t border-black/10 bg-black rounded-b-lg -mx-5 -mb-5 px-5 pb-5 flex items-center justify-between h-[80px]">
+          <span className="f-price text-green-400 drop-shadow-none text-2xl lg:text-3xl font-semibold">
+            ₱{product.price.toLocaleString()}
+          </span>
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              onToggleSelect(product);
+            }}
+            className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 ${
+              isSelected 
+                ? 'bg-yellow-400 text-black' 
+                : 'bg-gray-200 text-gray-600 hover:bg-yellow-400 hover:text-black'
+            }`}
+          >
+            {isSelected ? <Check size={20} strokeWidth={3} /> : <Plus size={20} strokeWidth={3} />}
+          </button>
         </div>
       </div>
     </div>
