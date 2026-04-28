@@ -24,6 +24,7 @@ const App: React.FC = () => {
   const [selectedProducts, setSelectedProducts] = useState<Product[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [flyingItems, setFlyingItems] = useState<FlyingItem[]>([]);
+  const [cartBounceKey, setCartBounceKey] = useState(0);
 
   const categoryRefs = useRef<Record<string, HTMLElement | null>>({});
   const catContainerRef = useRef<HTMLDivElement>(null);
@@ -47,6 +48,9 @@ const App: React.FC = () => {
         };
         
         setFlyingItems(prev => [...prev, flyingItem]);
+        
+        // Trigger cart bounce animation
+        setCartBounceKey(prev => prev + 1);
         
         // Remove the flying item after animation completes
         setTimeout(() => {
@@ -309,7 +313,8 @@ const App: React.FC = () => {
         <button
           ref={cartButtonRef}
           onClick={() => setIsCartOpen(true)}
-          className="fixed bottom-6 right-6 z-[99] bg-white text-black p-4 rounded-full shadow-2xl hover:bg-yellow-400 transition-all duration-300 active:scale-95 group"
+          key={cartBounceKey}
+          className="fixed bottom-6 right-6 z-[99] bg-white text-black p-4 rounded-full shadow-2xl hover:bg-yellow-400 transition-all duration-300 active:scale-95 group cart-bounce"
           aria-label="Open cart"
         >
           <ShoppingCart size={28} strokeWidth={2.5} />
