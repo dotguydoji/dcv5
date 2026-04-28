@@ -50,7 +50,7 @@ export const ProductCard = memo(({ product, isHighlighted, isSelected, onToggleS
             : 'border-black/5 hover:border-yellow-600/40'
       }`}
     >
-      <div className="relative aspect-[16/9] w-full overflow-hidden bg-gray-950/50">
+      <div className="relative aspect-[16/9] w-full overflow-hidden bg-black/50">
         <img 
           src={product.thumbnail} 
           alt={product.title}
