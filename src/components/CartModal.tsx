@@ -204,13 +204,18 @@ export const CartModal: React.FC<CartModalProps> = ({
               <div className="space-y-3">
                 {/* Copy Button */}
                 <button
-                  onClick={handleCopyOrder}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    handleCopyOrder(e);
+                  }}
                   className={`w-full flex items-center justify-center gap-2 py-4 rounded-sm font-bold transition-all touch-manipulation active:scale-[0.98] ${
                     copied 
                       ? 'bg-green-600 text-white cursor-default' 
                       : 'bg-white text-black hover:bg-white/90 cursor-pointer'
                   }`}
                   style={{ minHeight: '48px' }}
+                  type="button"
                 >
                   {copied ? (
                     <>
@@ -227,28 +232,21 @@ export const CartModal: React.FC<CartModalProps> = ({
                   )}
                 </button>
 
-                {/* Buy Buttons */}
+                {/* Buy Buttons - Always show both, hide icons on mobile */}
                 <div className="grid grid-cols-2 gap-3">
                   <button
                     onClick={() => handleBuyNow('mobile')}
-                    className="hidden sm:flex items-center justify-center gap-2 bg-brand-yellow text-black border border-brand-yellow py-3 rounded-sm transition-all duration-300 hover:bg-transparent hover:text-brand-yellow active:scale-95 font-bold"
+                    className="flex items-center justify-center gap-2 bg-brand-yellow text-black border border-brand-yellow py-3 rounded-sm transition-all duration-300 hover:bg-transparent hover:text-brand-yellow active:scale-95 font-bold"
                   >
-                    <Smartphone size={16} strokeWidth={2.5} />
+                    <Smartphone size={16} strokeWidth={2.5} className="hidden sm:block" />
                     <span className="text-sm">BUY WITH MOBILE</span>
                   </button>
                   <button
                     onClick={() => handleBuyNow('desktop')}
-                    className="hidden sm:flex items-center justify-center gap-2 bg-brand-yellow text-black border border-brand-yellow py-3 rounded-sm transition-all duration-300 hover:bg-transparent hover:text-brand-yellow active:scale-95 font-bold"
+                    className="flex items-center justify-center gap-2 bg-brand-yellow text-black border border-brand-yellow py-3 rounded-sm transition-all duration-300 hover:bg-transparent hover:text-brand-yellow active:scale-95 font-bold"
                   >
-                    <Monitor size={16} strokeWidth={2.5} />
+                    <Monitor size={16} strokeWidth={2.5} className="hidden sm:block" />
                     <span className="text-sm">BUY WITH DESKTOP</span>
-                  </button>
-                  {/* Mobile-only centered button */}
-                  <button
-                    onClick={() => handleBuyNow('mobile')}
-                    className="sm:hidden w-full flex items-center justify-center gap-2 bg-brand-yellow text-black border border-brand-yellow py-3 rounded-sm transition-all duration-300 hover:bg-transparent hover:text-brand-yellow active:scale-95 font-bold col-span-2"
-                  >
-                    <span className="text-sm">BUY NOW</span>
                   </button>
                 </div>
               </div>
