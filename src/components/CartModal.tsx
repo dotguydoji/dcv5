@@ -15,7 +15,7 @@ const getLanguageLabel = (product: Product) => {
   return '';
 };
 
-const formatPrice = (value: number) => `PHP ${value.toLocaleString()}`;
+const formatPrice = (value: number) => `P ${value.toLocaleString()}`;
 
 const formatOrderLine = (product: Product) => {
   const languageLabel = getLanguageLabel(product);

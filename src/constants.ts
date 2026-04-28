@@ -126,7 +126,7 @@ const PROGRAMMING_LEVELS: readonly ProgrammingLevelMeta[] = [
     label: 'Activities',
     folder: 'programming-languages-activities',
     fileSuffix: 'activities',
-    price: { en: 75, tl: 75 },
+    price: { en: 99, tl: 119 },
     available: true
   }
 ];
