@@ -273,7 +273,29 @@ const App: React.FC = () => {
             <p className="f-small text-brand-gray/60 font-black">{SITE_CONTENT.footer.copyright}</p>
           </div>
         </footer>
+
+        {/* Floating Cart Button */}
+        <button
+          onClick={() => setIsCartOpen(true)}
+          className="fixed bottom-6 right-6 z-[99] bg-brand-yellow text-black p-4 rounded-full shadow-2xl hover:bg-white transition-all duration-300 active:scale-95 group"
+          aria-label="Open cart"
+        >
+          <ShoppingCart size={28} strokeWidth={2.5} />
+          {selectedProducts.length > 0 && (
+            <span className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full h-7 w-7 flex items-center justify-center text-xs font-bold border-2 border-[#0D0D0D]">
+              {selectedProducts.length}
+            </span>
+          )}
+        </button>
       </div>
+
+      {/* Cart Modal */}
+      <CartModal 
+        isOpen={isCartOpen}
+        onClose={() => setIsCartOpen(false)}
+        selectedProducts={selectedProducts}
+        onToggleSelect={handleToggleSelect}
+      />
     </div>
   );
 };
