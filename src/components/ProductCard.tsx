@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, memo, useCallback } from 'react';
-import { Check } from 'lucide-react';
+import { Check, Plus } from 'lucide-react';
 import { Product } from '../types';
 
 interface ProductCardProps {
@@ -72,30 +72,22 @@ export const ProductCard = memo(({ product, isHighlighted, isSelected, onToggleS
         
         <div className="mt-auto pt-3 border-t border-black/10">
           <div className="flex justify-between items-center mb-3">
-            <span className="f-price text-green-600 drop-shadow-none text-xl lg:text-2xl flex-grow text-right">
+            <span className="f-price text-green-600 drop-shadow-none text-xl lg:text-2xl flex-grow">
               ₱{product.price.toLocaleString()}
             </span>
-          </div>
-          
-          {/* Add to Cart Section - Entire container is clickable */}
-          <div 
-            className="bg-black rounded-lg p-3 cursor-pointer hover:bg-black/90 transition-colors"
-            onClick={() => onToggleSelect(product)}
-          >
-            <label className="flex justify-between items-center">
-              <span className={`font-bold text-sm ${isSelected ? 'text-yellow-400' : 'text-white'}`}>
-                {isSelected ? 'Added to cart' : 'Add to cart'}
-              </span>
-              <div
-                className={`w-6 h-6 rounded-sm border-2 flex items-center justify-center transition-all duration-200 ${
-                  isSelected 
-                    ? 'bg-green-400 border-green-400' 
-                    : 'bg-transparent border-black/40'
-                }`}
-              >
-                {isSelected && <Check size={14} strokeWidth={3} className="text-black" />}
-              </div>
-            </label>
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                onToggleSelect(product);
+              }}
+              className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 ${
+                isSelected 
+                  ? 'bg-yellow-400 text-black' 
+                  : 'bg-gray-200 text-gray-600 hover:bg-yellow-400 hover:text-black'
+              }`}
+            >
+              {isSelected ? <Check size={20} strokeWidth={3} /> : <Plus size={20} strokeWidth={3} />}
+            </button>
           </div>
         </div>
       </div>
