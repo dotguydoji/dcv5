@@ -98,7 +98,7 @@ export const CartModal: React.FC<CartModalProps> = ({
               {/* Order List */}
               <div className="space-y-3 mb-6">
                 <h3 className="text-sm font-bold text-white uppercase tracking-wider">Selected Items</h3>
-                <div className="space-y-2">
+                <div className="space-y-2 max-h-[240px] overflow-y-auto pr-2 custom-scrollbar">
                   {selectedProducts.map((product) => (
                     <div 
                       key={product.id}
