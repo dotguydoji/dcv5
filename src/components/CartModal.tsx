@@ -145,11 +145,12 @@ export const CartModal: React.FC<CartModalProps> = ({
                 <button
                   onClick={handleCopyOrder}
                   disabled={copied}
-                  className={`w-full flex items-center justify-center gap-2 py-3 rounded-sm font-bold transition-all ${
+                  className={`w-full flex items-center justify-center gap-2 py-4 rounded-sm font-bold transition-all touch-manipulation active:scale-[0.98] ${
                     copied 
-                      ? 'bg-green-600 text-white' 
-                      : 'bg-white text-black hover:bg-white/90'
+                      ? 'bg-green-600 text-white cursor-default' 
+                      : 'bg-white text-black hover:bg-white/90 cursor-pointer'
                   }`}
+                  style={{ minHeight: '48px' }}
                 >
                   <Copy size={18} strokeWidth={2.5} />
                   {copied ? 'COPIED!' : 'COPY ORDER LIST'}
