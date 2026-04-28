@@ -92,7 +92,7 @@ export const ProductCard = memo(({ product, isHighlighted, isSelected, onToggleS
                     : 'bg-transparent border-white/40'
                 }`}
               >
-                {isSelected && <Check size={14} strokeWidth={3} className="text-black" />}
+                {isSelected && <Check size={14} strokeWidth={3} className="text-green-400" />}
               </div>
             </label>
           </div>
