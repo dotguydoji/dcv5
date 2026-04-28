@@ -43,6 +43,23 @@
   animation: highlightBlink 1.5s ease-in-out 2;
 }
 
+@keyframes flyToCart {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(calc(var(--end-x) - var(--start-x, 0)), calc(var(--end-y) - var(--start-y, 0))) scale(0.2);
+    opacity: 0;
+  }
+}
+
+.animate-fly-to-cart {
+  animation: flyToCart 0.6s ease-in forwards;
+  --start-x: 0;
+  --start-y: 0;
+}
+
 .ambient-glow {
   background: radial-gradient(circle at center, rgba(255, 107, 0, 0.1) 0%, transparent 70%);
   pointer-events: none;

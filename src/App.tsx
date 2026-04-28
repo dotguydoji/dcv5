@@ -23,7 +23,29 @@ const App: React.FC = () => {
 
   const [isScrolling, setIsScrolling] = useState(false);
 
-  const handleToggleSelect = (product: Product) => {
+  const handleToggleSelect = (product: Product, event?: React.MouseEvent) => {
+    // Create flying animation if event is provided
+    if (event && cartButtonRef.current) {
+      const buttonRect = (event.target as HTMLElement).getBoundingClientRect();
+      const cartRect = cartButtonRef.current.getBoundingClientRect();
+      
+      const flyingItem: FlyingItem = {
+        id: Date.now(),
+        startX: buttonRect.left + buttonRect.width / 2,
+        startY: buttonRect.top + buttonRect.height / 2,
+        endX: cartRect.left + cartRect.width / 2,
+        endY: cartRect.top + cartRect.height / 2,
+        imageSrc: product.thumbnail
+      };
+      
+      setFlyingItems(prev => [...prev, flyingItem]);
+      
+      // Remove the flying item after animation completes
+      setTimeout(() => {
+        setFlyingItems(prev => prev.filter(item => item.id !== flyingItem.id));
+      }, 600);
+    }
+    
     setSelectedProducts(prev => {
       const isSelected = prev.some(p => p.id === product.id);
       if (isSelected) {
@@ -276,6 +298,7 @@ const App: React.FC = () => {
 
         {/* Floating Cart Button */}
         <button
+          ref={cartButtonRef}
           onClick={() => setIsCartOpen(true)}
           className="fixed bottom-6 right-6 z-[99] bg-white text-black p-4 rounded-full shadow-2xl hover:bg-yellow-400 transition-all duration-300 active:scale-95 group"
           aria-label="Open cart"
@@ -288,6 +311,28 @@ const App: React.FC = () => {
           )}
         </button>
       </div>
+
+      {/* Flying Items Animation */}
+      {flyingItems.map(item => (
+        <div
+          key={item.id}
+          className="fixed z-[100] pointer-events-none animate-fly-to-cart"
+          style={{
+            left: 0,
+            top: 0,
+            '--start-x': `${item.startX}px`,
+            '--start-y': `${item.startY}px`,
+            '--end-x': `${item.endX}px`,
+            '--end-y': `${item.endY}px`,
+          } as React.CSSProperties}
+        >
+          <img 
+            src={item.imageSrc} 
+            alt="" 
+            className="w-12 h-12 object-cover rounded-sm shadow-lg"
+          />
+        </div>
+      ))}
 
       {/* Cart Modal */}
       <CartModal 
