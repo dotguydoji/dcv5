@@ -1,4 +1,13 @@
 
+export type ProductLanguage = 'en' | 'tl';
+
+export type ProductLevel =
+  | 'beginner'
+  | 'intermediate'
+  | 'advanced'
+  | 'build-phase'
+  | 'activities';
+
 export interface Product {
   id: string;
   title: string;
@@ -8,7 +17,10 @@ export interface Product {
   mobileUrl: string;
   desktopUrl: string;
   category: string;
-  language?: 'en' | 'tl';
+  language?: ProductLanguage;
+  level?: ProductLevel;
+  itemKey?: string;
+  available?: boolean;
 }
 
 export interface FAQItem {

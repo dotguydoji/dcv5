@@ -34,6 +34,10 @@ const App: React.FC = () => {
   const [isScrolling, setIsScrolling] = useState(false);
 
   const handleToggleSelect = (product: Product, event?: React.MouseEvent) => {
+    if (product.available === false) {
+      return;
+    }
+
     // Create flying animation when adding item
     if (!selectedProducts.some(p => p.id === product.id) && event) {
       const startRect = (event.target as HTMLElement).getBoundingClientRect();

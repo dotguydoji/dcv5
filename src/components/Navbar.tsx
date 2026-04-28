@@ -26,6 +26,13 @@ export const Navbar: React.FC<NavbarProps> = ({ onSearchSelect }) => {
       .substring(0, 100);       // Max length validation
   };
 
+  const getSearchMeta = (product: Product) => {
+    const meta = [product.category];
+    if (product.language === 'en') meta.push('English');
+    if (product.language === 'tl') meta.push('Tagalog');
+    return meta.join(' · ');
+  };
+
   const filteredProducts = searchQuery.trim() === '' 
     ? [] 
     : PRODUCTS.filter(p => {
@@ -163,7 +170,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onSearchSelect }) => {
                       </div>
                       <div className="overflow-hidden">
                         <div className={`f-body font-black truncate transition-colors ${index === selectedIndex ? 'text-brand-yellow' : 'text-white'}`}>{product.title}</div>
-                        <div className="f-small text-brand-gray/40 text-[10px] laptop:text-[11px] font-black truncate">{product.category}</div>
+                        <div className="f-small text-brand-gray/40 text-[10px] laptop:text-[11px] font-black truncate">{getSearchMeta(product)}</div>
                       </div>
                     </button>
                   ))}
@@ -229,7 +236,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onSearchSelect }) => {
                       </div>
                       <div className="overflow-hidden">
                         <div className="f-body font-black text-white truncate">{product.title}</div>
-                        <div className="f-small text-brand-gray/40 text-[11px] font-black truncate">{product.category}</div>
+                        <div className="f-small text-brand-gray/40 text-[11px] font-black truncate">{getSearchMeta(product)}</div>
                       </div>
                     </button>
                   ))}

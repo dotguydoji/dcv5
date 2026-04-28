@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { ShoppingCart, Copy, Smartphone, Monitor, X, ExternalLink } from 'lucide-react';
+import { Copy, Monitor, ShoppingCart, Smartphone, X } from 'lucide-react';
 import { Product } from '../types';
 
 interface CartModalProps {
@@ -9,15 +9,27 @@ interface CartModalProps {
   onToggleSelect: (product: Product, event?: React.MouseEvent) => void;
 }
 
+const getLanguageLabel = (product: Product) => {
+  if (product.language === 'tl') return 'Tagalog';
+  if (product.language === 'en') return 'English';
+  return '';
+};
+
+const formatOrderLine = (product: Product) => {
+  const languageLabel = getLanguageLabel(product);
+  return languageLabel
+    ? `${product.title} (${languageLabel}) - â‚±${product.price.toLocaleString()}`
+    : `${product.title} - â‚±${product.price.toLocaleString()}`;
+};
+
 export const CartModal: React.FC<CartModalProps> = ({
   isOpen,
   onClose,
   selectedProducts,
-  onToggleSelect,
+  onToggleSelect
 }) => {
   const [copied, setCopied] = React.useState(false);
 
-  // Prevent body scrolling when modal is open
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
@@ -25,37 +37,36 @@ export const CartModal: React.FC<CartModalProps> = ({
       document.body.style.overflow = '';
     }
 
-    // Cleanup on unmount
     return () => {
       document.body.style.overflow = '';
     };
   }, [isOpen]);
 
-  const handleCopyOrder = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    e.preventDefault();
-    
+  const handleCopyOrder = (event: React.MouseEvent) => {
+    event.stopPropagation();
+    event.preventDefault();
+
     if (selectedProducts.length === 0) return;
 
     const orderList = selectedProducts
-      .map((p, index) => `${index + 1}. ${p.title} - ₱${p.price.toLocaleString()}`)
+      .map((product, index) => `${index + 1}. ${formatOrderLine(product)}`)
       .join('\n');
 
-    const total = selectedProducts.reduce((sum, p) => sum + p.price, 0);
-    const fullText = `My Order:\n${orderList}\n\nTotal: ₱${total.toLocaleString()}`;
+    const total = selectedProducts.reduce((sum, product) => sum + product.price, 0);
+    const fullText = `My Order:\n${orderList}\n\nTotal: â‚±${total.toLocaleString()}`;
 
-    // Try modern clipboard API first
     if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(fullText).then(() => {
-        setCopied(true);
-        setTimeout(() => setCopied(false), 2000);
-      }).catch((err) => {
-        console.error('Clipboard API failed:', err);
-        // Fallback to execCommand
-        fallbackCopy(fullText);
-      });
+      navigator.clipboard
+        .writeText(fullText)
+        .then(() => {
+          setCopied(true);
+          setTimeout(() => setCopied(false), 2000);
+        })
+        .catch((error) => {
+          console.error('Clipboard API failed:', error);
+          fallbackCopy(fullText);
+        });
     } else {
-      // Fallback for older browsers
       fallbackCopy(fullText);
     }
   };
@@ -74,11 +85,11 @@ export const CartModal: React.FC<CartModalProps> = ({
     textArea.style.boxShadow = 'none';
     textArea.style.background = 'transparent';
     textArea.style.opacity = '0';
-    
+
     document.body.appendChild(textArea);
     textArea.focus();
     textArea.select();
-    
+
     try {
       const successful = document.execCommand('copy');
       if (successful) {
@@ -87,8 +98,8 @@ export const CartModal: React.FC<CartModalProps> = ({
       } else {
         console.error('execCommand copy failed');
       }
-    } catch (err) {
-      console.error('execCommand copy error:', err);
+    } catch (error) {
+      console.error('execCommand copy error:', error);
     } finally {
       document.body.removeChild(textArea);
     }
@@ -97,37 +108,26 @@ export const CartModal: React.FC<CartModalProps> = ({
   const handleBuyNow = (platform: 'mobile' | 'desktop') => {
     if (selectedProducts.length === 0) return;
 
-    const orderList = selectedProducts
-      .map((p) => `${p.title} - ₱${p.price.toLocaleString()}`)
-      .join(', ');
-
-    const total = selectedProducts.reduce((sum, p) => sum + p.price, 0);
+    const orderList = selectedProducts.map((product) => formatOrderLine(product)).join(', ');
+    const total = selectedProducts.reduce((sum, product) => sum + product.price, 0);
     const message = encodeURIComponent(
-      `Hi! I would like to purchase the following items:\n\n${orderList}\n\nTotal: ₱${total.toLocaleString()}`
+      `Hi! I would like to purchase the following items:\n\n${orderList}\n\nTotal: â‚±${total.toLocaleString()}`
     );
 
-    const url = platform === 'mobile' 
-      ? 'https://m.me/103186496068437' 
-      : 'https://www.facebook.com/share/p/18DmuzbFKk/';
+    const url = platform === 'mobile' ? 'https://m.me/103186496068437' : 'https://www.facebook.com/share/p/18DmuzbFKk/';
 
     window.open(url, '_blank');
   };
 
   if (!isOpen) return null;
 
-  const total = selectedProducts.reduce((sum, p) => sum + p.price, 0);
+  const total = selectedProducts.reduce((sum, product) => sum + product.price, 0);
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center">
-      {/* Backdrop */}
-      <div 
-        className="absolute inset-0 bg-black/80 backdrop-blur-sm"
-        onClick={onClose}
-      />
-      
-      {/* Modal */}
+      <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={onClose} />
+
       <div className="relative bg-[#222222] border border-white/10 rounded-lg w-full max-w-lg mx-4 max-h-[90vh] overflow-hidden flex flex-col shadow-2xl">
-        {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-white/10 bg-[#1A1A1A]">
           <div className="flex items-center gap-3">
             <ShoppingCart size={24} className="text-brand-yellow" strokeWidth={2.5} />
@@ -146,7 +146,6 @@ export const CartModal: React.FC<CartModalProps> = ({
           </button>
         </div>
 
-        {/* Content */}
         <div className="flex-1 overflow-y-auto p-6">
           {selectedProducts.length === 0 ? (
             <div className="text-center py-12">
@@ -156,26 +155,32 @@ export const CartModal: React.FC<CartModalProps> = ({
             </div>
           ) : (
             <>
-              {/* Order List */}
               <div className="space-y-3 mb-6">
                 <h3 className="text-sm font-bold text-white uppercase tracking-wider">Selected Items</h3>
                 <div className="space-y-2 max-h-[240px] overflow-y-auto pr-2 custom-scrollbar">
                   {selectedProducts.map((product) => (
-                    <div 
+                    <div
                       key={product.id}
                       className="flex items-start gap-3 bg-[#1A1A1A] border border-white/5 rounded-sm p-3"
                     >
-                      <img 
-                        src={product.thumbnail} 
+                      <img
+                        src={product.thumbnail}
                         alt={product.title}
                         className="w-16 h-10 object-cover rounded-sm flex-shrink-0"
                       />
                       <div className="flex-1 min-w-0">
                         <p className="text-white text-sm font-medium truncate">{product.title}</p>
-                        <p className="text-brand-yellow text-sm font-bold">₱{product.price.toLocaleString()}</p>
+                        <p className="text-brand-gray/50 text-[11px] font-black uppercase tracking-[0.16em] truncate">
+                          {product.category}
+                          {getLanguageLabel(product) ? ` · ${getLanguageLabel(product)}` : ''}
+                        </p>
+                        <p className="text-brand-yellow text-sm font-bold">â‚±{product.price.toLocaleString()}</p>
                       </div>
                       <button
-                        onClick={(e) => { e.stopPropagation(); onToggleSelect(product, e); }}
+                        onClick={(event) => {
+                          event.stopPropagation();
+                          onToggleSelect(product, event);
+                        }}
                         className="p-1 hover:bg-white/5 rounded transition-colors"
                       >
                         <X size={14} className="text-brand-gray/50 hover:text-red-400" />
@@ -183,36 +188,30 @@ export const CartModal: React.FC<CartModalProps> = ({
                     </div>
                   ))}
                 </div>
-                
-                {/* Total */}
+
                 <div className="flex justify-between items-center pt-4 border-t border-white/10">
                   <span className="text-brand-gray font-bold tracking-wider">TOTAL</span>
-                  <span className="text-2xl font-bold text-brand-yellow">₱{total.toLocaleString()}</span>
+                  <span className="text-2xl font-bold text-brand-yellow">â‚±{total.toLocaleString()}</span>
                 </div>
               </div>
 
-              {/* Instructions */}
               <div className="bg-brand-yellow/5 border border-brand-yellow/20 rounded-sm p-4 mb-6">
                 <h4 className="text-sm font-bold text-brand-yellow uppercase tracking-wider mb-2">How to Purchase</h4>
                 <p className="text-brand-gray/80 text-sm leading-relaxed">
-                  Click the copy button to copy your order. Then, send it to our Facebook page. 
-                  You can click the button below if you're using mobile or desktop.
+                  Click the copy button to copy your order. Then, send it to our Facebook page.
+                  You can click the button below if you&apos;re using mobile or desktop.
                 </p>
               </div>
 
-              {/* Action Buttons */}
               <div className="space-y-3">
-                {/* Copy Button */}
                 <button
-                  onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    handleCopyOrder(e);
+                  onClick={(event) => {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    handleCopyOrder(event);
                   }}
                   className={`w-full flex items-center justify-center gap-2 py-4 rounded-sm font-bold transition-all touch-manipulation active:scale-[0.98] ${
-                    copied 
-                      ? 'bg-green-600 text-white cursor-default' 
-                      : 'bg-white text-black hover:bg-white/90 cursor-pointer'
+                    copied ? 'bg-green-600 text-white cursor-default' : 'bg-white text-black hover:bg-white/90 cursor-pointer'
                   }`}
                   style={{ minHeight: '48px' }}
                   type="button"
@@ -232,7 +231,6 @@ export const CartModal: React.FC<CartModalProps> = ({
                   )}
                 </button>
 
-                {/* Buy Buttons - Always show both, hide icons on mobile */}
                 <div className="grid grid-cols-2 gap-3">
                   <button
                     onClick={() => handleBuyNow('mobile')}

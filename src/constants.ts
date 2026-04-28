@@ -1,22 +1,67 @@
+import { FAQItem, Product, ProductLanguage, ProductLevel, SiteContent } from './types';
 
-import { Product, FAQItem, SiteContent } from './types';
+const MOBILE_URL = 'https://m.me/103186496068437';
+const DESKTOP_URL = 'https://www.facebook.com/share/p/18DmuzbFKk/';
+
+const PROGRAMMING_LANGUAGES_CATEGORY = 'Programming Languages';
+const PROGRAMMING_LANGUAGE_PACKAGES_CATEGORY = 'Programming Language Packages';
+const WEB_DEVELOPMENT_CATEGORY = 'Web Development';
+const AI_MODULES_CATEGORY = 'AI Modules';
+
+const LANGUAGE_FILE_SEGMENT: Record<ProductLanguage, 'english' | 'tagalog'> = {
+  en: 'english',
+  tl: 'tagalog'
+};
+
+type ProgrammingLanguageKey = 'c' | 'cpp' | 'csharp' | 'java' | 'javascript' | 'python';
+type WebDevelopmentKey = 'html' | 'css' | 'jsdom' | 'package';
+type AIItemKey = 'machine-learning' | 'natural-language-processing' | 'deep-learning';
+
+interface ProgrammingLanguageMeta {
+  itemKey: ProgrammingLanguageKey;
+  name: string;
+}
+
+interface ProgrammingLevelMeta {
+  key: ProductLevel;
+  label: string;
+  folder: string;
+  fileSuffix: string;
+  price: Partial<Record<ProductLanguage, number>>;
+  available: boolean;
+}
+
+interface WebDevelopmentMeta {
+  itemKey: WebDevelopmentKey;
+  title: string;
+  fileStem: string;
+  description: Record<ProductLanguage, string>;
+  price: Record<ProductLanguage, number>;
+}
+
+interface AIItemMeta {
+  itemKey: AIItemKey;
+  title: string;
+  description: Record<ProductLanguage, string>;
+}
 
 /**
  * EDIT THIS SECTION TO CHANGE GLOBAL SITE TEXT
  */
 export const SITE_CONTENT: SiteContent = {
-  brandName: "DC NOTES",
-  brandTagline: "Notes",
+  brandName: 'DC NOTES',
+  brandTagline: 'Notes',
   hero: {
-    mainTitle: "Simple at Madaling Intindihin.",
-    subTitle: "DC NOTES / TECHNICAL LIBRARY"
+    mainTitle: 'Simple at Madaling Intindihin.',
+    subTitle: 'DC NOTES / TECHNICAL LIBRARY'
   },
   footer: {
-    description: "Easy-to-understand documentation made for beginners. Learn concepts step by step with clear explanations and helpful visuals.",
-    copyright: "© 2026 DC NOTES. ALL RIGHTS RESERVED."
+    description:
+      'Easy-to-understand documentation made for beginners. Learn concepts step by step with clear explanations and helpful visuals.',
+    copyright: '(c) 2026 DC NOTES. ALL RIGHTS RESERVED.'
   },
   socials: {
-    facebook: "https://facebook.com/dojicreates"
+    facebook: 'https://facebook.com/dojicreates'
   }
 };
 
@@ -24,462 +69,283 @@ export const SITE_CONTENT: SiteContent = {
  * EDIT THIS SECTION TO MANAGE PRODUCT CATEGORIES (Order matters)
  */
 export const CATEGORIES = [
-  'Programming Language Fundamentals',
-  'Programming Language Activities',
-  'Programming Language Intermediate',
-  'Programming Language Advanced',
-  'Web Development',
-  'AI Modules'
+  PROGRAMMING_LANGUAGES_CATEGORY,
+  PROGRAMMING_LANGUAGE_PACKAGES_CATEGORY,
+  WEB_DEVELOPMENT_CATEGORY,
+  AI_MODULES_CATEGORY
 ];
+
+const PROGRAMMING_LANGUAGES: readonly ProgrammingLanguageMeta[] = [
+  { itemKey: 'c', name: 'C' },
+  { itemKey: 'cpp', name: 'C++' },
+  { itemKey: 'csharp', name: 'C#' },
+  { itemKey: 'java', name: 'Java' },
+  { itemKey: 'javascript', name: 'JavaScript' },
+  { itemKey: 'python', name: 'Python' }
+];
+
+const PROGRAMMING_LEVELS: readonly ProgrammingLevelMeta[] = [
+  {
+    key: 'beginner',
+    label: 'Beginner',
+    folder: 'programming-languages-beginners',
+    fileSuffix: 'beginners',
+    price: { en: 99, tl: 120 },
+    available: true
+  },
+  {
+    key: 'intermediate',
+    label: 'Intermediate',
+    folder: 'programming-languages-intermediate',
+    fileSuffix: 'intermediate',
+    price: { en: 149, tl: 170 },
+    available: true
+  },
+  {
+    key: 'advanced',
+    label: 'Advanced',
+    folder: 'programming-languages-advanced',
+    fileSuffix: 'advanced',
+    price: { en: 199, tl: 220 },
+    available: true
+  },
+  {
+    key: 'build-phase',
+    label: 'Build Phase',
+    folder: 'programming-languages-buildphase',
+    fileSuffix: 'buildphase',
+    price: {},
+    available: false
+  },
+  {
+    key: 'activities',
+    label: 'Activities',
+    folder: 'programming-languages-activities',
+    fileSuffix: 'activities',
+    price: { en: 75, tl: 75 },
+    available: true
+  }
+];
+
+const WEB_DEVELOPMENT_ITEMS: readonly WebDevelopmentMeta[] = [
+  {
+    itemKey: 'html',
+    title: 'HTML',
+    fileStem: 'html',
+    description: {
+      en: 'Structured HTML lessons focused on semantic layout, clean markup, and solid page-building fundamentals.',
+      tl: 'Tagalog HTML lessons na nakatuon sa semantic layout, malinaw na markup, at matibay na page-building fundamentals.'
+    },
+    price: { en: 199, tl: 220 }
+  },
+  {
+    itemKey: 'css',
+    title: 'CSS',
+    fileStem: 'css',
+    description: {
+      en: 'Modern CSS coverage for responsive layout, spacing systems, components, and polished visual styling.',
+      tl: 'Tagalog CSS coverage para sa responsive layout, spacing systems, components, at mas maayos na visual styling.'
+    },
+    price: { en: 299, tl: 320 }
+  },
+  {
+    itemKey: 'jsdom',
+    title: 'JSDOM',
+    fileStem: 'jsdom',
+    description: {
+      en: 'JavaScript DOM lessons that focus on events, interactivity, and the practical logic behind dynamic interfaces.',
+      tl: 'Tagalog JavaScript DOM lessons na nakatuon sa events, interactivity, at praktikal na logic sa likod ng dynamic interfaces.'
+    },
+    price: { en: 399, tl: 420 }
+  },
+  {
+    itemKey: 'package',
+    title: 'Web Development Package',
+    fileStem: 'package',
+    description: {
+      en: 'A bundled web development package covering HTML, CSS, and JavaScript DOM material in one collection.',
+      tl: 'Isang bundled web development package na sakop ang HTML, CSS, at JavaScript DOM material sa iisang collection.'
+    },
+    price: { en: 799, tl: 820 }
+  }
+];
+
+const AI_ITEMS: readonly AIItemMeta[] = [
+  {
+    itemKey: 'machine-learning',
+    title: 'Machine Learning Fundamentals',
+    description: {
+      en: 'Introduction to machine learning concepts, algorithms, and practical examples for beginners.',
+      tl: 'Introduksyon sa machine learning concepts, algorithms, at praktikal na mga halimbawa para sa beginners.'
+    }
+  },
+  {
+    itemKey: 'natural-language-processing',
+    title: 'Natural Language Processing',
+    description: {
+      en: 'Core NLP topics including preprocessing, tokenization, and beginner-friendly language applications.',
+      tl: 'Mga pangunahing NLP topics kabilang ang preprocessing, tokenization, at beginner-friendly na language applications.'
+    }
+  },
+  {
+    itemKey: 'deep-learning',
+    title: 'Deep Learning Essentials',
+    description: {
+      en: 'Foundational deep learning material covering neural networks, model intuition, and practical use cases.',
+      tl: 'Foundational deep learning material na sakop ang neural networks, model intuition, at praktikal na use cases.'
+    }
+  }
+];
+
+const AI_FALLBACK_THUMBNAIL = '/web-app-manifest-512x512.png';
+
+const createProduct = (product: Product): Product => ({
+  mobileUrl: MOBILE_URL,
+  desktopUrl: DESKTOP_URL,
+  available: true,
+  ...product
+});
+
+const getProgrammingLanguageTitle = (languageName: string, level: ProductLevel) => {
+  switch (level) {
+    case 'activities':
+      return `${languageName} Activities`;
+    case 'build-phase':
+      return `${languageName} Build Phase`;
+    case 'beginner':
+      return `${languageName} for Beginners`;
+    case 'intermediate':
+      return `${languageName} for Intermediate`;
+    case 'advanced':
+      return `${languageName} for Advanced`;
+    default:
+      return languageName;
+  }
+};
+
+const getProgrammingLanguageDescription = (
+  languageName: string,
+  level: ProductLevel,
+  language: ProductLanguage
+) => {
+  if (level === 'build-phase') {
+    return language === 'tl'
+      ? `Ang ${languageName} Build Phase ay inihahanda pa at magiging available soon.`
+      : `${languageName} Build Phase is still being prepared and will be available soon.`;
+  }
+
+  if (level === 'activities') {
+    return language === 'tl'
+      ? `Practice-focused na ${languageName} activities na ginawa para mapalakas ang logic, syntax, at hands-on problem solving.`
+      : `Practice-focused ${languageName} activities designed to strengthen logic, syntax, and hands-on problem solving.`;
+  }
+
+  if (level === 'intermediate') {
+    return language === 'tl'
+      ? `Intermediate ${languageName} lessons na mas malalim ang examples, structure, at real coding workflows.`
+      : `Intermediate ${languageName} lessons with deeper examples, stronger structure, and more practical coding workflows.`;
+  }
+
+  if (level === 'advanced') {
+    return language === 'tl'
+      ? `Advanced ${languageName} material para sa mas mataas na concepts, mas malalim na techniques, at mas seryosong development work.`
+      : `Advanced ${languageName} material for higher-level concepts, deeper techniques, and more serious development work.`;
+  }
+
+  return language === 'tl'
+    ? `Beginner-friendly na ${languageName} notes na may step-by-step lessons, malinaw na examples, at praktikal na exercises.`
+    : `Beginner-friendly ${languageName} notes with step-by-step lessons, clear examples, and practical exercises.`;
+};
+
+const getProgrammingLanguageThumbnail = (
+  itemKey: ProgrammingLanguageKey,
+  level: ProgrammingLevelMeta,
+  language: ProductLanguage
+) => `/images/${level.folder}/${itemKey}-${level.fileSuffix}-${LANGUAGE_FILE_SEGMENT[language]}.png`;
+
+const getProgrammingLanguagePackageThumbnail = (
+  itemKey: ProgrammingLanguageKey,
+  language: ProductLanguage
+) => `/images/programming-languages-packages/${itemKey}-package-${LANGUAGE_FILE_SEGMENT[language]}.png`;
+
+const getWebDevelopmentThumbnail = (fileStem: string, language: ProductLanguage) =>
+  `/images/wevdevelopment/${fileStem}-webdevelopment-${LANGUAGE_FILE_SEGMENT[language]}.png`;
+
+const programmingLanguageProducts = PROGRAMMING_LEVELS.flatMap((level) =>
+  PROGRAMMING_LANGUAGES.flatMap((languageMeta) =>
+    (['en', 'tl'] as const).map((language) =>
+      createProduct({
+        id: `pl-${languageMeta.itemKey}-${level.key}-${language}`,
+        itemKey: languageMeta.itemKey,
+        title: getProgrammingLanguageTitle(languageMeta.name, level.key),
+        description: getProgrammingLanguageDescription(languageMeta.name, level.key, language),
+        price: level.price[language] ?? 0,
+        thumbnail: getProgrammingLanguageThumbnail(languageMeta.itemKey, level, language),
+        category: PROGRAMMING_LANGUAGES_CATEGORY,
+        language,
+        level: level.key,
+        available: level.available
+      })
+    )
+  )
+);
+
+const programmingLanguagePackageProducts = PROGRAMMING_LANGUAGES.flatMap((languageMeta) =>
+  (['en', 'tl'] as const).map((language) =>
+    createProduct({
+      id: `pl-package-${languageMeta.itemKey}-${language}`,
+      itemKey: languageMeta.itemKey,
+      title: `${languageMeta.name} Package`,
+      description:
+        language === 'tl'
+          ? `Bundled ${languageMeta.name} package sa Tagalog version para sa mas kumpletong learning set.`
+          : `Bundled ${languageMeta.name} package in the English version for a more complete learning set.`,
+      price: language === 'tl' ? 500 : 400,
+      thumbnail: getProgrammingLanguagePackageThumbnail(languageMeta.itemKey, language),
+      category: PROGRAMMING_LANGUAGE_PACKAGES_CATEGORY,
+      language
+    })
+  )
+);
+
+const webDevelopmentProducts = WEB_DEVELOPMENT_ITEMS.flatMap((item) =>
+  (['en', 'tl'] as const).map((language) =>
+    createProduct({
+      id: `wd-${item.itemKey}-${language}`,
+      itemKey: item.itemKey,
+      title: item.title,
+      description: item.description[language],
+      price: item.price[language],
+      thumbnail: getWebDevelopmentThumbnail(item.fileStem, language),
+      category: WEB_DEVELOPMENT_CATEGORY,
+      language
+    })
+  )
+);
+
+const aiProducts = AI_ITEMS.flatMap((item) =>
+  (['en', 'tl'] as const).map((language) =>
+    createProduct({
+      id: `ai-${item.itemKey}-${language}`,
+      itemKey: item.itemKey,
+      title: item.title,
+      description: item.description[language],
+      price: 75,
+      thumbnail: AI_FALLBACK_THUMBNAIL,
+      category: AI_MODULES_CATEGORY,
+      language
+    })
+  )
+);
 
 /**
  * EDIT THIS SECTION TO MANAGE ALL STORE ITEMS
  */
 export const PRODUCTS: Product[] = [
-  // Programming Language Fundamentals
-  {
-    id: 'pl-c',
-    title: 'C Programming Notes For Beginners',
-    description: 'A clear and practical introduction to C programming, perfect for students who want to master logic, memory handling, and core programming fundamentals from the ground up.',
-    price: 75,
-    thumbnail: '/images/c-fun.png',
-    mobileUrl: 'https://m.me/103186496068437',
-    desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
-    category: 'Programming Language Fundamentals'
-  },
-  {
-    id: 'pl-cpp',
-    title: 'C++ Notes For Beginners',
-    description: 'Step-by-step C++ lessons designed to build strong coding foundations, covering syntax, problem solving, and object-oriented concepts in a simple and easy-to-follow format.',
-    price: 75,
-    thumbnail: '/images/cpp-fun.png',
-    mobileUrl: 'https://m.me/103186496068437',
-    desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
-    category: 'Programming Language Fundamentals'
-  },
-  {
-    id: 'pl-csharp',
-    title: 'C# Notes For Beginners',
-    description: 'A beginner-friendly guide to C# that simplifies object-oriented programming and prepares you for building modern desktop, web, and enterprise applications.',
-    price: 75,
-    thumbnail: '/images/csharp-fun.png',
-    mobileUrl: 'https://m.me/103186496068437',
-    desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
-    category: 'Programming Language Fundamentals'
-  },
-  {
-    id: 'pl-python',
-    title: 'Python Notes For Beginners',
-    description: 'Learn Python the easy way with simple explanations, practical examples, and beginner-friendly lessons ideal for automation, data analysis, and real-world projects.',
-    price: 75,
-    thumbnail: '/images/py-fun.png',
-    mobileUrl: 'https://m.me/103186496068437',
-    desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
-    category: 'Programming Language Fundamentals'
-  },
-  {
-    id: 'pl-java',
-    title: 'Java Notes For Beginners',
-    description: 'A structured Java guide that helps you understand object-oriented programming, build strong coding habits, and prepare for academic or professional development.',
-    price: 75,
-    thumbnail: '/images/java-fun.png',
-    mobileUrl: 'https://m.me/103186496068437',
-    desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
-    category: 'Programming Language Fundamentals'
-  },
-  // {
-  //   id: 'pl-javascript',
-  //   title: 'JavaScript Notes For Beginners',
-  //   description: 'Master the fundamentals of JavaScript with easy-to-understand lessons that help you build interactive websites and start your journey into web development.',
-  //   price: 75,
-  //   thumbnail: '/images/c-fun.png',
-  //   mobileUrl: 'https://m.me/103186496068437',
-  //   desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
-  //   category: 'Programming Languages'
-  // },
-
-  // Programming Language Activities
-  {
-    id: 'pla-c',
-    title: 'C Activities (Beginners)',
-    description: 'Practice essential C programming concepts through structured exercises designed to strengthen logic, syntax, and problem-solving skills.',
-    price: 75,
-    thumbnail: '/images/c-act.png',
-    mobileUrl: 'https://m.me/103186496068437',
-    desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
-    category: 'Programming Language Activities'
-  },
-  {
-    id: 'pla-cpp',
-    title: 'C++ Activities (Beginners)',
-    description: 'Hands-on C++ exercises that reinforce core concepts, improve coding confidence, and help beginners master object-oriented thinking.',
-    price: 75,
-    thumbnail: '/images/cpp-act.png',
-    mobileUrl: 'https://m.me/103186496068437',
-    desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
-    category: 'Programming Language Activities'
-  },
-  {
-    id: 'pla-csharp',
-    title: 'C# Activities (Beginners)',
-    description: 'A collection of beginner-friendly C# programming tasks that build strong logical thinking and prepare students for real application development.',
-    price: 75,
-    thumbnail: '/images/csharp-act.png',
-    mobileUrl: 'https://m.me/103186496068437',
-    desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
-    category: 'Programming Language Activities'
-  },
-  {
-    id: 'pla-python',
-    title: 'Python Activities (Beginners)',
-    description: 'Simple yet effective Python exercises that help you practice coding fundamentals and build confidence through guided problem-solving.',
-    price: 75,
-    thumbnail: '/images/py-act.png',
-    mobileUrl: 'https://m.me/103186496068437',
-    desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
-    category: 'Programming Language Activities'
-  },
-  {
-    id: 'pla-java',
-    title: 'Java Activities (Beginners)',
-    description: 'Step-by-step Java programming activities that strengthen your understanding of object-oriented concepts and core programming logic.',
-    price: 75,
-    thumbnail: '/images/java-act.png',
-    mobileUrl: 'https://m.me/103186496068437',
-    desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
-    category: 'Programming Language Activities'
-  },
-//   {
-//     id: 'pla-javascript',
-//     title: 'JavaScript Activities (Beginners)',
-//     description: 'Interactive JavaScript exercises designed to improve coding skills and help beginners create dynamic and responsive web features.',
-//     price: 75,
-//     thumbnail: '/images/c-fun.png',
-//     mobileUrl: 'https://m.me/103186496068437',
-//     desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
-//     category: 'Programming Language Activities'
-//   },
-
-  // Programming Language Intermediate
-  {
-    id: 'pli-c',
-    title: 'C Programming Intermediate Notes',
-    description: 'Level up your C skills with intermediate concepts including pointers, data structures, file handling, and memory management techniques.',
-    price: 75,
-    thumbnail: '/images/c-fun.png',
-    mobileUrl: 'https://m.me/103186496068437',
-    desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
-    category: 'Programming Language Intermediate'
-  },
-  {
-    id: 'pli-cpp',
-    title: 'C++ Intermediate Programming',
-    description: 'Deep dive into C++ with templates, STL containers, smart pointers, and advanced object-oriented programming patterns.',
-    price: 75,
-    thumbnail: '/images/cpp-fun.png',
-    mobileUrl: 'https://m.me/103186496068437',
-    desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
-    category: 'Programming Language Intermediate'
-  },
-  {
-    id: 'pli-python',
-    title: 'Python Intermediate Development',
-    description: 'Master Python decorators, generators, context managers, async programming, and build real-world applications.',
-    price: 75,
-    thumbnail: '/images/py-fun.png',
-    mobileUrl: 'https://m.me/103186496068437',
-    desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
-    category: 'Programming Language Intermediate'
-  },
-
-  // Programming Language Advanced
-  {
-    id: 'pla-adv-c',
-    title: 'C Advanced Systems Programming',
-    description: 'Advanced C topics including multithreading, network programming, system calls, and building high-performance applications.',
-    price: 75,
-    thumbnail: '/images/c-fun.png',
-    mobileUrl: 'https://m.me/103186496068437',
-    desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
-    category: 'Programming Language Advanced'
-  },
-  {
-    id: 'pla-adv-cpp',
-    title: 'C++ Advanced Mastery',
-    description: 'Expert-level C++ covering move semantics, perfect forwarding, metaprogramming, and modern C++20/23 features.',
-    price: 75,
-    thumbnail: '/images/cpp-fun.png',
-    mobileUrl: 'https://m.me/103186496068437',
-    desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
-    category: 'Programming Language Advanced'
-  },
-  {
-    id: 'pla-adv-java',
-    title: 'Java Advanced Enterprise',
-    description: 'Advanced Java concepts including concurrency, JVM internals, microservices architecture, and enterprise design patterns.',
-    price: 75,
-    thumbnail: '/images/java-fun.png',
-    mobileUrl: 'https://m.me/103186496068437',
-    desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
-    category: 'Programming Language Advanced'
-  },
-
-  // Web Development
-  {
-    id: 'wd-html',
-    title: 'HTML5 Modern Web Structure',
-    description: 'Learn how to build clean, semantic, and accessible web pages using modern HTML5 standards and best practices.',
-    price: 75,
-    thumbnail: '/images/c-fun.png',
-    mobileUrl: 'https://m.me/103186496068437',
-    desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
-    category: 'Web Development'
-  },
-  {
-    id: 'wd-css',
-    title: 'CSS3 Responsive Design',
-    description: 'Master modern CSS including Flexbox, Grid, animations, custom properties, and responsive design techniques.',
-    price: 75,
-    thumbnail: '/images/c-fun.png',
-    mobileUrl: 'https://m.me/103186496068437',
-    desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
-    category: 'Web Development'
-  },
-  {
-    id: 'wd-js',
-    title: 'JavaScript DOM & Events',
-    description: 'Build interactive websites with JavaScript fundamentals, DOM manipulation, event handling, and modern ES6+ features.',
-    price: 75,
-    thumbnail: '/images/c-fun.png',
-    mobileUrl: 'https://m.me/103186496068437',
-    desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
-    category: 'Web Development'
-  },
-
-  // AI Modules
-  {
-    id: 'ai-ml-basics',
-    title: 'Machine Learning Fundamentals',
-    description: 'Introduction to machine learning concepts, algorithms, supervised and unsupervised learning with practical examples.',
-    price: 75,
-    thumbnail: '/images/c-fun.png',
-    mobileUrl: 'https://m.me/103186496068437',
-    desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
-    category: 'AI Modules'
-  },
-  {
-    id: 'ai-nlp',
-    title: 'Natural Language Processing',
-    description: 'Learn NLP basics including text preprocessing, sentiment analysis, tokenization, and building chatbots.',
-    price: 75,
-    thumbnail: '/images/c-fun.png',
-    mobileUrl: 'https://m.me/103186496068437',
-    desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
-    category: 'AI Modules'
-  },
-  {
-    id: 'ai-deeplearning',
-    title: 'Deep Learning Essentials',
-    description: 'Dive into neural networks, CNNs, RNNs, and deep learning frameworks to build intelligent AI applications.',
-    price: 75,
-    thumbnail: '/images/c-fun.png',
-    mobileUrl: 'https://m.me/103186496068437',
-    desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
-    category: 'AI Modules'
-  },
-
-  // Tagalog Versions - Programming Language Fundamentals
-  {
-    id: 'pl-c-tl',
-    title: 'C Programming Notes (Tagalog Version)',
-    description: 'Malinaw at praktikal na introduksyon sa C programming, perpekto para sa mga estudyanteng gustong matutunan ang logic, memory handling, at core programming fundamentals.',
-    price: 75,
-    thumbnail: '/images/c-fun.png',
-    mobileUrl: 'https://m.me/103186496068437',
-    desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
-    category: 'Programming Language Fundamentals'
-  },
-  {
-    id: 'pl-cpp-tl',
-    title: 'C++ Notes (Tagalog Version)',
-    description: 'Step-by-step na C++ lessons na nakadisenyo para bumuo ng malakas na coding foundations, sakop ang syntax, problem solving, at object-oriented concepts.',
-    price: 75,
-    thumbnail: '/images/cpp-fun.png',
-    mobileUrl: 'https://m.me/103186496068437',
-    desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
-    category: 'Programming Language Fundamentals'
-  },
-  {
-    id: 'pl-python-tl',
-    title: 'Python Notes (Tagalog Version)',
-    description: 'Matuto ng Python nang madali gamit ang simpleng paliwanag, praktikal na halimbawa, at beginner-friendly na aralin para sa automation at data analysis.',
-    price: 75,
-    thumbnail: '/images/py-fun.png',
-    mobileUrl: 'https://m.me/103186496068437',
-    desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
-    category: 'Programming Language Fundamentals'
-  },
-
-  // Tagalog Versions - Programming Language Activities
-  {
-    id: 'pla-c-tl',
-    title: 'C Activities (Tagalog Version)',
-    description: 'Sanayin ang mahahalagang C programming concepts sa pamamagitan ng structured exercises na nagpapalakas ng logic, syntax, at problem-solving skills.',
-    price: 75,
-    thumbnail: '/images/c-act.png',
-    mobileUrl: 'https://m.me/103186496068437',
-    desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
-    category: 'Programming Language Activities'
-  },
-  {
-    id: 'pla-cpp-tl',
-    title: 'C++ Activities (Tagalog Version)',
-    description: 'Hands-on na C++ exercises na nagpapalakas ng core concepts, nagpapabuti ng coding confidence, at tumutulong sa mga beginners na ma-master ang object-oriented thinking.',
-    price: 75,
-    thumbnail: '/images/cpp-act.png',
-    mobileUrl: 'https://m.me/103186496068437',
-    desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
-    category: 'Programming Language Activities'
-  },
-  {
-    id: 'pla-java-tl',
-    title: 'Java Activities (Tagalog Version)',
-    description: 'Step-by-step na Java programming activities na nagpapalakas ng iyong pagka-unawa sa object-oriented concepts at core programming logic.',
-    price: 75,
-    thumbnail: '/images/java-act.png',
-    mobileUrl: 'https://m.me/103186496068437',
-    desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
-    category: 'Programming Language Activities'
-  },
-
-  // Tagalog Versions - Programming Language Intermediate
-  {
-    id: 'pli-csharp-tl',
-    title: 'C# Intermediate Notes (Tagalog Version)',
-    description: 'Itaas ang iyong C# skills sa intermediate concepts kabilang ang LINQ, async/await, Entity Framework, at modern application development.',
-    price: 75,
-    thumbnail: '/images/csharp-fun.png',
-    mobileUrl: 'https://m.me/103186496068437',
-    desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
-    category: 'Programming Language Intermediate'
-  },
-  {
-    id: 'pli-python-tl',
-    title: 'Python Intermediate (Tagalog Version)',
-    description: 'I-master ang Python decorators, generators, context managers, async programming, at gumawa ng real-world applications.',
-    price: 75,
-    thumbnail: '/images/py-fun.png',
-    mobileUrl: 'https://m.me/103186496068437',
-    desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
-    category: 'Programming Language Intermediate'
-  },
-  {
-    id: 'pli-java-tl',
-    title: 'Java Intermediate (Tagalog Version)',
-    description: 'Intermediate Java topics kabilang ang collections, streams, lambdas, exception handling, at object-oriented design patterns.',
-    price: 75,
-    thumbnail: '/images/java-fun.png',
-    mobileUrl: 'https://m.me/103186496068437',
-    desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
-    category: 'Programming Language Intermediate'
-  },
-
-  // Tagalog Versions - Programming Language Advanced
-  {
-    id: 'pla-adv-cpp-tl',
-    title: 'C++ Advanced Mastery (Tagalog Version)',
-    description: 'Expert-level na C++ sakop ang move semantics, perfect forwarding, metaprogramming, at modern C++20/23 features.',
-    price: 75,
-    thumbnail: '/images/cpp-fun.png',
-    mobileUrl: 'https://m.me/103186496068437',
-    desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
-    category: 'Programming Language Advanced'
-  },
-  {
-    id: 'pla-adv-csharp-tl',
-    title: 'C# Advanced Enterprise (Tagalog Version)',
-    description: 'Advanced C# concepts kabilang ang multithreading, async programming patterns, microservices, at enterprise architecture.',
-    price: 75,
-    thumbnail: '/images/csharp-fun.png',
-    mobileUrl: 'https://m.me/103186496068437',
-    desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
-    category: 'Programming Language Advanced'
-  },
-  {
-    id: 'pla-adv-python-tl',
-    title: 'Python Advanced Development (Tagalog Version)',
-    description: 'Advanced Python topics kabilang ang metaprogramming, performance optimization, C extensions, at building scalable applications.',
-    price: 75,
-    thumbnail: '/images/py-fun.png',
-    mobileUrl: 'https://m.me/103186496068437',
-    desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
-    category: 'Programming Language Advanced'
-  },
-
-  // Tagalog Versions - Web Development
-  {
-    id: 'wd-html-tl',
-    title: 'HTML5 Modern Web Structure (Tagalog Version)',
-    description: 'Matuto kung paano gumawa ng malinis, semantic, at accessible na web pages gamit ang modern HTML5 standards at best practices.',
-    price: 75,
-    thumbnail: '/images/c-fun.png',
-    mobileUrl: 'https://m.me/103186496068437',
-    desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
-    category: 'Web Development'
-  },
-  {
-    id: 'wd-css-tl',
-    title: 'CSS3 Responsive Design (Tagalog Version)',
-    description: 'I-master ang modern CSS kabilang ang Flexbox, Grid, animations, custom properties, at responsive design techniques.',
-    price: 75,
-    thumbnail: '/images/c-fun.png',
-    mobileUrl: 'https://m.me/103186496068437',
-    desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
-    category: 'Web Development'
-  },
-  {
-    id: 'wd-js-tl',
-    title: 'JavaScript DOM & Events (Tagalog Version)',
-    description: 'Gumawa ng interactive websites gamit ang JavaScript fundamentals, DOM manipulation, event handling, at modern ES6+ features.',
-    price: 75,
-    thumbnail: '/images/c-fun.png',
-    mobileUrl: 'https://m.me/103186496068437',
-    desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
-    category: 'Web Development'
-  },
-
-  // Tagalog Versions - AI Modules
-  {
-    id: 'ai-ml-basics-tl',
-    title: 'Machine Learning Fundamentals (Tagalog Version)',
-    description: 'Introduksyon sa machine learning concepts, algorithms, supervised at unsupervised learning na may praktikal na halimbawa.',
-    price: 75,
-    thumbnail: '/images/c-fun.png',
-    mobileUrl: 'https://m.me/103186496068437',
-    desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
-    category: 'AI Modules'
-  },
-  {
-    id: 'ai-nlp-tl',
-    title: 'Natural Language Processing (Tagalog Version)',
-    description: 'Matuto ng NLP basics kabilang ang text preprocessing, sentiment analysis, tokenization, at paggawa ng chatbots.',
-    price: 75,
-    thumbnail: '/images/c-fun.png',
-    mobileUrl: 'https://m.me/103186496068437',
-    desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
-    category: 'AI Modules'
-  },
-  {
-    id: 'ai-deeplearning-tl',
-    title: 'Deep Learning Essentials (Tagalog Version)',
-    description: 'Sumisid sa neural networks, CNNs, RNNs, at deep learning frameworks para makagawa ng intelligent AI applications.',
-    price: 75,
-    thumbnail: '/images/c-fun.png',
-    mobileUrl: 'https://m.me/103186496068437',
-    desktopUrl: 'https://www.facebook.com/share/p/18DmuzbFKk/',
-    category: 'AI Modules'
-  }
-
+  ...programmingLanguageProducts,
+  ...programmingLanguagePackageProducts,
+  ...webDevelopmentProducts,
+  ...aiProducts
 ];
 
 /**
@@ -487,23 +353,25 @@ export const PRODUCTS: Product[] = [
  */
 export const FAQS: FAQItem[] = [
   {
-    question: "What format are the notes in?",
-    answer: "The notes are in high-quality PDF format. They can be accessed anytime on your laptop, tablet, or phone."
+    question: 'What format are the notes in?',
+    answer: 'The notes are in high-quality PDF format. They can be accessed anytime on your laptop, tablet, or phone.'
   },
   {
-    question: "How will I receive the PDF notes after payment?",
-    answer: "After completing your payment, you will be sent an access link via email where you can view your PDF notes instantly and securely."
+    question: 'How will I receive the PDF notes after payment?',
+    answer: 'After completing your payment, you will be sent an access link via email where you can view your PDF notes instantly and securely.'
   },
   {
-    question: "Are these notes suitable for absolute beginners?",
-    answer: "Yes! The notes are designed for absolute beginners and progress up to mastery level. The explanations you hear on YouTube are the same style I use inside the PDF, but the notes go deeper, with more details, examples, and expanded topics to make sure you fully understand."
+    question: 'Are these notes suitable for absolute beginners?',
+    answer:
+      'Yes! The notes are designed for absolute beginners and progress up to mastery level. The explanations you hear on YouTube are the same style I use inside the PDF, but the notes go deeper, with more details, examples, and expanded topics to make sure you fully understand.'
   },
   {
-    question: "Is this a one-time payment?",
-    answer: "Yes, it’s a one-time payment with lifetime access. No hidden charges or subscriptions."
+    question: 'Is this a one-time payment?',
+    answer: 'Yes, it is a one-time payment with lifetime access. No hidden charges or subscriptions.'
   },
   {
-    question: "How often are the notes updated?",
-    answer: "The notes are regularly updated. Whenever we upload a new tutorial on YouTube, we also update the PDF notes so your material stays fresh and relevant."
+    question: 'How often are the notes updated?',
+    answer:
+      'The notes are regularly updated. Whenever we upload a new tutorial on YouTube, we also update the PDF notes so your material stays fresh and relevant.'
   }
 ];
