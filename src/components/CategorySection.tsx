@@ -17,7 +17,8 @@ export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProp
   const englishScrollRef = useRef<HTMLDivElement>(null);
   const tagalogScrollRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [englishActiveIndex, setEnglishActiveIndex] = useState(0);
+  const [tagalogActiveIndex, setTagalogActiveIndex] = useState(0);
   const [englishCanScrollLeft, setEnglishCanScrollLeft] = useState(false);
   const [englishCanScrollRight, setEnglishCanScrollRight] = useState(true);
   const [tagalogCanScrollLeft, setTagalogCanScrollLeft] = useState(false);
@@ -69,7 +70,7 @@ export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProp
         const visibleEntry = entries.find(e => e.isIntersecting);
         if (visibleEntry) {
           const index = parseInt((visibleEntry.target as HTMLElement).dataset.index || '0');
-          setActiveIndex(index);
+          setEnglishActiveIndex(index);
         }
       },
       { 
@@ -136,7 +137,7 @@ export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProp
         const visibleEntry = entries.find(e => e.isIntersecting);
         if (visibleEntry) {
           const index = parseInt((visibleEntry.target as HTMLElement).dataset.index || '0');
-          setActiveIndex(index);
+          setTagalogActiveIndex(index);
         }
       },
       { 
@@ -258,7 +259,7 @@ export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProp
                   key={i}
                   onClick={() => jumpToCard(i, 'english')}
                   className={`transition-all duration-300 rounded-full h-1 ${
-                    activeIndex === i 
+                    englishActiveIndex === i 
                       ? 'bg-brand-yellow w-10 shadow-[0_0_10px_rgba(255,107,0,0.5)]' 
                       : 'bg-white/10 w-2 hover:bg-white/30'
                   }`}
@@ -334,7 +335,7 @@ export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProp
                   key={i}
                   onClick={() => jumpToCard(i, 'tagalog')}
                   className={`transition-all duration-300 rounded-full h-1 ${
-                    activeIndex === i 
+                    tagalogActiveIndex === i 
                       ? 'bg-brand-yellow w-10 shadow-[0_0_10px_rgba(255,107,0,0.5)]' 
                       : 'bg-white/10 w-2 hover:bg-white/30'
                   }`}
