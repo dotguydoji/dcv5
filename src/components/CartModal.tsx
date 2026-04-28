@@ -44,35 +44,6 @@ export const CartModal: React.FC<CartModalProps> = ({
     };
   }, [isOpen]);
 
-  const handleCopyOrder = (event: React.MouseEvent) => {
-    event.stopPropagation();
-    event.preventDefault();
-
-    if (selectedProducts.length === 0) return;
-
-    const orderList = selectedProducts
-      .map((product, index) => `${index + 1}. ${formatOrderLine(product)}`)
-      .join('\n');
-
-    const total = selectedProducts.reduce((sum, product) => sum + product.price, 0);
-    const fullText = `My Order:\n${orderList}\n\nTotal: ${formatPrice(total)}`;
-
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard
-        .writeText(fullText)
-        .then(() => {
-          setCopied(true);
-          setTimeout(() => setCopied(false), 2000);
-        })
-        .catch((error) => {
-          console.error('Clipboard API failed:', error);
-          fallbackCopy(fullText);
-        });
-    } else {
-      fallbackCopy(fullText);
-    }
-  };
-
   const fallbackCopy = (text: string) => {
     const textArea = document.createElement('textarea');
     textArea.value = text;
@@ -107,14 +78,37 @@ export const CartModal: React.FC<CartModalProps> = ({
     }
   };
 
-  const handleBuyNow = (platform: 'mobile' | 'desktop') => {
+  const handleCopyOrder = (event: React.MouseEvent) => {
+    event.stopPropagation();
+    event.preventDefault();
+
     if (selectedProducts.length === 0) return;
 
-    const orderList = selectedProducts.map((product) => formatOrderLine(product)).join(', ');
+    const orderList = selectedProducts
+      .map((product, index) => `${index + 1}. ${formatOrderLine(product)}`)
+      .join('\n');
+
     const total = selectedProducts.reduce((sum, product) => sum + product.price, 0);
-    const message = encodeURIComponent(
-      `Hi! I would like to purchase the following items:\n\n${orderList}\n\nTotal: ${formatPrice(total)}`
-    );
+    const fullText = `My Order:\n${orderList}\n\nTotal: ${formatPrice(total)}`;
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard
+        .writeText(fullText)
+        .then(() => {
+          setCopied(true);
+          setTimeout(() => setCopied(false), 2000);
+        })
+        .catch((error) => {
+          console.error('Clipboard API failed:', error);
+          fallbackCopy(fullText);
+        });
+    } else {
+      fallbackCopy(fullText);
+    }
+  };
+
+  const handleBuyNow = (platform: 'mobile' | 'desktop') => {
+    if (selectedProducts.length === 0) return;
 
     const url =
       platform === 'mobile'
@@ -143,10 +137,7 @@ export const CartModal: React.FC<CartModalProps> = ({
               </span>
             )}
           </div>
-          <button
-            onClick={onClose}
-            className="p-2 hover:bg-white/5 rounded-full transition-colors"
-          >
+          <button onClick={onClose} className="p-2 hover:bg-white/5 rounded-full transition-colors">
             <X size={20} className="text-brand-gray hover:text-white" />
           </button>
         </div>
@@ -177,7 +168,7 @@ export const CartModal: React.FC<CartModalProps> = ({
                         <p className="text-white text-sm font-medium truncate">{product.title}</p>
                         <p className="text-brand-gray/50 text-[11px] font-black uppercase tracking-[0.16em] truncate">
                           {product.category}
-                          {getLanguageLabel(product) ? ` · ${getLanguageLabel(product)}` : ''}
+                          {getLanguageLabel(product) ? ` | ${getLanguageLabel(product)}` : ''}
                         </p>
                         <p className="text-brand-yellow text-sm font-bold">{formatPrice(product.price)}</p>
                       </div>
@@ -203,8 +194,8 @@ export const CartModal: React.FC<CartModalProps> = ({
               <div className="bg-brand-yellow/5 border border-brand-yellow/20 rounded-sm p-4 mb-6">
                 <h4 className="text-sm font-bold text-brand-yellow uppercase tracking-wider mb-2">How to Purchase</h4>
                 <p className="text-brand-gray/80 text-sm leading-relaxed">
-                  Click the copy button to copy your order. Then, send it to our Facebook page.
-                  You can click the button below if you&apos;re using mobile or desktop.
+                  Click the copy button to copy your order. Then, send it to our Facebook page. You can click the
+                  button below if you&apos;re using mobile or desktop.
                 </p>
               </div>
 
