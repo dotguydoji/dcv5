@@ -60,18 +60,6 @@ export const ProductCard = memo(({ product, isHighlighted, isSelected, onToggleS
           onLoad={handleImageLoad}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[#222222] to-transparent opacity-40"></div>
-        
-        {/* Selection Checkbox Overlay */}
-        <button
-          onClick={() => onToggleSelect(product)}
-          className={`absolute top-3 right-3 w-8 h-8 rounded-sm border-2 flex items-center justify-center transition-all duration-200 ${
-            isSelected 
-              ? 'bg-brand-yellow border-brand-yellow' 
-              : 'bg-black/60 border-white/40 hover:border-white'
-          }`}
-        >
-          {isSelected && <Check size={18} strokeWidth={3} className="text-black" />}
-        </button>
       </div>
       
       <div className="p-5 laptop:p-5 flex flex-col flex-grow">
@@ -83,19 +71,26 @@ export const ProductCard = memo(({ product, isHighlighted, isSelected, onToggleS
         </p>
         
         <div className="mt-auto pt-3 border-t border-white/5">
-          <div className="flex justify-between items-center">
+          <div className="flex justify-between items-center mb-3">
             <span className="f-small text-brand-gray font-bold tracking-[0.2em] opacity-50">PRICE</span>
             <span className="f-price text-brand-yellow drop-shadow-[0_0_10px_rgba(255,107,0,0.2)] text-xl lg:text-2xl">
               ₱{product.price.toLocaleString()}
             </span>
           </div>
           
-          {isSelected && (
-            <p className="text-brand-yellow text-xs font-bold mt-2 flex items-center gap-1">
-              <Check size={12} strokeWidth={3} />
-              SELECTED
-            </p>
-          )}
+          {/* Add to Cart Section */}
+          <div className="flex justify-between items-center">
+            <span className="text-white font-bold text-sm">Add to cart</span>
+            <button
+              onClick={() => onToggleSelect(product)}
+              className={`w-6 h-6 rounded-sm border-2 flex items-center justify-center transition-all duration-200 ${
+                isSelected 
+                  ? 'bg-brand-yellow border-brand-yellow' 
+                  : 'bg-transparent border-white/40 hover:border-white'
+              }`}>
+              {isSelected && <Check size={14} strokeWidth={3} className="text-black" />}
+            </button>
+          </div>
         </div>
       </div>
     </div>
