@@ -8,6 +8,13 @@ import { PRODUCTS, CATEGORIES, SITE_CONTENT } from "./constants";
 import { Product } from './types';
 import { ChevronLeft, ChevronRight, ShoppingCart } from 'lucide-react';
 
+interface FlyingItem {
+  id: string;
+  startX: number;
+  startY: number;
+  thumbnail: string;
+}
+
 const App: React.FC = () => {
   const [openCategories, setOpenCategories] = useState<Record<string, boolean>>({
     [CATEGORIES[0]]: true
@@ -16,14 +23,44 @@ const App: React.FC = () => {
   const [highlightedProductId, setHighlightedProductId] = useState<string | null>(null);
   const [selectedProducts, setSelectedProducts] = useState<Product[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [flyingItems, setFlyingItems] = useState<FlyingItem[]>([]);
+  const [cartBounceKey, setCartBounceKey] = useState(0);
 
   const categoryRefs = useRef<Record<string, HTMLElement | null>>({});
   const catContainerRef = useRef<HTMLDivElement>(null);
   const catButtonRefs = useRef<Record<string, HTMLButtonElement | null>>({});
+  const cartButtonRef = useRef<HTMLButtonElement>(null);
 
   const [isScrolling, setIsScrolling] = useState(false);
 
-  const handleToggleSelect = (product: Product) => {
+  const handleToggleSelect = (product: Product, event?: React.MouseEvent) => {
+    // Create flying animation when adding item
+    if (!selectedProducts.some(p => p.id === product.id) && event) {
+      const startRect = (event.target as HTMLElement).getBoundingClientRect();
+      const cartRect = cartButtonRef.current?.getBoundingClientRect();
+      
+      if (cartRect) {
+        const flyingItem: FlyingItem = {
+          id: `${product.id}-${Date.now()}`,
+          startX: startRect.left,
+          startY: startRect.top,
+          thumbnail: product.thumbnail
+        };
+        
+        setFlyingItems(prev => [...prev, flyingItem]);
+        
+        // Trigger cart bounce animation after the item hits the cart (1000ms delay to match flight time)
+        setTimeout(() => {
+          setCartBounceKey(prev => prev + 1);
+        }, 1000);
+        
+        // Remove the flying item after animation completes
+        setTimeout(() => {
+          setFlyingItems(prev => prev.filter(item => item.id !== flyingItem.id));
+        }, 1000);
+      }
+    }
+    
     setSelectedProducts(prev => {
       const isSelected = prev.some(p => p.id === product.id);
       if (isSelected) {
@@ -276,8 +313,10 @@ const App: React.FC = () => {
 
         {/* Floating Cart Button */}
         <button
+          ref={cartButtonRef}
           onClick={() => setIsCartOpen(true)}
-          className="fixed bottom-6 right-6 z-[99] bg-white text-black p-4 rounded-full shadow-2xl hover:bg-yellow-400 transition-all duration-300 active:scale-95 group"
+          key={cartBounceKey}
+          className="fixed bottom-6 right-6 z-[99] bg-white text-black p-4 rounded-full shadow-2xl hover:bg-yellow-400 transition-all duration-300 active:scale-95 group cart-bounce"
           aria-label="Open cart"
         >
           <ShoppingCart size={28} strokeWidth={2.5} />
@@ -287,6 +326,30 @@ const App: React.FC = () => {
             </span>
           )}
         </button>
+
+        {/* Flying Items Animation */}
+        {flyingItems.map(item => {
+          const cartRect = cartButtonRef.current?.getBoundingClientRect();
+          if (!cartRect) return null;
+          
+          const flyEndX = cartRect.left + cartRect.width / 2 - item.startX;
+          const flyEndY = cartRect.top + cartRect.height / 2 - item.startY;
+          
+          return (
+            <img
+              key={item.id}
+              src={item.thumbnail}
+              alt=""
+              className="fly-to-cart"
+              style={{
+                left: item.startX,
+                top: item.startY,
+                '--fly-end-x': `${flyEndX}px`,
+                '--fly-end-y': `${flyEndY}px`
+              } as React.CSSProperties}
+            />
+          );
+        })}
       </div>
 
       {/* Cart Modal */}

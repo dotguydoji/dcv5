@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ShoppingCart, Copy, Smartphone, Monitor, X, ExternalLink } from 'lucide-react';
 import { Product } from '../types';
 
@@ -6,7 +6,7 @@ interface CartModalProps {
   isOpen: boolean;
   onClose: () => void;
   selectedProducts: Product[];
-  onToggleSelect: (product: Product) => void;
+  onToggleSelect: (product: Product, event?: React.MouseEvent) => void;
 }
 
 export const CartModal: React.FC<CartModalProps> = ({
@@ -17,7 +17,24 @@ export const CartModal: React.FC<CartModalProps> = ({
 }) => {
   const [copied, setCopied] = React.useState(false);
 
-  const handleCopyOrder = () => {
+  // Prevent body scrolling when modal is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+
+    // Cleanup on unmount
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
+
+  const handleCopyOrder = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    e.preventDefault();
+    
     if (selectedProducts.length === 0) return;
 
     const orderList = selectedProducts
@@ -27,10 +44,54 @@ export const CartModal: React.FC<CartModalProps> = ({
     const total = selectedProducts.reduce((sum, p) => sum + p.price, 0);
     const fullText = `My Order:\n${orderList}\n\nTotal: ₱${total.toLocaleString()}`;
 
-    navigator.clipboard.writeText(fullText).then(() => {
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    });
+    // Try modern clipboard API first
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(fullText).then(() => {
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      }).catch((err) => {
+        console.error('Clipboard API failed:', err);
+        // Fallback to execCommand
+        fallbackCopy(fullText);
+      });
+    } else {
+      // Fallback for older browsers
+      fallbackCopy(fullText);
+    }
+  };
+
+  const fallbackCopy = (text: string) => {
+    const textArea = document.createElement('textarea');
+    textArea.value = text;
+    textArea.style.position = 'fixed';
+    textArea.style.top = '0';
+    textArea.style.left = '0';
+    textArea.style.width = '2em';
+    textArea.style.height = '2em';
+    textArea.style.padding = '0';
+    textArea.style.border = 'none';
+    textArea.style.outline = 'none';
+    textArea.style.boxShadow = 'none';
+    textArea.style.background = 'transparent';
+    textArea.style.opacity = '0';
+    
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    
+    try {
+      const successful = document.execCommand('copy');
+      if (successful) {
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      } else {
+        console.error('execCommand copy failed');
+      }
+    } catch (err) {
+      console.error('execCommand copy error:', err);
+    } finally {
+      document.body.removeChild(textArea);
+    }
   };
 
   const handleBuyNow = (platform: 'mobile' | 'desktop') => {
@@ -98,7 +159,7 @@ export const CartModal: React.FC<CartModalProps> = ({
               {/* Order List */}
               <div className="space-y-3 mb-6">
                 <h3 className="text-sm font-bold text-white uppercase tracking-wider">Selected Items</h3>
-                <div className="space-y-2">
+                <div className="space-y-2 max-h-[240px] overflow-y-auto pr-2 custom-scrollbar">
                   {selectedProducts.map((product) => (
                     <div 
                       key={product.id}
@@ -114,7 +175,7 @@ export const CartModal: React.FC<CartModalProps> = ({
                         <p className="text-brand-yellow text-sm font-bold">₱{product.price.toLocaleString()}</p>
                       </div>
                       <button
-                        onClick={() => onToggleSelect(product)}
+                        onClick={(e) => { e.stopPropagation(); onToggleSelect(product, e); }}
                         className="p-1 hover:bg-white/5 rounded transition-colors"
                       >
                         <X size={14} className="text-brand-gray/50 hover:text-red-400" />
@@ -143,32 +204,48 @@ export const CartModal: React.FC<CartModalProps> = ({
               <div className="space-y-3">
                 {/* Copy Button */}
                 <button
-                  onClick={handleCopyOrder}
-                  disabled={copied}
-                  className={`w-full flex items-center justify-center gap-2 py-3 rounded-sm font-bold transition-all ${
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    handleCopyOrder(e);
+                  }}
+                  className={`w-full flex items-center justify-center gap-2 py-4 rounded-sm font-bold transition-all touch-manipulation active:scale-[0.98] ${
                     copied 
-                      ? 'bg-green-600 text-white' 
-                      : 'bg-white text-black hover:bg-white/90'
+                      ? 'bg-green-600 text-white cursor-default' 
+                      : 'bg-white text-black hover:bg-white/90 cursor-pointer'
                   }`}
+                  style={{ minHeight: '48px' }}
+                  type="button"
                 >
-                  <Copy size={18} strokeWidth={2.5} />
-                  {copied ? 'COPIED!' : 'COPY ORDER LIST'}
+                  {copied ? (
+                    <>
+                      <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                      </svg>
+                      COPIED!
+                    </>
+                  ) : (
+                    <>
+                      <Copy size={18} strokeWidth={2.5} />
+                      COPY ORDER LIST
+                    </>
+                  )}
                 </button>
 
-                {/* Buy Buttons */}
+                {/* Buy Buttons - Always show both, hide icons on mobile */}
                 <div className="grid grid-cols-2 gap-3">
                   <button
                     onClick={() => handleBuyNow('mobile')}
                     className="flex items-center justify-center gap-2 bg-brand-yellow text-black border border-brand-yellow py-3 rounded-sm transition-all duration-300 hover:bg-transparent hover:text-brand-yellow active:scale-95 font-bold"
                   >
-                    <Smartphone size={16} strokeWidth={2.5} />
+                    <Smartphone size={16} strokeWidth={2.5} className="hidden sm:block" />
                     <span className="text-sm">BUY WITH MOBILE</span>
                   </button>
                   <button
                     onClick={() => handleBuyNow('desktop')}
                     className="flex items-center justify-center gap-2 bg-brand-yellow text-black border border-brand-yellow py-3 rounded-sm transition-all duration-300 hover:bg-transparent hover:text-brand-yellow active:scale-95 font-bold"
                   >
-                    <Monitor size={16} strokeWidth={2.5} />
+                    <Monitor size={16} strokeWidth={2.5} className="hidden sm:block" />
                     <span className="text-sm">BUY WITH DESKTOP</span>
                   </button>
                 </div>

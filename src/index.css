@@ -35,12 +35,67 @@
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
 @keyframes highlightBlink {
-  0% { border-color: #FF6B00; box-shadow: 0 0 0px #FF6B00; }
+  0% { border-color: #FF6B00; box-shadow: 0 0px 0px #FF6B00; }
   50% { border-color: #FF6B00; box-shadow: 0 0 30px rgba(255, 107, 0, 0.4); }
   100% { border-color: #1F2937; box-shadow: 0 0 0px #FF6B00; }
 }
 .animate-highlight {
   animation: highlightBlink 1.5s ease-in-out 2;
+}
+
+/* Flying to cart animation - straight line with spin */
+@keyframes flyToCart {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0) scale(1) rotate(0deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--fly-end-x), var(--fly-end-y)) scale(0.2) rotate(720deg);
+  }
+}
+
+.fly-to-cart {
+  position: fixed;
+  z-index: 9999;
+  pointer-events: none;
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+  animation: flyToCart 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+/* Cart bounce animation */
+@keyframes cartBounce {
+  0% { transform: scale(1); }
+  30% { transform: scale(1.25); }
+  50% { transform: scale(0.95); }
+  70% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+.cart-bounce {
+  animation: cartBounce 0.5s ease-in-out;
+}
+
+/* Custom scrollbar for cart items */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #1A1A1A;
+  border-radius: 3px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #FF6B00;
+  border-radius: 3px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #ff8533;
 }
 
 .ambient-glow {

@@ -6,7 +6,7 @@ interface ProductCardProps {
   product: Product;
   isHighlighted?: boolean;
   isSelected: boolean;
-  onToggleSelect: (product: Product) => void;
+  onToggleSelect: (product: Product, event?: React.MouseEvent) => void;
 }
 
 export const ProductCard = memo(({ product, isHighlighted, isSelected, onToggleSelect }: ProductCardProps) => {
@@ -77,7 +77,7 @@ export const ProductCard = memo(({ product, isHighlighted, isSelected, onToggleS
           <button
             onClick={(e) => {
               e.stopPropagation();
-              onToggleSelect(product);
+              onToggleSelect(product, e);
             }}
             className={`transition-all duration-300 ${
               isSelected 
