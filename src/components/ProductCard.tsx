@@ -76,7 +76,7 @@ export const ProductCard = memo(
             {isAvailable ? (
               <>
                 <span className="f-price text-green-400 drop-shadow-none text-2xl lg:text-3xl font-semibold">
-                  â‚±{product.price.toLocaleString()}
+                  PHP {product.price.toLocaleString()}
                 </span>
                 <button
                   onClick={(event) => {

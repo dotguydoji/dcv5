@@ -273,8 +273,6 @@ export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProp
       setSelectedLevel(nextLevel);
     };
 
-    if (products.length === 0) return null;
-
     return (
       <section
         ref={ref}
@@ -355,7 +353,7 @@ export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProp
           {hasLevelToggle && (
             <div className="flex items-center gap-3 mb-4 flex-wrap">
               <span className="text-sm font-bold text-white/70 tracking-wide">Levels:</span>
-              {availableLevels.map((level) => (
+              {availableLevels.map((level, levelIndex) => (
                 <button
                   key={level}
                   type="button"
@@ -368,13 +366,14 @@ export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProp
                   }`}
                   style={{ textShadow: selectedLevel === level ? 'none' : '0 0 3px rgba(0,0,0,0.8), 0 0 1px #000' }}
                 >
-                  {LEVEL_LABEL[level]}
+                  <span className="md:hidden">{levelIndex + 1}</span>
+                  <span className="hidden md:inline">{LEVEL_LABEL[level]}</span>
                 </button>
               ))}
             </div>
           )}
 
-          {visibleProducts.length > 0 && (
+          {visibleProducts.length > 0 ? (
             <>
               <div className="relative">
                 <div
@@ -450,6 +449,15 @@ export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProp
                 </button>
               </div>
             </>
+          ) : (
+            <div className="min-h-[180px] flex items-center justify-center rounded-lg border border-white/5 bg-black/20 text-center px-6">
+              <div>
+                <p className="text-white font-bold uppercase tracking-[0.2em] text-sm">Coming Soon</p>
+                <p className="text-brand-gray/70 mt-2 max-w-md">
+                  Items for this category are still being prepared.
+                </p>
+              </div>
+            </div>
           )}
         </div>
       </section>

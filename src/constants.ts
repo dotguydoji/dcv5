@@ -6,6 +6,8 @@ const DESKTOP_URL = 'https://www.facebook.com/share/p/18DmuzbFKk/';
 const PROGRAMMING_LANGUAGES_CATEGORY = 'Programming Languages';
 const PROGRAMMING_LANGUAGE_PACKAGES_CATEGORY = 'Programming Language Packages';
 const WEB_DEVELOPMENT_CATEGORY = 'Web Development';
+const TOOLS_CATEGORY = 'Tools';
+const FRAMEWORKS_CATEGORY = 'Frameworks';
 const AI_MODULES_CATEGORY = 'AI Modules';
 
 const LANGUAGE_FILE_SEGMENT: Record<ProductLanguage, 'english' | 'tagalog'> = {
@@ -72,6 +74,8 @@ export const CATEGORIES = [
   PROGRAMMING_LANGUAGES_CATEGORY,
   PROGRAMMING_LANGUAGE_PACKAGES_CATEGORY,
   WEB_DEVELOPMENT_CATEGORY,
+  TOOLS_CATEGORY,
+  FRAMEWORKS_CATEGORY,
   AI_MODULES_CATEGORY
 ];
 
@@ -199,7 +203,9 @@ const AI_ITEMS: readonly AIItemMeta[] = [
 
 const AI_FALLBACK_THUMBNAIL = '/web-app-manifest-512x512.png';
 
-const createProduct = (product: Product): Product => ({
+type ProductSeed = Omit<Product, 'mobileUrl' | 'desktopUrl'>;
+
+const createProduct = (product: ProductSeed): Product => ({
   mobileUrl: MOBILE_URL,
   desktopUrl: DESKTOP_URL,
   available: true,

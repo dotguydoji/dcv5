@@ -1,21 +1,25 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth scroll-pt-[160px] lg:scroll-pt-[200px]">
+<html lang="en">
 
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="DC Notes is a curated collection of high-quality PDF guides on coding, programming, and artificial intelligence, designed to simplify complex concepts into clear, actionable knowledge. Created by Doji Creates, these notes are primarily tailored for Filipinos, helping learners and builders quickly level up their technical skills without unnecessary noise.">
+  <meta
+    name="description"
+    content="DC Notes is a curated collection of high-quality PDF guides on coding, programming, and artificial intelligence, designed to simplify complex concepts into clear, actionable knowledge. Created by Doji Creates, these notes are primarily tailored for Filipinos, helping learners and builders quickly level up their technical skills without unnecessary noise."
+  />
 
   <title>Doji's Library</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap"
-    rel="stylesheet">
-    <!-- Favicons -->
-    <link rel="icon" href="/favicon.ico" />
-    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet"
+  >
+  <link rel="icon" href="/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
   <meta property="og:title" content="Doji's Library">
   <meta property="og:description" content="Coding, Programming and AI PDF Notes.">
@@ -25,206 +29,15 @@
   <meta property="og:url" content="https://dojicreates.com/">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Doji's Library">
-  
+
   <meta name="twitter:card" content="summary_large_image">
-    
-    <!-- Web App Manifest -->
-    <link rel="manifest" href="/site.webmanifest" />
-    
-    <!-- Apple & Android icons for PWA -->
-    <link rel="apple-touch-icon" sizes="192x192" href="/web-app-manifest-192x192.png" />
-    <link rel="apple-touch-icon" sizes="512x512" href="/web-app-manifest-512x512.png" />
-    
-    <!-- Robots -->
-    <meta name="robots" content="index, follow" />
-    
-    <!-- Optional: theme color for mobile browsers -->
-    <meta name="theme-color" content="#FF6B00" />
-    
-    <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            brand: {
-              black: '#000000',
-              yellow: '#FF6B00',
-              gray: '#9CA3AF',
-              light: '#E5E7EB',
-              white: '#FFFFFF',
-            }
-          },
-          fontFamily: {
-            sans: ['Poppins', 'sans-serif'],
-            poppins: ['Poppins', 'sans-serif'],
-          },
-          screens: {
-            'xs': '480px',
-            'laptop': '1366px',
-          }
-        }
-      }
-    }
-  </script>
-  <style>
-    body {
-      background-color: #0D0D0D;
-      color: #E5E7EB;
-      -webkit-tap-highlight-color: transparent;
-      overflow-x: hidden;
-    }
 
-    /* Global Responsive Font Utilities with Font Weights */
-    .f-heading {
-      font-size: 1.5rem;
-      line-height: 2rem;
-      font-weight: 800;
-    }
+  <link rel="manifest" href="/site.webmanifest" />
+  <link rel="apple-touch-icon" sizes="192x192" href="/web-app-manifest-192x192.png" />
+  <link rel="apple-touch-icon" sizes="512x512" href="/web-app-manifest-512x512.png" />
 
-    .f-body {
-      font-size: 0.95rem;
-      line-height: 1.5rem;
-      font-weight: 400;
-    }
-
-    .f-small {
-      font-size: 0.7rem;
-      line-height: 1rem;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      font-weight: 700;
-    }
-
-    .f-price {
-      font-family: 'Poppins', sans-serif;
-      font-size: 1.75rem;
-      line-height: 1.75rem;
-      font-weight: 400;
-      letter-spacing: -0.05em;
-    }
-
-    @media (min-width: 768px) {
-      .f-heading {
-        font-size: 2rem;
-        line-height: 2.5rem;
-        font-weight: 800;
-      }
-    }
-
-    @media (min-width: 1024px) {
-      .f-heading {
-        font-size: 2.25rem;
-        line-height: 2.75rem;
-        font-weight: 800;
-      }
-
-      .f-body {
-        font-size: 1.125rem;
-        line-height: 1.75rem;
-        font-weight: 400;
-      }
-
-      .f-small {
-        font-size: 0.85rem;
-        line-height: 1.25rem;
-        text-transform: uppercase;
-        letter-spacing: 0.15em;
-        font-weight: 700;
-      }
-
-      .f-price {
-        font-family: 'Poppins', sans-serif;
-        font-size: 2.25rem;
-        line-height: 2.25rem;
-        font-weight: 400;
-        letter-spacing: -0.05em;
-      }
-    }
-
-    @media (min-width: 1440px) {
-      .f-heading {
-        font-size: 2.5rem;
-        line-height: 3rem;
-        font-weight: 800;
-      }
-
-      .f-small {
-        font-size: 0.9rem;
-        font-weight: 700;
-      }
-
-      .f-price {
-        font-family: 'Poppins', sans-serif;
-        font-size: 2.75rem;
-        line-height: 2.75rem;
-        font-weight: 400;
-      }
-    }
-
-    ::-webkit-scrollbar {
-      width: 8px;
-    }
-
-    ::-webkit-scrollbar-track {
-      background: #0D0D0D;
-    }
-
-    ::-webkit-scrollbar-thumb {
-      background: #1F2937;
-      border-radius: 10px;
-    }
-
-    ::-webkit-scrollbar-thumb:hover {
-      background: #FF6B00;
-    }
-
-    .no-scrollbar::-webkit-scrollbar {
-      display: none;
-    }
-
-    .no-scrollbar {
-      -ms-overflow-style: none;
-      scrollbar-width: none;
-    }
-
-    @keyframes highlightBlink {
-      0% {
-        border-color: #FF6B00;
-        box-shadow: 0 0 0px #FF6B00;
-      }
-
-      50% {
-        border-color: #FF6B00;
-        box-shadow: 0 0 30px rgba(255, 107, 0, 0.4);
-      }
-
-      100% {
-        border-color: #1F2937;
-        box-shadow: 0 0 0px #FF6B00;
-      }
-    }
-
-    .animate-highlight {
-      animation: highlightBlink 1.5s ease-in-out 2;
-    }
-
-    .ambient-glow {
-      background: radial-gradient(circle at center, rgba(255, 107, 0, 0.1) 0%, transparent 70%);
-      pointer-events: none;
-    }
-  </style>
-  <script type="importmap">
-{
-  "imports": {
-    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
-    "react/": "https://esm.sh/react@^19.2.4/",
-    "react": "https://esm.sh/react@^19.2.4",
-    "lucide-react": "https://esm.sh/lucide-react@^0.563.0"
-  }
-}
-</script>
-  <link rel="stylesheet" href="/index.css">
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#FF6B00" />
 </head>
 
 <body>

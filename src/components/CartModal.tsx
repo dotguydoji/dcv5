@@ -15,11 +15,13 @@ const getLanguageLabel = (product: Product) => {
   return '';
 };
 
+const formatPrice = (value: number) => `PHP ${value.toLocaleString()}`;
+
 const formatOrderLine = (product: Product) => {
   const languageLabel = getLanguageLabel(product);
   return languageLabel
-    ? `${product.title} (${languageLabel}) - â‚±${product.price.toLocaleString()}`
-    : `${product.title} - â‚±${product.price.toLocaleString()}`;
+    ? `${product.title} (${languageLabel}) - ${formatPrice(product.price)}`
+    : `${product.title} - ${formatPrice(product.price)}`;
 };
 
 export const CartModal: React.FC<CartModalProps> = ({
@@ -53,7 +55,7 @@ export const CartModal: React.FC<CartModalProps> = ({
       .join('\n');
 
     const total = selectedProducts.reduce((sum, product) => sum + product.price, 0);
-    const fullText = `My Order:\n${orderList}\n\nTotal: â‚±${total.toLocaleString()}`;
+    const fullText = `My Order:\n${orderList}\n\nTotal: ${formatPrice(total)}`;
 
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard
@@ -111,10 +113,13 @@ export const CartModal: React.FC<CartModalProps> = ({
     const orderList = selectedProducts.map((product) => formatOrderLine(product)).join(', ');
     const total = selectedProducts.reduce((sum, product) => sum + product.price, 0);
     const message = encodeURIComponent(
-      `Hi! I would like to purchase the following items:\n\n${orderList}\n\nTotal: â‚±${total.toLocaleString()}`
+      `Hi! I would like to purchase the following items:\n\n${orderList}\n\nTotal: ${formatPrice(total)}`
     );
 
-    const url = platform === 'mobile' ? 'https://m.me/103186496068437' : 'https://www.facebook.com/share/p/18DmuzbFKk/';
+    const url =
+      platform === 'mobile'
+        ? 'https://m.me/103186496068437'
+        : 'https://www.facebook.com/share/p/18DmuzbFKk/';
 
     window.open(url, '_blank');
   };
@@ -174,7 +179,7 @@ export const CartModal: React.FC<CartModalProps> = ({
                           {product.category}
                           {getLanguageLabel(product) ? ` · ${getLanguageLabel(product)}` : ''}
                         </p>
-                        <p className="text-brand-yellow text-sm font-bold">â‚±{product.price.toLocaleString()}</p>
+                        <p className="text-brand-yellow text-sm font-bold">{formatPrice(product.price)}</p>
                       </div>
                       <button
                         onClick={(event) => {
@@ -191,7 +196,7 @@ export const CartModal: React.FC<CartModalProps> = ({
 
                 <div className="flex justify-between items-center pt-4 border-t border-white/10">
                   <span className="text-brand-gray font-bold tracking-wider">TOTAL</span>
-                  <span className="text-2xl font-bold text-brand-yellow">â‚±{total.toLocaleString()}</span>
+                  <span className="text-2xl font-bold text-brand-yellow">{formatPrice(total)}</span>
                 </div>
               </div>
 
@@ -211,7 +216,9 @@ export const CartModal: React.FC<CartModalProps> = ({
                     handleCopyOrder(event);
                   }}
                   className={`w-full flex items-center justify-center gap-2 py-4 rounded-sm font-bold transition-all touch-manipulation active:scale-[0.98] ${
-                    copied ? 'bg-green-600 text-white cursor-default' : 'bg-white text-black hover:bg-white/90 cursor-pointer'
+                    copied
+                      ? 'bg-green-600 text-white cursor-default'
+                      : 'bg-white text-black hover:bg-white/90 cursor-pointer'
                   }`}
                   style={{ minHeight: '48px' }}
                   type="button"
