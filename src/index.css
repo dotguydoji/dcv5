@@ -35,12 +35,35 @@
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
 @keyframes highlightBlink {
-  0% { border-color: #FF6B00; box-shadow: 0 0 0px #FF6B00; }
+  0% { border-color: #FF6B00; box-shadow: 0 0px 0px #FF6B00; }
   50% { border-color: #FF6B00; box-shadow: 0 0 30px rgba(255, 107, 0, 0.4); }
   100% { border-color: #1F2937; box-shadow: 0 0 0px #FF6B00; }
 }
 .animate-highlight {
   animation: highlightBlink 1.5s ease-in-out 2;
+}
+
+/* Flying to cart animation */
+@keyframes flyToCart {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0) scale(1) rotate(0deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--fly-end-x), var(--fly-end-y)) scale(0.2) rotate(720deg);
+  }
+}
+
+.fly-to-cart {
+  position: fixed;
+  z-index: 9999;
+  pointer-events: none;
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+  animation: flyToCart 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
 }
 
 .ambient-glow {

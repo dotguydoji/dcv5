@@ -6,7 +6,7 @@ interface CartModalProps {
   isOpen: boolean;
   onClose: () => void;
   selectedProducts: Product[];
-  onToggleSelect: (product: Product) => void;
+  onToggleSelect: (product: Product, event?: React.MouseEvent) => void;
 }
 
 export const CartModal: React.FC<CartModalProps> = ({
@@ -114,7 +114,7 @@ export const CartModal: React.FC<CartModalProps> = ({
                         <p className="text-brand-yellow text-sm font-bold">₱{product.price.toLocaleString()}</p>
                       </div>
                       <button
-                        onClick={() => onToggleSelect(product)}
+                        onClick={(e) => { e.stopPropagation(); onToggleSelect(product, e); }}
                         className="p-1 hover:bg-white/5 rounded transition-colors"
                       >
                         <X size={14} className="text-brand-gray/50 hover:text-red-400" />
