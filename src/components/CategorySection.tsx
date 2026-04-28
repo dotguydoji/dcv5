@@ -65,17 +65,35 @@ export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProp
     );
 
     // Observer for tracking active dot (which item is most visible)
+    let lastActiveIndex = -1;
+    let debounceTimer: NodeJS.Timeout | null = null;
+    
     const activeObserver = new IntersectionObserver(
       (entries) => {
-        const visibleEntry = entries.find(e => e.isIntersecting);
-        if (visibleEntry) {
-          const index = parseInt((visibleEntry.target as HTMLElement).dataset.index || '0');
-          setEnglishActiveIndex(index);
+        // Find the entry with the highest intersection ratio
+        const mostVisibleEntry = entries.reduce((max, entry) => {
+          return entry.intersectionRatio > (max?.intersectionRatio || 0) ? entry : max;
+        }, entries.find(e => e.isIntersecting) || null);
+        
+        if (mostVisibleEntry && mostVisibleEntry.intersectionRatio > 0.7) {
+          const newIndex = parseInt((mostVisibleEntry.target as HTMLElement).dataset.index || '0');
+          
+          // Debounce to prevent rapid switching
+          if (debounceTimer) {
+            clearTimeout(debounceTimer);
+          }
+          
+          debounceTimer = setTimeout(() => {
+            if (newIndex !== lastActiveIndex) {
+              lastActiveIndex = newIndex;
+              setEnglishActiveIndex(newIndex);
+            }
+          }, 50);
         }
       },
       { 
         root: container,
-        threshold: 0.6 
+        threshold: [0.5, 0.7, 0.9]
       }
     );
 
@@ -132,17 +150,35 @@ export const CategorySection = React.forwardRef<HTMLElement, CategorySectionProp
     );
 
     // Observer for tracking active dot (which item is most visible)
+    let tagalogLastActiveIndex = -1;
+    let tagalogDebounceTimer: NodeJS.Timeout | null = null;
+    
     const activeObserver = new IntersectionObserver(
       (entries) => {
-        const visibleEntry = entries.find(e => e.isIntersecting);
-        if (visibleEntry) {
-          const index = parseInt((visibleEntry.target as HTMLElement).dataset.index || '0');
-          setTagalogActiveIndex(index);
+        // Find the entry with the highest intersection ratio
+        const mostVisibleEntry = entries.reduce((max, entry) => {
+          return entry.intersectionRatio > (max?.intersectionRatio || 0) ? entry : max;
+        }, entries.find(e => e.isIntersecting) || null);
+        
+        if (mostVisibleEntry && mostVisibleEntry.intersectionRatio > 0.7) {
+          const newIndex = parseInt((mostVisibleEntry.target as HTMLElement).dataset.index || '0');
+          
+          // Debounce to prevent rapid switching
+          if (tagalogDebounceTimer) {
+            clearTimeout(tagalogDebounceTimer);
+          }
+          
+          tagalogDebounceTimer = setTimeout(() => {
+            if (newIndex !== tagalogLastActiveIndex) {
+              tagalogLastActiveIndex = newIndex;
+              setTagalogActiveIndex(newIndex);
+            }
+          }, 50);
         }
       },
       { 
         root: container,
-        threshold: 0.6 
+        threshold: [0.5, 0.7, 0.9]
       }
     );
 
