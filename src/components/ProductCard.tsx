@@ -42,12 +42,12 @@ export const ProductCard = memo(({ product, isHighlighted, isSelected, onToggleS
   return (
     <div 
       ref={cardRef}
-      className={`group flex-shrink-0 w-[320px] sm:w-[360px] laptop:w-[290px] xl:w-[320px] bg-[#222222] border rounded-lg overflow-hidden flex flex-col transition-all duration-300 active:scale-[0.98] shadow-2xl shadow-black/80 will-change-transform ${
+      className={`group flex-shrink-0 w-[320px] sm:w-[360px] laptop:w-[290px] xl:w-[320px] bg-[#F5F5DC] border rounded-lg overflow-hidden flex flex-col transition-all duration-300 active:scale-[0.98] shadow-2xl shadow-black/20 will-change-transform ${
         isHighlighted 
-          ? 'animate-highlight border-brand-yellow z-10 scale-[1.02]' 
+          ? 'animate-highlight border-yellow-600 z-10 scale-[1.02]' 
           : isSelected
-            ? 'border-brand-yellow ring-2 ring-brand-yellow/30'
-            : 'border-white/5 hover:border-brand-yellow/40'
+            ? 'border-yellow-600 ring-2 ring-yellow-600/30'
+            : 'border-black/5 hover:border-yellow-600/40'
       }`}
     >
       <div className="relative aspect-[16/9] w-full overflow-hidden bg-gray-950/50">
@@ -59,20 +59,20 @@ export const ProductCard = memo(({ product, isHighlighted, isSelected, onToggleS
           decoding="async"
           onLoad={handleImageLoad}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#222222] to-transparent opacity-40"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-[#F5F5DC] to-transparent opacity-40"></div>
       </div>
       
       <div className="p-5 laptop:p-5 flex flex-col flex-grow">
-        <h3 className="f-body font-poppins font-medium text-white mb-1 leading-tight group-hover:text-brand-yellow transition-colors duration-300 truncate">
+        <h3 className="f-body font-poppins font-medium text-black mb-1 leading-tight group-hover:text-yellow-600 transition-colors duration-300 truncate">
           {product.title}
         </h3>
-        <p className="f-small normal-case text-brand-gray/80 mb-4 flex-grow tracking-normal leading-relaxed line-clamp-2 opacity-80">
+        <p className="f-small normal-case text-gray-600/80 mb-4 flex-grow tracking-normal leading-relaxed line-clamp-2 opacity-80">
           {product.description}
         </p>
         
-        <div className="mt-auto pt-3 border-t border-white/5">
+        <div className="mt-auto pt-3 border-t border-black/10">
           <div className="flex justify-between items-center mb-3">
-            <span className="f-price text-green-400 drop-shadow-[0_0_10px_rgba(255,107,0,0.2)] text-xl lg:text-2xl flex-grow text-right">
+            <span className="f-price text-green-600 drop-shadow-none text-xl lg:text-2xl flex-grow text-right">
               ₱{product.price.toLocaleString()}
             </span>
           </div>
@@ -90,7 +90,7 @@ export const ProductCard = memo(({ product, isHighlighted, isSelected, onToggleS
                 className={`w-6 h-6 rounded-sm border-2 flex items-center justify-center transition-all duration-200 ${
                   isSelected 
                     ? 'bg-green-400 border-green-400' 
-                    : 'bg-transparent border-white/40'
+                    : 'bg-transparent border-black/40'
                 }`}
               >
                 {isSelected && <Check size={14} strokeWidth={3} className="text-black" />}
